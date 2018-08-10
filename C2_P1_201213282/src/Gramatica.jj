@@ -54,7 +54,22 @@ public class Simple1 {
 }
 
 PARSER_END(Simple1)
-
+SKIP:{
+" "
+|"\t"
+|"\n"
+|"\r"
+}
+TOKEN :{
+<NUMERO : (<DIGITO>)+>
+<>
+}
+TOKEN :{
+<R_Tex:"TEXTO">
+<R_Ent:"Entero">
+<R_Dec:"Decimal">
+<R_Ran:"Rango">
+}
 void Input() :
 {}
 {
