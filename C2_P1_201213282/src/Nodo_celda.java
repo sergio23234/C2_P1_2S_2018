@@ -14,11 +14,16 @@ import java.util.ArrayList;
 public class Nodo_celda {
     String nombre_cabecera;
     ArrayList<String> celdas; 
+    int contador;
     public Nodo_celda(String nombre){
       celdas = new ArrayList();
       nombre_cabecera = nombre; 
+      contador = 0;
     }
     public void add_dato(String contenido){
         celdas.add(contenido);
+    }
+    public int dev_tam(){
+        return celdas.size();
     }
 }

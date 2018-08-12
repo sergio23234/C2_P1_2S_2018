@@ -23,7 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class Principal extends javax.swing.JFrame {
 
-    private ArrayList<Nodo_celda> lista = new ArrayList();
+    private lista_celdas lista;
 
     /**
      * Creates new form Principal
@@ -151,53 +151,67 @@ public class Principal extends javax.swing.JFrame {
 
     private void Leer_archivo(String path) {
         try {
+            lista = new lista_celdas();
             FileInputStream file = new FileInputStream(new File(path));
-            System.out.println("llego");
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rowIterator = sheet.iterator();
             Row row;
             boolean encabezado = false;
-
+            int ordenado[] = new int[16];
             while (rowIterator.hasNext()) {
                 row = rowIterator.next();
                 if (!encabezado) {
                     Iterator<Cell> cellIterator = row.cellIterator();
                     Cell cell;
+                    int contador = 0;
                     while (cellIterator.hasNext()) {
-                        // se obtiene la celda en específico y se la imprime
                         cell = cellIterator.next();
-                        Nodo_celda nodo = new Nodo_celda(cell.getStringCellValue());
-                        lista.add(nodo);
+                        contador++;
+                    }
+                    if (contador > 16) {
+                        System.out.println("hay columnas de mas");
+                    } else if (contador < 3) {
+                        System.out.println("tiene que venir 3 columnas como minimo");
+                    } else {
+                        cellIterator = row.cellIterator();
+                        contador = 0;
+                        while (cellIterator.hasNext()) {
+                            cell = cellIterator.next();
+                            ordenado[contador] = lista.comp_lista(cell.getStringCellValue());
+                            contador++;
+                        }
                     }
                     encabezado = true;
                 } else {
                     //se obtiene las celdas por fila
                     Iterator<Cell> cellIterator = row.cellIterator();
                     Cell cell;
+                    for(int i=0;i<ordenado.length;i++){
+                        System.out.println(ordenado[i]+"i:"+i);
+                    }
                     //se recorre cada celda
                     int contador = 0;
                     while (cellIterator.hasNext()) {
-                        Nodo_celda nodo = lista.get(contador);
-                        // se obtiene la celda en específico y se la imprime
                         cell = cellIterator.next();
-                        nodo.add_dato(cell.getStringCellValue());
+                        int num = ordenado[contador];
+                       lista.add_lista(cell.getStringCellValue(),num);
                         contador++;
                     }
-                   
+
                 }
-                
+
             }
             recorrer_lista();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
-    public void recorrer_lista(){
-        for (Nodo_celda lista1 : lista) {
-           System.out.println("nombre: "+lista1.nombre_cabecera+" cantidad: "+lista1.celdas.size());
-        }
+
+    public void recorrer_lista() {
+        lista.recorrer_lista();
     }
+
     /**
      * @param args the command line arguments
      */
