@@ -1,19 +1,29 @@
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author sergi
  */
 public class Principal extends javax.swing.JFrame {
+
+    private ArrayList<Nodo_celda> lista = new ArrayList();
 
     /**
      * Creates new form Principal
@@ -23,7 +33,7 @@ public class Principal extends javax.swing.JFrame {
         Pesta.setEnabledAt(1, false);
         Pesta.setEnabledAt(2, false);
         super.repaint();
- }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -119,9 +129,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void GenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerarActionPerformed
         // TODO add your handling code here:
-                JFileChooser JFC = new JFileChooser();
+        JFileChooser JFC = new JFileChooser();
         //filtro que muestra solo los archivos con extension *.edu
-        JFC.setFileFilter(new FileNameExtensionFilter("todos los archivos *.xls", "xls", "XLS","xlsx","XLSX"));
+        JFC.setFileFilter(new FileNameExtensionFilter("todos los archivos *.xls", "xls", "XLS", "xlsx", "XLSX"));
         //se comprueba si se ha dado al boton aceptar
         int abrir = JFC.showDialog(null, "Abrir");
         if (abrir == JFileChooser.APPROVE_OPTION) {
@@ -129,15 +139,65 @@ public class Principal extends javax.swing.JFrame {
             String PATH = JFC.getSelectedFile().getAbsolutePath();
             if (PATH.toLowerCase().endsWith(".xls") || PATH.toLowerCase().endsWith(".xlsx")) {
                 JOptionPane.showMessageDialog(this, "Reconocido" + PATH, "formato XLSX", JOptionPane.ERROR_MESSAGE);
+                Leer_archivo(PATH);
             } else {
                 JOptionPane.showMessageDialog(this, "Incorrecto:" + PATH, "Formato no es de excel", JOptionPane.ERROR_MESSAGE);
             }
 
         }
 
-        
+
     }//GEN-LAST:event_GenerarActionPerformed
 
+    private void Leer_archivo(String path) {
+        try {
+            FileInputStream file = new FileInputStream(new File(path));
+            System.out.println("llego");
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = sheet.iterator();
+            Row row;
+            boolean encabezado = false;
+
+            while (rowIterator.hasNext()) {
+                row = rowIterator.next();
+                if (!encabezado) {
+                    Iterator<Cell> cellIterator = row.cellIterator();
+                    Cell cell;
+                    while (cellIterator.hasNext()) {
+                        // se obtiene la celda en específico y se la imprime
+                        cell = cellIterator.next();
+                        Nodo_celda nodo = new Nodo_celda(cell.getStringCellValue());
+                        lista.add(nodo);
+                    }
+                    encabezado = true;
+                } else {
+                    //se obtiene las celdas por fila
+                    Iterator<Cell> cellIterator = row.cellIterator();
+                    Cell cell;
+                    //se recorre cada celda
+                    int contador = 0;
+                    while (cellIterator.hasNext()) {
+                        Nodo_celda nodo = lista.get(contador);
+                        // se obtiene la celda en específico y se la imprime
+                        cell = cellIterator.next();
+                        nodo.add_dato(cell.getStringCellValue());
+                        contador++;
+                    }
+                   
+                }
+                
+            }
+            recorrer_lista();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+    public void recorrer_lista(){
+        for (Nodo_celda lista1 : lista) {
+           System.out.println("nombre: "+lista1.nombre_cabecera+" cantidad: "+lista1.celdas.size());
+        }
+    }
     /**
      * @param args the command line arguments
      */
