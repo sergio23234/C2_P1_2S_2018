@@ -2,7 +2,6 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -159,6 +158,7 @@ public class Principal extends javax.swing.JFrame {
             Row row;
             boolean encabezado = false;
             int ordenado[] = new int[16];
+            int total_columnas=0;
             while (rowIterator.hasNext()) {
                 row = rowIterator.next();
                 if (!encabezado) {
@@ -169,6 +169,7 @@ public class Principal extends javax.swing.JFrame {
                         cell = cellIterator.next();
                         contador++;
                     }
+                    total_columnas=contador;
                     if (contador > 16) {
                         System.out.println("hay columnas de mas");
                     } else if (contador < 3) {
@@ -183,19 +184,20 @@ public class Principal extends javax.swing.JFrame {
                         }
                     }
                     encabezado = true;
-                } else {
+                } else if(!lista.repetido()){
+                    
                     //se obtiene las celdas por fila
                     Iterator<Cell> cellIterator = row.cellIterator();
                     Cell cell;
-                    for(int i=0;i<ordenado.length;i++){
-                        System.out.println(ordenado[i]+"i:"+i);
+                    for (int i = 0; i < ordenado.length; i++) {
+                        System.out.println(ordenado[i] + "i:" + i);
                     }
                     //se recorre cada celda
                     int contador = 0;
                     while (cellIterator.hasNext()) {
                         cell = cellIterator.next();
                         int num = ordenado[contador];
-                       lista.add_lista(cell.getStringCellValue(),num);
+                        lista.add_lista(cell.getStringCellValue(), num);
                         contador++;
                     }
 
@@ -209,6 +211,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void recorrer_lista() {
+        lista.llenar_Vacias();
         lista.recorrer_lista();
     }
 
