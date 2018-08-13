@@ -61,14 +61,27 @@ SKIP:{
 |"\r"
 }
 TOKEN :{
+<R_fin:"»">
 <NUMERO : (<DIGITO>)+>
 <>
 }
 TOKEN :{
-<R_Tex:"TEXTO">
-<R_Ent:"Entero">
-<R_Dec:"Decimal">
-<R_Ran:"Rango">
+<R_tip:"Tipo«">
+<R_idp:"idpregunta«">
+<R_eti:"etiqueta«">
+<R_par:"parametro«">
+<R_cal:"calculo«">
+<R_apl:"aplicable«">
+<R_sug:"sugerir«">
+<R_res:"restringir«">
+<R_req:"requerido«">
+<R_rsm:"restringirmsn«">
+<R_rqm:"requeridomsn«">
+<R_prd"predeterminado«">
+<R_rep:"repeticion«">
+<R_apa:"apariencia«">
+<R_pre:"codigo_pre«">
+<R_pos:"codigo_post«">
 }
 void Input() :
 {}

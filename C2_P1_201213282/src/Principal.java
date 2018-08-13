@@ -150,6 +150,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void Leer_archivo(String path) {
         try {
+            boolean errores = false;
             lista = new lista_celdas();
             FileInputStream file = new FileInputStream(new File(path));
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -158,8 +159,8 @@ public class Principal extends javax.swing.JFrame {
             Row row;
             boolean encabezado = false;
             int ordenado[] = new int[16];
-            int total_columnas=0;
-            while (rowIterator.hasNext()) {
+            int total_columnas = 0;
+            while (rowIterator.hasNext() && !errores) {
                 row = rowIterator.next();
                 if (!encabezado) {
                     Iterator<Cell> cellIterator = row.cellIterator();
@@ -169,11 +170,13 @@ public class Principal extends javax.swing.JFrame {
                         cell = cellIterator.next();
                         contador++;
                     }
-                    total_columnas=contador;
+                    total_columnas = contador;
                     if (contador > 16) {
                         System.out.println("hay columnas de mas");
+                        errores = true;
                     } else if (contador < 3) {
                         System.out.println("tiene que venir 3 columnas como minimo");
+                        errores = true;
                     } else {
                         cellIterator = row.cellIterator();
                         contador = 0;
@@ -184,27 +187,41 @@ public class Principal extends javax.swing.JFrame {
                         }
                     }
                     encabezado = true;
-                } else if(!lista.repetido()){
-                    
-                    //se obtiene las celdas por fila
-                    Iterator<Cell> cellIterator = row.cellIterator();
-                    Cell cell;
-                    for (int i = 0; i < ordenado.length; i++) {
-                        System.out.println(ordenado[i] + "i:" + i);
-                    }
-                    //se recorre cada celda
-                    int contador = 0;
-                    while (cellIterator.hasNext()) {
-                        cell = cellIterator.next();
-                        int num = ordenado[contador];
-                        lista.add_lista(cell.getStringCellValue(), num);
-                        contador++;
+                } else {
+                    boolean uno = lista.repetido();
+                    boolean dos = lista.equivocada(total_columnas);
+                    boolean tres = lista.minimo();
+                    if (!uno && !dos && tres) {
+                        Iterator<Cell> cellIterator = row.cellIterator();
+                        Cell cell;
+                        for (int i = 0; i < ordenado.length; i++) {
+                            System.out.println(ordenado[i] + "i:" + i);
+                        }
+                        //se recorre cada celda
+                        int contador = 0;
+                        while (cellIterator.hasNext()) {
+                            cell = cellIterator.next();
+                            int num = ordenado[contador];
+                            lista.add_lista(cell.getStringCellValue(), num);
+                            contador++;
+                        }
+                    } else {
+                        if(uno){
+                            System.out.println("Hay columnas repetidas");
+                        }else if(dos){
+                            System.out.println("Hay columnas con nombres equivocados");
+                        }else{
+                            System.out.println("No estan las columnas minimas");
+                        }
+                        errores = true;
                     }
 
                 }
-
             }
-            recorrer_lista();
+            if(!errores){
+                recorrer_lista();
+                lista.escribir_lista();
+            }
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

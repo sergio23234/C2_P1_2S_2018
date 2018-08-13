@@ -1,4 +1,7 @@
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /*
@@ -13,7 +16,7 @@ import java.util.ArrayList;
 public class lista_celdas {
 
     private ArrayList<Nodo_celda> lista;
-
+    private String matriz[] = new String[16];
     public lista_celdas() {
         lista = new ArrayList();
         llenar();
@@ -54,6 +57,22 @@ public class lista_celdas {
         lista.add(new Nodo_celda("apariencia"));
         lista.add(new Nodo_celda("codigo_pre"));
         lista.add(new Nodo_celda("codigo_post"));
+        matriz[0]="tipo«";
+        matriz[1]="idpregunta«";
+        matriz[2]="etiqueta«";
+        matriz[3]="parametro«";
+        matriz[4]="calculo«";
+        matriz[5]="aplicable«";
+        matriz[6]="sugerir«";
+        matriz[7]="restringir«";
+        matriz[8]="restringirmsn«";
+        matriz[9]="requeridomsn«";
+        matriz[10]="requerido«";
+        matriz[11]="predeterminado«";
+        matriz[12]="repeticion«";
+        matriz[13]="apariencia«";
+        matriz[14]="codigo_pre«";
+        matriz[15]="codigo_post«";
     }
 
     public void llenar_Vacias() {
@@ -91,5 +110,61 @@ public class lista_celdas {
             }
         }
         return false;
+    } //hay una columna repetida
+    
+    public boolean minimo(){ 
+        for(int i=0;i<3;i++){
+            if(lista.get(i).contador==0){
+                return false;
+            }
+        }
+        return true;
+    }//no tiene las 3 columnas obligatorios
+
+    public boolean equivocada(int num){
+        int contador = 0;
+        for (Nodo_celda lista1 : lista) {
+            if (lista1.contador > 0) {
+                contador= contador+1;
+            }
+        }
+        if(contador<num){
+            return true;
+        }
+        return false;
+    }//viene una columna equivocada
+    
+    public void escribir_lista(){
+        FileWriter FR = null;
+        BufferedWriter BR = null;
+        try {
+            int contador = 0;
+            FR = new FileWriter("path.txt");
+            BR = new BufferedWriter(FR);
+            String linea="";
+            contador = lista.get(0).dev_tam();
+            for(int i=0;i<contador;i++){
+                linea ="";
+                for(int j=0;j<lista.size();j++){
+                    Nodo_celda nodo=lista.get(j);
+                  String es_nodo = matriz[j]+nodo.celdas.get(i)+"» ";
+                  linea = linea + es_nodo;
+                }
+                BR.write(linea+"\n");
+            }
+            BR.close();
+        } catch (IOException e) {
+            System.out.println("error en:"+e.getMessage());
+        }finally {
+            try {
+                if (null != FR) {
+                    FR.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                //Logger.getLogger(fileChooser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
+
 }
