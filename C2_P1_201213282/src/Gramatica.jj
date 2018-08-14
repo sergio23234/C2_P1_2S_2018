@@ -93,15 +93,35 @@ TOKEN :{
 <R_pre:"codigo_pre«">
 <R_pos:"codigo_post«">
 }
+TOKEN :{
+<R_Text:"Texto">
+<R_Ente:"Entero">
+<R_Deci:"Decimal">
+<R_Rang:"Rango">
+<R_Cond:"Condicion">
+<R_Fech:"Fecha">
+<R_Hora:"Hora">
+<R_FeHo:"FechaHora">
+<R_Selu:"Seleccion_uno">
+<R_Selm:"Seleccion_multiples">
+<R_Nota:"Nota">
+<R_Mult:"Fichero">
+<R_Calc:"Calcular">
+<R_AgrI:"Iniciar agrupacion">
+<R_AgrF:"Finalizar agrupacion">
+<R_Cici:"Iniciar Ciclo">
+<R_Cicf:"Finalizar Ciclo">
+}
 NArbol Inicio(): 
 {NArbol arbol=new NArbol(); }
 {
 	arbol=Contenido(){return arbol;}
 }
-void Input() :
-{}
+void Contenido() :
+{NArbol abrbol = new NArbol();}
 {
-  MatchedBraces() ("\n"|"\r")* <EOF>
+<R_tip><R_fin><R_idp><R_fin><R_eti><R_fin><R_par><R_fin><R_cal><R_fin><R_apl><R_fin><R_sug><R_fin><R_res><R_fin><R_req><R_fin><R_rsm><R_fin><R_rqm><R_fin><R_prd><R_fin><R_rep><R_fin><R_apa><R_fin><R_pre><R_fin><R_pos><R_fin> 
+|<EOF>
 }
 
 void MatchedBraces() :
