@@ -45,10 +45,20 @@ options {
 PARSER_BEGIN(Gramatica)
 
 public class Gramatica {
-
-  public static void main(String args[]) throws ParseException {
-    Simple1 parser = new Simple1(System.in);
-    parser.Input();
+		NArbol Gramatica(String arg[]){ 
+   		try
+    {
+     System.out.println("entro");
+     Gramatica parser = new Gramatica(System.in);
+     return parser.Inicio() ;
+    }
+    catch(ParseException e)
+    {
+      System.out.println(e.getMessage());
+      System.out.println("Analizador: Se han encontrado errores en el analisis.");
+      return null;
+    }	  
+  }
   }
 
 }
@@ -82,6 +92,11 @@ TOKEN :{
 <R_apa:"apariencia«">
 <R_pre:"codigo_pre«">
 <R_pos:"codigo_post«">
+}
+NArbol Inicio(): 
+{NArbol arbol=new NArbol(); }
+{
+	arbol=Contenido(){return arbol;}
 }
 void Input() :
 {}
