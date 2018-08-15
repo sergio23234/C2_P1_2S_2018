@@ -73,7 +73,7 @@ SKIP:{
 TOKEN :{
 <R_fin:"»">
 <NUMERO : (<DIGITO>)+>
-<>
+<R_ID:[a-Z]>
 }
 TOKEN :{
 <R_tip:"Tipo«">
@@ -117,15 +117,52 @@ NArbol Inicio():
 {
 	arbol=Contenido(){return arbol;}
 }
-void Contenido() :
+void Contenido() ://Inicio del Cuerpo Tipo
 {NArbol abrbol = new NArbol();}
 {
-<R_tip><R_fin><R_idp><R_fin><R_eti><R_fin><R_par><R_fin><R_cal><R_fin><R_apl><R_fin><R_sug><R_fin><R_res><R_fin><R_req><R_fin><R_rsm><R_fin><R_rqm><R_fin><R_prd><R_fin><R_rep><R_fin><R_apa><R_fin><R_pre><R_fin><R_pos><R_fin> 
+<R_tip>Cuerpo_Tipo() Est_ID() ContenidoP()
+}
+NArbol ContenidoP():
+{NArbol arbol = new NArbol();}
+{
+<R_tip>Cuerpo_Tipo() Est_ID() ContenidoP()
 |<EOF>
 }
-
-void MatchedBraces() :
-{}
+NArbol Cuerpo_Tipo():
+{NArbol arbol = new NArbol();}
 {
-  "{" [ MatchedBraces() ] "}"
+ <R_Text><R_fin>
+|<R_Ente><R_fin>
+|<R_Deci><R_fin>
+|<R_Rang><R_fin>
+|<R_Cond><R_fin>
+|<R_Fech><R_fin>
+|<R_Hora><R_fin>
+|<R_FeHo><R_fin>
+|<R_Selu><R_fin>
+|<R_Selm><R_fin>
+|<R_Nota><R_fin>
+|<R_Mult><R_fin>
+|<R_Calc><R_fin>
+|<R_AgrI><R_fin>
+|<R_AgrF><R_fin>
+|<R_Cici><R_fin>
+|<R_Cicf><R_fin>
+|<R_fin>
+}
+NArbol Est_ID():
+{NArbol arbol = new NArbol();}
+{
+<R_idp>Cuerpo_ID() Est_eti()
+<R_fin>
+}
+String Cuerpo_ID()
+{String ID = "";}
+{
+
+}
+NArbol Est_eti():
+{NArbol arbol = new NArbol();}
+{
+<R_eti><R_fin><R_par><R_fin><R_cal><R_fin><R_apl><R_fin><R_sug><R_fin><R_res><R_fin><R_req><R_fin><R_rsm><R_fin><R_rqm><R_fin><R_prd><R_fin><R_rep><R_fin><R_apa><R_fin><R_pre><R_fin><R_pos><R_fin> 
 }
