@@ -153,24 +153,24 @@ NArbol Cuerpo_Tipo():
 NArbol Est_ID():
 {NArbol arbol = new NArbol();}
 {
-<R_idp>Cuerpo_ID() Est_eti()
-<R_fin>
+  <R_idp> Cuerpo_ID()   Est_eti()
+  <R_fin>
 }
 String Cuerpo_ID()
 {String ID = "";}
 {
-<R_ID> <R_fin>
-|<R_fin>
+  <R_ID>  <R_fin>
+| <R_fin>
 }
 NArbol Est_eti():
 {NArbol arbol = new NArbol();}
 {
-<R_eti>Cuerpo_Eti() 
+  <R_eti> Cuerpo_Eti() Est_param()
 }
 String Cuerpo_Eti():
 {String Etiqueta ="";}
 {
-<R_ID><R_fin>
+ <R_ID> <R_fin>
 |<R_fin>
 }
 NArbol Est_param() //
@@ -209,6 +209,40 @@ NArbol Est_restrin() //sugerir
 NArbol Est_requerido() //requerido
 {NArbol arbol = new NArbol();}
 {
-<R_req>Cuerpo_requerido() 
-<R_rsm><R_fin><R_rqm><R_fin><R_prd><R_fin><R_rep><R_fin><R_apa><R_fin><R_pre><R_fin><R_pos><R_fin> 
+<R_req>Cuerpo_requerido() Est_restrimen() 
+}
+NArbol Est_restrimen() //restringir mensaje 
+{NArbol arbol = new NArbol();}
+{
+<R_rsm>Cuerpo_resmensaje() Est_resquemen()
+}
+NArbol Est_resquemen() //requerido mensaje 
+{NArbol arbol = new NArbol();}
+{
+<R_rqm>Cuerpo_requemen() Est_predeter()
+}
+NArbol Est_predeter() //predeterminado 
+{NArbol arbol = new NArbol();}
+{
+<R_prd> Cuerpo_prede() Est_repetir()
+}
+NArbol Est_repetir() //repeticion 
+{NArbol arbol = new NArbol();}
+{
+<R_rep>Cuerpo_repetir() Est_aparencia()
+}
+NArbol Est_aparencia() //apariencia 
+{NArbol arbol = new NArbol();}
+{
+<R_apa>Cuerpo_aparien() Est_codigoPRE
+}
+NArbol Est_codigoPRE() //codigo pre 
+{NArbol arbol = new NArbol();}
+{
+<R_pre>Cuerpo_pre() Est_codigoPOST
+}
+NArbol Est_codigoPOST() //codigo post
+{NArbol arbol = new NArbol();}
+{
+<R_pos>Cuerpo_post()
 }
