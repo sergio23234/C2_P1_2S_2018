@@ -23,7 +23,7 @@
 
 
 options {
-  LOOKAHEAD = 1;
+  LOOKAHEAD = 10;
   CHOICE_AMBIGUITY_CHECK = 2;
   OTHER_AMBIGUITY_CHECK = 1;
   STATIC = true;
@@ -282,68 +282,85 @@ NArbol Est_codigoPOST() //codigo post
 }
 /*---------------------Operaciones Aritmeticas---------------------- */
 String Est_SR(): //SUMA Y RESTA
-{String resultado="";}{
-  Est_MD() Est_SRP()
+{String resultado="";
+ String var1="";}
+{
+  var1=Est_MD() resultado=Est_SRP()    {return var1+resultado;}
 }
 String Est_SRP():
-{String resultado="";}{
-  <MAS> Est_MD() Est_SRP()
-| <MEN> Est_MD() Est_SRP()
-| <EOF>
+{String resultado="";
+ String var1="";}
+{
+  <MAS> var1=Est_MD() resultado=Est_SRP()   {var1="+"+var1; return var1+resultado;}
+| <MEN> var1=Est_MD() resultado=Est_SRP()   {var1="-"+var1; return var1+resultado;}
+| <EOF>                                     {return "";}
 }
 String Est_MD(): //MULTIPLICACION Y DIVISION
-{String resultado="";}{
-  Est_ID() Est_MDP()
+{   String resultado="";
+    String var1="";}
+{
+  var1=Est_ID() resultado=Est_MDP(){return var1+resultado;}
 }
 String Est_MDP():
-{String resultado="";}{
-  <POR> Est_ID() Est_SRP()
-| <DIV> Est_ID() Est_SRP()
-| <EOF>
+{String resultado="";
+ String var1="";}
+{
+  <POR> var1=Est_ID() resultado=Est_SRP()   {var1="*"+var1; return var1+resultado;}
+| <DIV> var1=Est_ID() resultado=Est_SRP()   {var1="div"+var1; return var1+resultado;}
+| <EOF>                                     {return "";}
 }
 String Est_ID():
 {String resultado="";}
 {
-    <PAI>Est_SR<PAF>
+   <PAI>Est_SR<PAF>
 |   Var_ID()
 }
 /*---------------------Operaciones de Logias---------------------- */
 String Est_ANDOR(): //AND y OR
-{String resultado="";}{
-  Est_NOT() Est_ANDORP()
+{   String resultado="";
+    String var1="";}{
+  var1=Est_NOT() resultado=Est_ANDORP()     {return var1+resultado;}
 }
 String Est_ANDORP():
-{String resultado="";}{
-  <AND> Est_NOT() Est_ANDORP()
-| <OR>  Est_NOT() Est_ANDORP()
-| <EOF>
+{   String resultado="";
+    String var1="";}
+{
+  <AND> var1=Est_NOT() resultado=Est_ANDORP()   {resultado="&&"+var1+resultado; return resultado;}
+| <OR>  var1=Est_NOT() resultado=Est_ANDORP()   {resultado="||"+var1+resultado; return resultado;}
+| <EOF>                                         {return "";}
 }
 String Est_NOT(): //NOT
-{String resultado="";}{
-    <NOT> Est_ANDOR()
-|   Est_COMP() 
+{String resultado="";}
+{
+    <NOT> resultado=Est_ANDOR() {return "!"+resultado;}
+|   resultado=Est_COMP()        {return resultado;}
 }
 /*---------------------Operaciones de Comparadores---------------------- */
 String Est_COMP(): //AND y OR
-{String resultado="";}{
-  Est_COMP3() Est_COMPP()
+{String resultado="";
+    String var1="";}
+{
+  resultado=Est_COMP3() var1=Est_COMPP()    {return resultado+var1;}
 }
 String Est_COMPP():
-{String resultado="";}{
-  <IGU><IGU> Est_COMP3() Est_ANDORP()
-| <NOT><IGU> Est_COMP3() Est_ANDORP()
-| <NOR>COMP2() Est_COMP3() Est_ANDORP()
-| <MAY>COMP2() Est_COMP3() Est_ANDORP()
-| <EOF>
-}
-String COMP2():{
-String resultado="";}
+{   String resultado="";
+    String var1="";
+    String var2="";
+    String var3=""; }
 {
-<IGU>
-|<EOF>
+  <IGU><IGU> Est_COMP3() Est_COMPP()                    {resultado = "=="+var2+var3; return resultado;}
+| <NOT><IGU> var2=Est_COMP3() var3=Est_COMPP()          {resultado = "!="+var2+var3; return resultado;}
+| <NOR>var1=COMP2() var2=Est_COMP3() var3=Est_COMPP()   {String pre_res ="<"+var1; resultado = pre_res+var2+var3; return resultado;}
+| <MAY>var1=COMP2() var2=Est_COMP3() var3=Est_COMPP()   {String pre_res =">"+var1; resultado = pre_res+var2+var3; return resultado;}
+| <EOF>                                                 {return "";}
 }
-String Est_NOT(): //NOT
-{String resultado="";}{
-    <NOT> Est_ANDOR()
-|   Est_COMP() 
+String COMP2():{}
+{   
+    <IGU>   {return "=";}
+|   <EOF>   {return "";}
+}
+String Est_COMP3(): //NOT
+{String resultado="";}
+{
+  resultado=Est_SR()            {return resultado;}  
 }
