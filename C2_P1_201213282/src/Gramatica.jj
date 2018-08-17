@@ -70,28 +70,47 @@ SKIP:{
 |"\n"
 |"\r"
 }
-TOKEN :{
-<R_fin:"»">
-<NUMERO : (<DIGITO>)+>
-<R_ID:[a-Z]>
+TOKEN:
+{
+  	<MAS:"+">
+ |	<MEN:"-">
+ |	<POR:"*">
+ |	<ELV:"^">
+ |	<IGU:"=">
+ |	<PAI:"(">
+ |	<PAF:")">
+ |	<AND:"&&">
+ |	<OR:"||">
+ |	<ARR:"@">  	
+ |      <NOT:"!">
+ |	<MAY:">">
+ |	<NOR:"<">
+ |      <PUN:".">
+ |      <R_fin:"»$">
+ |	<MOD:"mod">
+ |	<DIV:"div">
 }
+TOKEN:{
+
+}
+
 TOKEN :{
-<R_tip:"Tipo«">
-<R_idp:"idpregunta«">
-<R_eti:"etiqueta«">
-<R_par:"parametro«">
-<R_cal:"calculo«">
-<R_apl:"aplicable«">
-<R_sug:"sugerir«">
-<R_res:"restringir«">
-<R_req:"requerido«">
-<R_rsm:"restringirmsn«">
-<R_rqm:"requeridomsn«">
-<R_prd"predeterminado«">
-<R_rep:"repeticion«">
-<R_apa:"apariencia«">
-<R_pre:"codigo_pre«">
-<R_pos:"codigo_post«">
+<R_tip:"Tipo«$">
+<R_idp:"idpregunta«$">
+<R_eti:"etiqueta«$">
+<R_par:"parametro«$">
+<R_cal:"calculo«$">
+<R_apl:"aplicable«$">
+<R_sug:"sugerir«$">
+<R_res:"restringir«$">
+<R_req:"requerido«$">
+<R_rsm:"restringirmsn«$">
+<R_rqm:"requeridomsn«$">
+<R_prd"predeterminado«$">
+<R_rep:"repeticion«$">
+<R_apa:"apariencia«$">
+<R_pre:"codigo_pre«$">
+<R_pos:"codigo_post«$">
 }
 TOKEN :{
 <R_Text:"Texto">
@@ -111,6 +130,16 @@ TOKEN :{
 <R_AgrF:"Finalizar agrupacion">
 <R_Cici:"Iniciar Ciclo">
 <R_Cicf:"Finalizar Ciclo">
+
+TOKEN :{
+    
+    <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|".")*>
+|   <#LETTER: (["a"-"z","A"-"Z"])>
+|   <INTEGER: (<DIGIT>)+>
+|   <DOUBLE: (<DIGIT>)+"."(<DIGIT>)+>
+|   <#DIGIT: ["0"-"9"]>
+|   <T_Texto:~["$»","«$","@{","@["]>
+}
 }
 NArbol Inicio(): 
 {NArbol arbol=new NArbol(); }
@@ -118,9 +147,11 @@ NArbol Inicio():
 	arbol=Contenido(){return arbol;}
 }
 void Contenido() ://Inicio del Cuerpo Tipo
-{NArbol abrbol = new NArbol();}
+{   NArbol arbol = new NArbol();
+    NArbol arbol1 = new NArbol();
+    NArbol arbol2 = new NArbol();}
 {
-<R_tip>Cuerpo_Tipo() Est_ID() ContenidoP()
+<R_tip>arbol1=Cuerpo_Tipo(){} Est_ID(arbol1) ContenidoP()
 }
 NArbol ContenidoP():
 {NArbol arbol = new NArbol();}
@@ -128,39 +159,43 @@ NArbol ContenidoP():
 <R_tip>Cuerpo_Tipo() Est_ID() ContenidoP()
 |<EOF>
 }
+/*--------------- Cuerpo Tipo---------------- */
 NArbol Cuerpo_Tipo():
-{NArbol arbol = new NArbol();}
+{NArbol arbol = new NArbol();
+ Boolean Error =false;
+String valor ="";}
 {
- <R_Text><R_fin>
-|<R_Ente><R_fin>
-|<R_Deci><R_fin>
-|<R_Rang><R_fin>
-|<R_Cond><R_fin>
-|<R_Fech><R_fin>
-|<R_Hora><R_fin>
-|<R_FeHo><R_fin>
-|<R_Selu><R_fin>
-|<R_Selm><R_fin>
-|<R_Nota><R_fin>
-|<R_Mult><R_fin>
-|<R_Calc><R_fin>
-|<R_AgrI><R_fin>
-|<R_AgrF><R_fin>
-|<R_Cici><R_fin>
-|<R_Cicf><R_fin>
-|<R_fin>
+ valor=<R_Text><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Ente><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Deci><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Rang><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Cond><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Fech><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Hora><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_FeHo><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Selu><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Selm><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Nota><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Mult><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Calc><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_AgrI><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_AgrF><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Cici><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|valor=<R_Cicf><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
+|<R_fin>{arbol.Error = true; return arbol;}
 }
-NArbol Est_ID():
+/*--------------- Estructura ID---------------- */
+NArbol Est_ID(NArbol actual):
 {NArbol arbol = new NArbol();}
 {
   <R_idp> Cuerpo_ID()   Est_eti()
-  <R_fin>
+  
 }
 String Cuerpo_ID()
 {String ID = "";}
 {
-  <R_ID>  <R_fin>
-| <R_fin>
+    ID=<T_ID><R_fin>{arbol.Error = true; return arbol;}
+|   <R_fin>{arbol.Error = true; return arbol;}
 }
 NArbol Est_eti():
 {NArbol arbol = new NArbol();}
