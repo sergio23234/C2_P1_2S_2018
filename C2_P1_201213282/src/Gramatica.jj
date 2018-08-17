@@ -83,8 +83,8 @@ TOKEN:
  |	<OR:"||">
  |	<ARR:"@">  	
  |      <NOT:"!">
+ |	<NOR:"<"> 
  |	<MAY:">">
- |	<NOR:"<">
  |      <PUN:".">
  |      <R_fin:"»$">
  |	<MOD:"mod">
@@ -130,7 +130,7 @@ TOKEN :{
 <R_AgrF:"Finalizar agrupacion">
 <R_Cici:"Iniciar Ciclo">
 <R_Cicf:"Finalizar Ciclo">
-
+}
 TOKEN :{
     
     <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|".")*>
@@ -138,8 +138,7 @@ TOKEN :{
 |   <INTEGER: (<DIGIT>)+>
 |   <DOUBLE: (<DIGIT>)+"."(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
-|   <T_Texto:~["$»","«$","@{","@["]>
-}
+|   <T_Texto:~["$»","«$","@{","@["."}@"]>
 }
 NArbol Inicio(): 
 {NArbol arbol=new NArbol(); }
@@ -191,7 +190,7 @@ NArbol Est_ID(NArbol actual):
   <R_idp> Cuerpo_ID()   Est_eti()
   
 }
-String Cuerpo_ID()
+String Cuerpo_ID():
 {String ID = "";}
 {
     ID=<T_ID><R_fin>{arbol.Error = true; return arbol;}
@@ -208,7 +207,7 @@ String Cuerpo_Eti():
  <R_ID> <R_fin>
 |<R_fin>
 }
-NArbol Est_param() //
+NArbol Est_param(): //
 {NArbol arbol = new NArbol();}
 {
 <R_par>Cuerpo_param() Est_cacular
@@ -220,7 +219,7 @@ String Cuerpo_param()
 
 |<R_fin>
 }
-NArbol Est_calcular() //calcular
+NArbol Est_calcular(): //calcular
 {NArbol arbol = new NArbol();}
 {
 <R_cal>Cuerpo_calcular() Est_aplicable
@@ -280,4 +279,71 @@ NArbol Est_codigoPOST() //codigo post
 {NArbol arbol = new NArbol();}
 {
 <R_pos>Cuerpo_post()
+}
+/*---------------------Operaciones Aritmeticas---------------------- */
+String Est_SR(): //SUMA Y RESTA
+{String resultado="";}{
+  Est_MD() Est_SRP()
+}
+String Est_SRP():
+{String resultado="";}{
+  <MAS> Est_MD() Est_SRP()
+| <MEN> Est_MD() Est_SRP()
+| <EOF>
+}
+String Est_MD(): //MULTIPLICACION Y DIVISION
+{String resultado="";}{
+  Est_ID() Est_MDP()
+}
+String Est_MDP():
+{String resultado="";}{
+  <POR> Est_ID() Est_SRP()
+| <DIV> Est_ID() Est_SRP()
+| <EOF>
+}
+String Est_ID():
+{String resultado="";}
+{
+    <PAI>Est_SR<PAF>
+|   Var_ID()
+}
+/*---------------------Operaciones de Logias---------------------- */
+String Est_ANDOR(): //AND y OR
+{String resultado="";}{
+  Est_NOT() Est_ANDORP()
+}
+String Est_ANDORP():
+{String resultado="";}{
+  <AND> Est_NOT() Est_ANDORP()
+| <OR>  Est_NOT() Est_ANDORP()
+| <EOF>
+}
+String Est_NOT(): //NOT
+{String resultado="";}{
+    <NOT> Est_ANDOR()
+|   Est_COMP() 
+}
+/*---------------------Operaciones de Comparadores---------------------- */
+String Est_COMP(): //AND y OR
+{String resultado="";}{
+  Est_COMP3() Est_COMPP()
+}
+String Est_COMPP():
+{String resultado="";}{
+  <IGU><IGU> Est_COMP3() Est_ANDORP()
+| <NOT><IGU> Est_COMP3() Est_ANDORP()
+| <NOR>COMP2() Est_COMP3() Est_ANDORP()
+| <MAY>COMP2() Est_COMP3() Est_ANDORP()
+| <EOF>
+}
+String COMP2():{
+String resultado="";}
+{
+<IGU>
+|<EOF>
+}
+String Est_NOT(): //NOT
+{String resultado="";}{
+    <NOT> Est_ANDOR()
+|   Est_COMP() 
 }
