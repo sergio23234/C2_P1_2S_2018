@@ -116,8 +116,8 @@ TOKEN :{
 <R_OP:"Opcion">
 <C_VF:"V_F">
 <C_SN:"S_N">
-<R_OP:"Finalizar">
-<R_OP:"Iniciar">
+<R_OF:"Finalizar">
+<R_OI:"Iniciar">
 <R_CMIN:"Cad_min">
 <R_CMAX:"Cad_max">
 <R_CFIL:"Cad_fil">
@@ -213,7 +213,7 @@ String Cuerpo_Eti():
  <R_ID> <R_fin>
 |<R_fin>
 }
-/*--------------- Estructura ID---------------- */
+/*--------------- Estructura PARAMETRO---------------- */
 NArbol Est_param(): //
 {NArbol arbol = new NArbol();}
 {
@@ -223,8 +223,22 @@ String Cuerpo_param()
 {String param="";}
 {
 // No se 
-<R_OP> <IGU> PARAM1()
+ <R_OP> <IGU> PARAM1()// Opcion  = Param1()
+|<R_OI> <IGU> EXP_AR() PARAM2()// Iniciar = EXP
+|<R_OF> <IGU> EXP_AR() PARAM2_1()// Finalizar = EXP
 |<R_fin>
+}
+String PARAM2()
+{String resultado="";}
+{
+ <R_OF> <IGU> EXP_AR()
+|<EOF>
+}
+String PARAM2_1(){
+String resultado="";}
+{
+ <R_OI> <IGU> EXP_AR()
+|<EOF>
 }
 NArbol Est_calcular(): //calcular
 {NArbol arbol = new NArbol();}
@@ -288,18 +302,18 @@ NArbol Est_codigoPOST() //codigo post
 <R_pos>Cuerpo_post()
 }
 /*---------------------Operaciones Aritmeticas---------------------- */
-String Est_SR(): //SUMA Y RESTA
+String EXP_AR(): //SUMA Y RESTA
 {String resultado="";
  String var1="";}
 {
-  var1=Est_MD() resultado=Est_SRP()    {return var1+resultado;}
+  var1=Est_MD() resultado=EXP_ARP()    {return var1+resultado;}
 }
-String Est_SRP():
+String EXP_ARP():
 {String resultado="";
  String var1="";}
 {
-  <MAS> var1=Est_MD() resultado=Est_SRP()   {var1="+"+var1; return var1+resultado;}
-| <MEN> var1=Est_MD() resultado=Est_SRP()   {var1="-"+var1; return var1+resultado;}
+  <MAS> var1=Est_MD() resultado=EXP_ARP()   {var1="+"+var1; return var1+resultado;}
+| <MEN> var1=Est_MD() resultado=EXP_ARP()   {var1="-"+var1; return var1+resultado;}
 | <EOF>                                     {return "";}
 }
 String Est_MD(): //MULTIPLICACION Y DIVISION
@@ -312,54 +326,54 @@ String Est_MDP():
 {String resultado="";
  String var1="";}
 {
-  <POR> var1=Est_ID() resultado=Est_SRP()   {var1="*"+var1; return var1+resultado;}
-| <DIV> var1=Est_ID() resultado=Est_SRP()   {var1="/"+var1; return var1+resultado;}
-| <MOD> var1=Est_ID() resultado=Est_SRP()   {var1="%"+var1; return var1+resultado;}
+  <POR> var1=Est_ID() resultado=EXP_ARP()   {var1="*"+var1; return var1+resultado;}
+| <DIV> var1=Est_ID() resultado=EXP_ARP()   {var1="/"+var1; return var1+resultado;}
+| <MOD> var1=Est_ID() resultado=EXP_ARP()   {var1="%"+var1; return var1+resultado;}
 | <EOF>                                     {return "";}
 }
 String Est_ID():
 {String resultado="";}
 {
-   <PAI>Est_SR<PAF>
+   <PAI>EXP_AR<PAF>
 |   Var_ID()
 }
 /*---------------------Operaciones de Logias---------------------- */
-String Est_ANDOR(): //AND y OR
+String EXP_LOG(): //AND y OR
 {   String resultado="";
     String var1="";}{
-  var1=Est_NOT() resultado=Est_ANDORP()     {return var1+resultado;}
+  var1=Est_NOT() resultado=EXP_LOGP()     {return var1+resultado;}
 }
-String Est_ANDORP():
+String EXP_LOGP():
 {   String resultado="";
     String var1="";}
 {
-  <AND> var1=Est_NOT() resultado=Est_ANDORP()   {resultado="&&"+var1+resultado; return resultado;}
-| <OR>  var1=Est_NOT() resultado=Est_ANDORP()   {resultado="||"+var1+resultado; return resultado;}
+  <AND> var1=Est_NOT() resultado=EXP_LOGP()   {resultado="&&"+var1+resultado; return resultado;}
+| <OR>  var1=Est_NOT() resultado=EXP_LOGP()   {resultado="||"+var1+resultado; return resultado;}
 | <EOF>                                         {return "";}
 }
 String Est_NOT(): //NOT
 {String resultado="";}
 {
-    <NOT> resultado=Est_ANDOR() {return "!"+resultado;}
-|   resultado=Est_COMP()        {return resultado;}
+    <NOT> resultado=EXP_LOG() {return "!"+resultado;}
+|   resultado=EXP_COMP()        {return resultado;}
 }
 /*---------------------Operaciones de Comparadores---------------------- */
-String Est_COMP(): //AND y OR
+String EXP_COMP(): //AND y OR
 {String resultado="";
     String var1="";}
 {
-  resultado=Est_COMP3() var1=Est_COMPP()    {return resultado+var1;}
+  resultado=EXP_COMP3() var1=EXP_COMPP()    {return resultado+var1;}
 }
-String Est_COMPP():
+String EXP_COMPP():
 {   String resultado="";
     String var1="";
     String var2="";
     String var3=""; }
 {
-  <IGU> Est_COMP3() Est_COMPP()                         {resultado = "=="+var2+var3; return resultado;}
-| <NOT><IGU> var2=Est_COMP3() var3=Est_COMPP()          {resultado = "!="+var2+var3; return resultado;}
-| <NOR>var1=COMP2() var2=Est_COMP3() var3=Est_COMPP()   {String pre_res ="<"+var1; resultado = pre_res+var2+var3; return resultado;}
-| <MAY>var1=COMP2() var2=Est_COMP3() var3=Est_COMPP()   {String pre_res =">"+var1; resultado = pre_res+var2+var3; return resultado;}
+  <IGU> EXP_COMP3() EXP_COMPP()                         {resultado = "=="+var2+var3; return resultado;}
+| <NOT><IGU> var2=EXP_COMP3() var3=EXP_COMPP()          {resultado = "!="+var2+var3; return resultado;}
+| <NOR>var1=COMP2() var2=EXP_COMP3() var3=EXP_COMPP()   {String pre_res ="<"+var1; resultado = pre_res+var2+var3; return resultado;}
+| <MAY>var1=COMP2() var2=EXP_COMP3() var3=EXP_COMPP()   {String pre_res =">"+var1; resultado = pre_res+var2+var3; return resultado;}
 | <EOF>                                                 {return "";}
 }
 String COMP2():{}
@@ -367,8 +381,8 @@ String COMP2():{}
     <IGU>   {return "=";}
 |   <EOF>   {return "";}
 }
-String Est_COMP3(): //NOT
+String EXP_COMP3(): //NOT
 {String resultado="";}
 {
-  resultado=Est_SR()            {return resultado;}  
+  resultado=EXP_AR()            {return resultado;}  
 }
