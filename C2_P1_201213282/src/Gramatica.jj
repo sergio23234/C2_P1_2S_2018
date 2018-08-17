@@ -113,6 +113,14 @@ TOKEN :{
 <R_pos:"codigo_post«$">
 }
 TOKEN :{
+<R_OP:"Opcion">
+<C_VF:"V_F">
+<C_SN:"S_N">
+<R_OP:"Finalizar">
+<R_OP:"Iniciar">
+<R_CMIN:"Cad_min">
+<R_CMAX:"Cad_max">
+<R_CFIL:"Cad_fil">
 <R_Text:"Texto">
 <R_Ente:"Entero">
 <R_Deci:"Decimal">
@@ -159,43 +167,41 @@ NArbol ContenidoP():
 |<EOF>
 }
 /*--------------- Cuerpo Tipo---------------- */
-NArbol Cuerpo_Tipo():
-{NArbol arbol = new NArbol();
- Boolean Error =false;
-String valor ="";}
+String Cuerpo_Tipo():
+{String valor ="";
+ token val = new token();}
 {
- valor=<R_Text><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Ente><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Deci><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Rang><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Cond><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Fech><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Hora><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_FeHo><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Selu><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Selm><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Nota><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Mult><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Calc><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_AgrI><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_AgrF><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Cici><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|valor=<R_Cicf><R_fin>{arbol.Tipo =valor; arbol.Error = false;  return arbol;}
-|<R_fin>{arbol.Error = true; return arbol;}
+ val=<R_Text><R_fin>    {return val.ini;}
+|val=<R_Ente><R_fin>    {return val.ini;}
+|val=<R_Deci><R_fin>    {return val.ini;}
+|val=<R_Rang><R_fin>    {return val.ini;}
+|val=<R_Cond><R_fin>    {return val.ini;}
+|val=<R_Fech><R_fin>    {return val.ini;}
+|val=<R_Hora><R_fin>    {return val.ini;}
+|val=<R_FeHo><R_fin>    {return val.ini;}
+|val=<R_Selu><R_fin>    {return val.ini;}
+|val=<R_Selm><R_fin>    {return val.ini;}
+|val=<R_Nota><R_fin>    {return val.ini;}
+|val=<R_Mult><R_fin>    {return val.ini;}
+|val=<R_Calc><R_fin>    {return val.ini;}
+|val=<R_AgrI><R_fin>    {return val.ini;}
+|val=<R_AgrF><R_fin>    {return val.ini;}
+|val=<R_Cici><R_fin>    {return val.ini;}
+|val=<R_Cicf><R_fin>    {return val.ini;}
 }
 /*--------------- Estructura ID---------------- */
 NArbol Est_ID(NArbol actual):
-{NArbol arbol = new NArbol();}
+{NArbol arbol = new NArbol();
+    String ID ="";}
 {
-  <R_idp> Cuerpo_ID()   Est_eti()
-  
+  <R_idp> ID=Cuerpo_ID()   Est_eti()
 }
-String Cuerpo_ID():
-{String ID = "";}
+String Cuerpo_ID(NArbol actual):
+{token ID = "";}
 {
-    ID=<T_ID><R_fin>{arbol.Error = true; return arbol;}
-|   <R_fin>{arbol.Error = true; return arbol;}
+    ID=<T_ID><R_fin>{return token.;}
 }
+/*--------------- Estructura etiqueta---------------- */
 NArbol Est_eti():
 {NArbol arbol = new NArbol();}
 {
@@ -207,6 +213,7 @@ String Cuerpo_Eti():
  <R_ID> <R_fin>
 |<R_fin>
 }
+/*--------------- Estructura ID---------------- */
 NArbol Est_param(): //
 {NArbol arbol = new NArbol();}
 {
@@ -216,7 +223,7 @@ String Cuerpo_param()
 {String param="";}
 {
 // No se 
-
+<R_OP> <IGU> PARAM1()
 |<R_fin>
 }
 NArbol Est_calcular(): //calcular
@@ -306,7 +313,8 @@ String Est_MDP():
  String var1="";}
 {
   <POR> var1=Est_ID() resultado=Est_SRP()   {var1="*"+var1; return var1+resultado;}
-| <DIV> var1=Est_ID() resultado=Est_SRP()   {var1="div"+var1; return var1+resultado;}
+| <DIV> var1=Est_ID() resultado=Est_SRP()   {var1="/"+var1; return var1+resultado;}
+| <MOD> var1=Est_ID() resultado=Est_SRP()   {var1="%"+var1; return var1+resultado;}
 | <EOF>                                     {return "";}
 }
 String Est_ID():
@@ -348,7 +356,7 @@ String Est_COMPP():
     String var2="";
     String var3=""; }
 {
-  <IGU><IGU> Est_COMP3() Est_COMPP()                    {resultado = "=="+var2+var3; return resultado;}
+  <IGU> Est_COMP3() Est_COMPP()                         {resultado = "=="+var2+var3; return resultado;}
 | <NOT><IGU> var2=Est_COMP3() var3=Est_COMPP()          {resultado = "!="+var2+var3; return resultado;}
 | <NOR>var1=COMP2() var2=Est_COMP3() var3=Est_COMPP()   {String pre_res ="<"+var1; resultado = pre_res+var2+var3; return resultado;}
 | <MAY>var1=COMP2() var2=Est_COMP3() var3=Est_COMPP()   {String pre_res =">"+var1; resultado = pre_res+var2+var3; return resultado;}
