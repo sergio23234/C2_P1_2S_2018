@@ -108,6 +108,8 @@ TOKEN :{
 <R_rqm:"requeridomsn«$">
 <R_prd"predeterminado«$">
 <R_rep:"repeticion«$">
+<R_mul:"multimedia«$">
+<R_lec:"lectura«$">
 <R_apa:"apariencia«$">
 <R_pre:"codigo_pre«$">
 <R_pos:"codigo_post«$">
@@ -116,6 +118,8 @@ TOKEN :{
 <R_OP:"Opcion">
 <C_VF:"V_F">
 <C_SN:"S_N">
+<TRUE:"verdadero">
+<FALSE:"falso">
 <R_OF:"Finalizar">
 <R_OI:"Iniciar">
 <R_CMIN:"Cad_min">
@@ -219,14 +223,31 @@ NArbol Est_param(): //
 {
 <R_par>Cuerpo_param() Est_cacular
 }
-String Cuerpo_param()
+String Cuerpo_param():
 {String param="";}
 {
 // No se 
  <R_OP> <IGU> PARAM1()// Opcion  = Param1()
 |<R_OI> <IGU> EXP_AR() PARAM2()// Iniciar = EXP
 |<R_OF> <IGU> EXP_AR() PARAM2_1()// Finalizar = EXP
-|<R_fin>
+|<R_CMIN><IGU>EXP_AR() PARAM3(1,0,0)// C_min = num 
+|<R_CMAX><IGU>EXP_AR() PARAM3(0,1,0)// C_max = num
+|<R_CFIL><IGU>EXP_AR() PARAM3(0,0,1)// C_FIl = num
+|<R_fin>{return "";}
+}
+String PARAM3(int min,int max, int fil):
+{String resultado ="";}
+{
+|<R_CMIN><IGU> resultado=EXP_AR(){min = min+1; if(min<2&&max<2&&fil<2){PARAM3(min,max,fil);}else{return "error";}}
+|<R_CMAX><IGU>EXP_AR() PARAM3(){max = max+1; if(min<2&&max<2&&fil<2){PARAM3(min,max,fil);}else{return "error";}}
+|<R_CFIL><IGU>EXP_AR() PARAM3(){fil = fil+1; if(min<2&&max<2&&fil<2){PARAM3(min,max,fil);}else{return "error";}}
+|<EOF>{return "";}
+}
+String PARAM1():
+{}
+{
+    <C_SN>{return "S_N";}
+|   <C_VF>{return "V_F";}
 }
 String PARAM2()
 {String resultado="";}
@@ -240,57 +261,109 @@ String resultado="";}
  <R_OI> <IGU> EXP_AR()
 |<EOF>
 }
+/*------------------------OPERACION CALCULAR-----------------------------------*/
 NArbol Est_calcular(): //calcular
 {NArbol arbol = new NArbol();}
 {
 <R_cal>Cuerpo_calcular() Est_aplicable
 }
-
+String Cuerpo_calcular():
+{String resultado=""}
+{
+ resultado=EXP_LOG(){return resultado;}
+| <EOF>{return "";}
+}
+/*------------------------OPERACION Aplicable-----------------------------------*/
 NArbol Est_aplicable() //aplicable
 {NArbol arbol = new NArbol();}
 {
 <R_apl>Cuerpo_apli() Est_sugerir()
 }
-NArbol Est_sugerir() //sugerir
+/*------------------------OPERACION Sugerir-----------------------------------*/
+NArbol Est_sugerir(): //sugerir
 {NArbol arbol = new NArbol();}
 {
 <R_sug>Cuerpo_suger() Est_restrin()
 }
-NArbol Est_restrin() //sugerir
+String Cuerpo_suger():
+{}
+{
+//LETRAS CON ESPACIO
+<EOF>       {return "";}
+}
+/*------------------------OPERACION Restringir-----------------------------------*/
+NArbol Est_restrin(): //restringir
 {NArbol arbol = new NArbol();}
 {
-<R_res>Cuerpo_requerido() Est_requerido()
+<R_res>Cuerpo_restringir() Est_requerido()
 }
-NArbol Est_requerido() //requerido
+String Cuerpo_restringir():
+{String resultado="";}
+{
+ resultado=EXP_COMP(){return resultado;}
+|<EOF> {return "";}
+}
+/*------------------------OPERACION Requerido-----------------------------------*/
+NArbol Est_requerido(): //requerido
 {NArbol arbol = new NArbol();}
 {
 <R_req>Cuerpo_requerido() Est_restrimen() 
 }
-NArbol Est_restrimen() //restringir mensaje 
+String cuerpo_requerido():
+{String resultado="";}
+{
+ resultado= EXP_AR(){return resultado;}
+|<TRUE>{return "verdadero";}
+|<FALSE>{return "falso";}
+|<EOF> {return "";}
+}
+/*------------------------OPERACION Restringir mensaje-----------------------------------*/
+NArbol Est_restrimen(): //restringir mensaje 
 {NArbol arbol = new NArbol();}
 {
 <R_rsm>Cuerpo_resmensaje() Est_resquemen()
 }
-NArbol Est_resquemen() //requerido mensaje 
+String cuerpo_resmensaje():{}
+{
+//ID MENSAJE<>
+|<EOF> {return "";}
+}
+/*------------------------OPERACION Requerido mensaje-----------------------------------*/
+NArbol Est_resquemen(): //requerido mensaje 
 {NArbol arbol = new NArbol();}
 {
-<R_rqm>Cuerpo_requemen() Est_predeter()
+<R_rqm>cuerpo_requemen() Est_predeter()
 }
-NArbol Est_predeter() //predeterminado 
+String cuerpo_requemen():{}
+{
+//ID MENSAJE<>
+|<EOF> {return "";}
+}
+/*------------------------OPERACION Predeterminado-----------------------------------*/
+NArbol Est_predeter(): //predeterminado 
 {NArbol arbol = new NArbol();}
 {
 <R_prd> Cuerpo_prede() Est_repetir()
 }
+String Cuerpo_prede():
+{String resultado="";}
+{
+resultado=EXP_COND  {return resultado;}
+|<EOF>              {return "";}
+}
+/*------------------------OPERACION repetir-----------------------------------*/
 NArbol Est_repetir() //repeticion 
 {NArbol arbol = new NArbol();}
 {
 <R_rep>Cuerpo_repetir() Est_aparencia()
 }
+
 NArbol Est_aparencia() //apariencia 
 {NArbol arbol = new NArbol();}
 {
 <R_apa>Cuerpo_aparien() Est_codigoPRE
 }
+
 NArbol Est_codigoPRE() //codigo pre 
 {NArbol arbol = new NArbol();}
 {

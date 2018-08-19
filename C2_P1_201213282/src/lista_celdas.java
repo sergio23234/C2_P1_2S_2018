@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class lista_celdas {
 
     private ArrayList<Nodo_celda> lista;
-    private String matriz[] = new String[16];
+    private String matriz[] = new String[18];
     public lista_celdas() {
         lista = new ArrayList();
         llenar();
@@ -54,6 +54,8 @@ public class lista_celdas {
         lista.add(new Nodo_celda("predeterminado"));
         lista.add(new Nodo_celda("repeticion"));
         lista.add(new Nodo_celda("apariencia"));
+        lista.add(new Nodo_celda("lectura"));
+        lista.add(new Nodo_celda("multimedia"));
         lista.add(new Nodo_celda("codigo_pre"));
         lista.add(new Nodo_celda("codigo_post"));
         matriz[0]="tipo«$";
@@ -70,8 +72,10 @@ public class lista_celdas {
         matriz[11]="predeterminado«$";
         matriz[12]="repeticion«$";
         matriz[13]="apariencia«$";
-        matriz[14]="codigo_pre«$";
-        matriz[15]="codigo_post«$";
+        matriz[14]="lectura«$";
+        matriz[15]="multimedia«$";
+        matriz[16]="codigo_pre«$";
+        matriz[17]="codigo_post«$";
     }
 
     public void llenar_Vacias() {
