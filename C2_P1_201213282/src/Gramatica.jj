@@ -115,6 +115,9 @@ TOKEN :{
 <R_pos:"codigo_post«$">
 }
 TOKEN :{
+<R_MIMG:"Media_imagen">
+<R_MVID:"Media_video">
+<R_MAUD:"Media_audio">
 <R_OP:"Opcion">
 <C_VF:"V_F">
 <C_SN:"S_N">
@@ -151,6 +154,7 @@ TOKEN :{
 |   <DOUBLE: (<DIGIT>)+"."(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
 |   <T_Texto:~["$»","«$","@{","@["."}@"]>
+|   <T_MUL:"\""~["\""]"\"">
 }
 NArbol Inicio(): 
 {NArbol arbol=new NArbol(); }
@@ -352,19 +356,58 @@ resultado=EXP_COND  {return resultado;}
 |<EOF>              {return "";}
 }
 /*------------------------OPERACION repetir-----------------------------------*/
-NArbol Est_repetir() //repeticion 
+NArbol Est_repetir(): //repeticion 
 {NArbol arbol = new NArbol();}
 {
-<R_rep>Cuerpo_repetir() Est_aparencia()
+<R_rep>Cuerpo_repetir() Est_apariencia()
 }
-
-NArbol Est_aparencia() //apariencia 
+String Cuerpo_repetir():{
+String resultado="";}
+{
+  resultado = EXP_AR(){return resultado;}
+| <EOF>{return "";}
+}
+/*------------------------OPERACION apariencia-----------------------------------*/
+NArbol Est_apariencia(): //apariencia 
 {NArbol arbol = new NArbol();}
 {
-<R_apa>Cuerpo_aparien() Est_codigoPRE
+<R_apa>Cuerpo_aparien() Est_Lectura()
 }
-
-NArbol Est_codigoPRE() //codigo pre 
+String Cuerpo_aparien():{}
+{
+<EOF> {return "";}
+}
+/*------------------------OPERACION lectura-----------------------------------*/
+NArbol Est_Lectura():
+{}
+{
+<R_lec> Cuerpo_lectura() Est_multimed()
+}
+String Cuerpo_lectura():{
+String resultado="";
+}
+{
+  <TRUE>                {return "verdadero";}
+| <FALSE>               {return "falso";}
+| resultado=EXP_AR()    {return resultado;}
+| <EOF>                 {return "";}
+}
+/*------------------------OPERACION lectura-----------------------------------*/
+NArbol Est_multimed():{
+}
+{
+<R_mul>Cuerpo_multimed() Est_codigoPRE()
+}
+String Cuerpo_multimed():
+{String resultado="";}
+{
+ <R_MIMG><T_MUL>    {}
+|<R_MAUD><T_MUL>    {}
+|<R_MVID><T_MUL>    {}
+|<EOF>              {return "";}
+}
+/*------------------------OPERACION Codigo PRE-----------------------------------*/
+NArbol Est_codigoPRE(): //codigo pre 
 {NArbol arbol = new NArbol();}
 {
 <R_pre>Cuerpo_pre() Est_codigoPOST
