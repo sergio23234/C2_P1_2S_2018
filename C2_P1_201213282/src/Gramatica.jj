@@ -501,4 +501,36 @@ String EXP_COMP3(): //NOT
 {String resultado="";}
 {
   resultado=EXP_AR()            {return resultado;}  
+
+/*---------------------Propuesta de ID---------------------- */
+void Etiqueta() :
+{String Cad;}
+{
+  (Cad = ETQ() {System.out.println(Cad);})+ <EOF>
+}
+
+
+String ETQ() :
+{String Cad;
+String aux;}
+{
+Cad = T() aux = ETQ2() {Cad = Cad + aux;  return Cad;}
+}
+
+
+String ETQ2() :
+{String Cad;
+String aux;}
+{
+ Cad = T() aux = ETQ2() {Cad = Cad + aux;  return Cad;}
+| <EOF> {return "";}
+}
+
+String T() :
+{Token t;}
+{
+t = <Cualquiera> {return t.image + " ";}
+|<Numeral> <Acor> t=<ID> <Ccor> {return t.image + " ";}
+| <Punto> {return "padre ";}
+| <PuntoP> {return "madre";}
 }
