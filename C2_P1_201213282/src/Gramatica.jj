@@ -219,13 +219,14 @@ String etiqueta="";}
 }
 
 /*--------------- Estructura PARAMETRO---------------- */
-NArbol Est_param(): //
-{NArbol arbol = new NArbol();}
+NArbol Est_param(NArbol actual): //
+{NArbol arbol = new NArbol();
+ Clase_parametro param;}
 {
-<R_par>Cuerpo_param() Est_cacular
+<R_par> param=Cuerpo_param() Est_cacular
 }
-String Cuerpo_param():
-{String param="";}
+Clase_parametro Cuerpo_param():
+{Clase_parametro param=new Clase_parametro();}
 {
 // No se 
  <R_OP> <IGU> PARAM1()// Opcion  = Param1()
@@ -234,7 +235,7 @@ String Cuerpo_param():
 |<R_CMIN><IGU>EXP_AR() PARAM3(1,0,0)// C_min = num 
 |<R_CMAX><IGU>EXP_AR() PARAM3(0,1,0)// C_max = num
 |<R_CFIL><IGU>EXP_AR() PARAM3(0,0,1)// C_FIl = num
-|<R_fin>{return "";}
+|<R_fin>{return param();}
 }
 String PARAM3(int min,int max, int fil):
 {String resultado ="";}
