@@ -80,15 +80,18 @@ TOKEN:
  |	<PAI:"(">
  |	<PAF:")">
  |	<AND:"&&">
- |	<OR:"||">
- |	<ARR:"@">  	
+ |	<OR:"||">  	
  |      <NOT:"!">
  |	<NOR:"<"> 
  |	<MAY:">">
+ |      <DPUN:"..">
  |      <PUN:".">
  |      <R_fin:"»$">
  |	<MOD:"mod">
  |	<DIV:"div">
+ |	<ARR:"@[">
+ |	<NCO:"#[">
+ |      <COR:"]">
 }
 TOKEN:{
 
@@ -147,14 +150,12 @@ TOKEN :{
 <R_Cicf:"Finalizar Ciclo">
 }
 TOKEN :{
-    
     <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|".")*>
 |   <#LETTER: (["a"-"z","A"-"Z"])>
 |   <INTEGER: (<DIGIT>)+>
 |   <DOUBLE: (<DIGIT>)+"."(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
-|   <T_Texto:~["$»","«$","@{","@["."}@"]>
-|   <T_MUL:"\""~["\""]"\"">
+|   <T_Texto:~["$»","«$","#[","@[",".",".."]>
 }
 NArbol Inicio(): 
 {NArbol arbol=new NArbol(); }
@@ -177,25 +178,25 @@ NArbol ContenidoP():
 /*--------------- Cuerpo Tipo---------------- */
 String Cuerpo_Tipo():
 {String valor ="";
- token val = new token();}
+ token val;}
 {
- val=<R_Text><R_fin>    {return val.ini;}
-|val=<R_Ente><R_fin>    {return val.ini;}
-|val=<R_Deci><R_fin>    {return val.ini;}
-|val=<R_Rang><R_fin>    {return val.ini;}
-|val=<R_Cond><R_fin>    {return val.ini;}
-|val=<R_Fech><R_fin>    {return val.ini;}
-|val=<R_Hora><R_fin>    {return val.ini;}
-|val=<R_FeHo><R_fin>    {return val.ini;}
-|val=<R_Selu><R_fin>    {return val.ini;}
-|val=<R_Selm><R_fin>    {return val.ini;}
-|val=<R_Nota><R_fin>    {return val.ini;}
-|val=<R_Mult><R_fin>    {return val.ini;}
-|val=<R_Calc><R_fin>    {return val.ini;}
-|val=<R_AgrI><R_fin>    {return val.ini;}
-|val=<R_AgrF><R_fin>    {return val.ini;}
-|val=<R_Cici><R_fin>    {return val.ini;}
-|val=<R_Cicf><R_fin>    {return val.ini;}
+ val=<R_Text><R_fin>    {return val.image;}
+|val=<R_Ente><R_fin>    {return val.image;}
+|val=<R_Deci><R_fin>    {return val.image;}
+|val=<R_Rang><R_fin>    {return val.image;}
+|val=<R_Cond><R_fin>    {return val.image;}
+|val=<R_Fech><R_fin>    {return val.image;}
+|val=<R_Hora><R_fin>    {return val.image;}
+|val=<R_FeHo><R_fin>    {return val.image;}
+|val=<R_Selu><R_fin>    {return val.image;}
+|val=<R_Selm><R_fin>    {return val.image;}
+|val=<R_Nota><R_fin>    {return val.image;}
+|val=<R_Mult><R_fin>    {return val.image;}
+|val=<R_Calc><R_fin>    {return val.image;}
+|val=<R_AgrI><R_fin>    {return val.image;}
+|val=<R_AgrF><R_fin>    {return val.image;}
+|val=<R_Cici><R_fin>    {return val.image;}
+|val=<R_Cicf><R_fin>    {return val.image;}
 }
 /*--------------- Estructura ID---------------- */
 NArbol Est_ID(NArbol actual):
@@ -503,34 +504,41 @@ String EXP_COMP3(): //NOT
   resultado=EXP_AR()            {return resultado;}  
 
 /*---------------------Propuesta de ID---------------------- */
-void Etiqueta() :
-{String Cad;}
+String Etiqueta_ID() :
+{String Cad;String total="";}
 {
-  (Cad = ETQ() {System.out.println(Cad);})+ <EOF>
+  (Cad = ETIQ() {System.out.println(Cad);String total = total+Cad;})+ <EOF>{return total;}
 }
-
-
-String ETQ() :
+String ETIQ() :
 {String Cad;
 String aux;}
 {
-Cad = T() aux = ETQ2() {Cad = Cad + aux;  return Cad;}
+Cad = T() aux = ETIQ2() {Cad = Cad + aux;  return Cad;}
 }
 
-
-String ETQ2() :
+String ETIQ2() :
 {String Cad;
 String aux;}
 {
- Cad = T() aux = ETQ2() {Cad = Cad + aux;  return Cad;}
+ Cad = T() aux = ETQI2() {Cad = Cad + aux;  return Cad;}
 | <EOF> {return "";}
 }
 
 String T() :
 {Token t;}
 {
-t = <Cualquiera> {return t.image + " ";}
-|<Numeral> <Acor> t=<ID> <Ccor> {return t.image + " ";}
-| <Punto> {return "padre ";}
-| <PuntoP> {return "madre";}
+t = <T_Texto> {return t.image + " ";}
+|<NCO> t=<T_ID> <COR> {return t.image + " ";}
+| <PUN> {return "yo ";}
+| <DPUN> {return "padre";}
+}
+/*------------------------VAR ID---------------------------------*/
+String Var_ID():{
+Token t;
+String var;
+}
+{
+    t=<INTEGER> {return t.image;}
+|   t=<DOUBLE>  {return t.image;}
+|   var=T()     {return var;}  
 }
