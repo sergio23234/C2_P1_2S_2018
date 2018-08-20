@@ -206,22 +206,18 @@ NArbol Est_ID(NArbol actual):
   <R_idp> ID=Cuerpo_ID()   Est_eti()
 }
 String Cuerpo_ID(NArbol actual):
-{token ID = "";}
+{token ID;}
 {
-    ID=<T_ID><R_fin>{return token.;}
+    ID=<T_ID><R_fin>{return token.image;}
 }
 /*--------------- Estructura etiqueta---------------- */
 NArbol Est_eti():
-{NArbol arbol = new NArbol();}
+{NArbol arbol = new NArbol();
+String etiqueta="";}
 {
-  <R_eti> Cuerpo_Eti() Est_param()
+  <R_eti> etiqueta=Etiqueta_ET() Est_param()
 }
-String Cuerpo_Eti():
-{String Etiqueta ="";}
-{
- <R_ID> <R_fin>
-|<R_fin>
-}
+
 /*--------------- Estructura PARAMETRO---------------- */
 NArbol Est_param(): //
 {NArbol arbol = new NArbol();}
@@ -504,7 +500,7 @@ String EXP_COMP3(): //NOT
   resultado=EXP_AR()            {return resultado;}  
 
 /*---------------------Propuesta de ID---------------------- */
-String Etiqueta_ID() :
+String Etiqueta_ET() :
 {String Cad;String total="";}
 {
   (Cad = ETIQ() {System.out.println(Cad);String total = total+Cad;})+ <EOF>{return total;}
