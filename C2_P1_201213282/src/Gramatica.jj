@@ -342,57 +342,59 @@ mensaje=Etiqueta_ET()  <R_fin>  {actual.set_men_rest(mensaje);}
 |<R_fin>                        {}
 }
 /*------------------------OPERACION Requerido mensaje-----------------------------------*/
-NArbol Est_resquemen(): //requerido mensaje 
-{NArbol arbol = new NArbol();}
+void Est_resquemen(NArbol actual): //requerido mensaje 
+{}
 {
-<R_rqm>cuerpo_requemen() Est_predeter()
+    <R_rqm>cuerpo_requemen(actual) Est_predeter(actual)
 }
-String cuerpo_requemen():{}
+String cuerpo_requemen(NArbol actual):
+{String mensaje="";}
 {
-//ID MENSAJE<>
+mensaje=Etiqueta_ET()  <R_fin>  {actual.set_men_reque(mensaje);}
 |<R_fin>{return "";}
 }
 /*------------------------OPERACION Predeterminado-----------------------------------*/
-NArbol Est_predeter(): //predeterminado 
-{NArbol arbol = new NArbol();}
+void Est_predeter(NArbol actual): //predeterminado 
+{}
 {
 <R_prd> Cuerpo_prede() Est_repetir()
 }
-String Cuerpo_prede():
+void Cuerpo_prede(NArbol actual):
 {String resultado="";}
 {
 resultado=EXP_COND  {return resultado;}
 |<EOF>              {return "";}
 }
 /*------------------------OPERACION repetir-----------------------------------*/
-NArbol Est_repetir(): //repeticion 
-{NArbol arbol = new NArbol();}
+void Est_repetir(NArbol actual): //repeticion 
+{}
 {
 <R_rep>Cuerpo_repetir() Est_apariencia()
 }
-String Cuerpo_repetir():{
+void Cuerpo_repetir(NArbol actual):{
 String resultado="";}
 {
   resultado = EXP_AR(){return resultado;}
 | <EOF>{return "";}
 }
 /*------------------------OPERACION apariencia-----------------------------------*/
-NArbol Est_apariencia(): //apariencia 
-{NArbol arbol = new NArbol();}
+void Est_apariencia(NArbol actual): //apariencia 
+{}
 {
 <R_apa>Cuerpo_aparien() Est_Lectura()
 }
-String Cuerpo_aparien():{}
+void Cuerpo_aparien(NArbol actual):
+{}
 {
 <EOF> {return "";}
 }
 /*------------------------OPERACION lectura-----------------------------------*/
-NArbol Est_Lectura():
+void Est_Lectura(NArbol actual):
 {}
 {
 <R_lec> Cuerpo_lectura() Est_multimed()
 }
-String Cuerpo_lectura():{
+void Cuerpo_lectura(NArbol actual):{
 String resultado="";
 }
 {
