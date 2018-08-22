@@ -301,45 +301,45 @@ void Est_sugerir(NArbol actual): //sugerir
 void Cuerpo_suger():
 {String mensaje="";}
 {
- mensaje=Etiqueta_ET()  {actual.set_sugerir(mensaje);}
-|<EOF>                  {}
+ mensaje=Etiqueta_ET()  <R_fin>  {actual.set_sugerir(mensaje);}
+|<R_fin>                         {}
 }
 /*------------------------OPERACION Restringir-----------------------------------*/
-NArbol Est_restrin(): //restringir
-{NArbol arbol = new NArbol();}
+void Est_restrin(NArbol actual): //restringir
+{}
 {
-<R_res>Cuerpo_restringir() Est_requerido()
+<R_res>Cuerpo_restringir(actual) Est_requerido(actual)
 }
-String Cuerpo_restringir():
+void Cuerpo_restringir(NArbol actual):
 {String resultado="";}
 {
- resultado=EXP_COMP(){return resultado;}
-|<EOF> {return "";}
+ resultado=EXP_COMP()   {actual.set_restringir(resultado);}
+|<R_fin>                {}
 }
 /*------------------------OPERACION Requerido-----------------------------------*/
-NArbol Est_requerido(): //requerido
-{NArbol arbol = new NArbol();}
+void Est_requerido(NArbol actual): //requerido
+{}
 {
-<R_req>Cuerpo_requerido() Est_restrimen() 
+<R_req>Cuerpo_requerido(actual) Est_restrimen(actual) 
 }
-String cuerpo_requerido():
-{String resultado="";}
+void cuerpo_requerido(NArbol actual):
+{}
 {
- resultado= EXP_AR(){return resultado;}
-|<TRUE>     {return "verdadero";}
-|<FALSE>    {return "falso";}
-|<EOF>      {return "";}
+ <TRUE>     {actual.set_requerido();}
+|<FALSE>    {}
+|<R_fin>    {}
 }
 /*------------------------OPERACION Restringir mensaje-----------------------------------*/
-NArbol Est_restrimen(): //restringir mensaje 
-{NArbol arbol = new NArbol();}
+void Est_restrimen(NArbol actual): //restringir mensaje 
+{}
 {
-<R_rsm>Cuerpo_resmensaje() Est_resquemen()
+<R_rsm>Cuerpo_resmensaje(actual) Est_resquemen(actual)
 }
-String cuerpo_resmensaje():{}
+void cuerpo_resmensaje(NArbol actual):
+{String mensaje="";}
 {
-//ID MENSAJE<>
-|<EOF> {return "";}
+mensaje=Etiqueta_ET()  <R_fin>  {actual.set_men_rest(mensaje);}
+|<R_fin>                        {}
 }
 /*------------------------OPERACION Requerido mensaje-----------------------------------*/
 NArbol Est_resquemen(): //requerido mensaje 
@@ -350,7 +350,7 @@ NArbol Est_resquemen(): //requerido mensaje
 String cuerpo_requemen():{}
 {
 //ID MENSAJE<>
-|<EOF> {return "";}
+|<R_fin>{return "";}
 }
 /*------------------------OPERACION Predeterminado-----------------------------------*/
 NArbol Est_predeter(): //predeterminado 
