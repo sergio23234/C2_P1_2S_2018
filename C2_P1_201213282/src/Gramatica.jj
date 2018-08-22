@@ -243,7 +243,7 @@ String PARAM3(int min,int max, int fil):
 |<R_CMIN><IGU> resultado=EXP_AR(){min = min+1; if(min<2&&max<2&&fil<2){PARAM3(min,max,fil);}else{return "error";}}
 |<R_CMAX><IGU>EXP_AR() PARAM3(){max = max+1; if(min<2&&max<2&&fil<2){PARAM3(min,max,fil);}else{return "error";}}
 |<R_CFIL><IGU>EXP_AR() PARAM3(){fil = fil+1; if(min<2&&max<2&&fil<2){PARAM3(min,max,fil);}else{return "error";}}
-|<EOF>{return "";}
+|<EOF>{return min+","+max+","+fil;}
 }
 String PARAM1():
 {}
@@ -254,7 +254,7 @@ String PARAM1():
 String PARAM2()
 {String resultado="";}
 {
- <R_OF> <IGU> EXP_AR()
+ <R_OF> <IGU> EXP_AR(){}
 |<EOF>
 }
 String PARAM2_1(){
