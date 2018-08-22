@@ -16,6 +16,8 @@ public class Arbol_Nogrupo {
     String restringir;
     String predeterminado;
     String mensaje_restrin;
+    String Calcular;
+    String Ruta;
 
     public Arbol_Nogrupo() {
         etiqueta = "";
@@ -24,6 +26,8 @@ public class Arbol_Nogrupo {
         restringir = "";
         predeterminado = "";
         mensaje_restrin = "";
+        Calcular = "";
+        Ruta = "";
     }
 
     public void set_requerido() {
@@ -57,9 +61,15 @@ public class Arbol_Nogrupo {
         }
     }
 
-    public void Set_etiqueta(String etiqueta){
+    public void Set_etiqueta(String etiqueta) {
         this.etiqueta = etiqueta;
     }
-    
-    
+
+    public void Set_calcular(String calcular) {
+        this.Calcular = calcular;
+    }
+
+    public void Set_ruta(String rut) {
+        this.Ruta = rut;
+    }
 }
