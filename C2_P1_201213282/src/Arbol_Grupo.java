@@ -43,4 +43,29 @@ public class Arbol_Grupo {
     public void Set_fichero(String fichero) {
         this.tipo_fichero = fichero;
     }
+
+    public String add_cad_min(String cad) {
+        return parametro.add_cad_min(cad);
+    }
+
+    public String add_cad_max(String cad) {
+        return parametro.add_cad_max(cad);
+    }
+
+    public String add_cad_fil(String cad) {
+        return parametro.add_cad_fil(cad);
+    }
+
+    public String add_opc(int tipo) {
+        return parametro.add_opc(tipo);
+    }
+
+    public String add_rango_min(String cad) {
+        return parametro.add_rango_min(cad);
+    }
+
+    public String add_rango_max(String cad) {
+        return parametro.add_rango_max(cad);
+    }
+
 }

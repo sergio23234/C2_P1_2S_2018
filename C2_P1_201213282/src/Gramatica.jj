@@ -170,7 +170,7 @@ NArbol Inicio():
 NArbol Contenido() ://Inicio del Cuerpo Tipo
 {   NArbol arbol = new NArbol();}
 {
-<R_tip>arbol1=Cuerpo_Tipo(arbol) Est_ID(arbol) {} ContenidoP()
+<R_tip>arbol1=Cuerpo_Tipo(arbol) Est_ID(arbol){} ContenidoP()
 }
 NArbol ContenidoP():
 {NArbol arbol = new NArbol();}
@@ -183,125 +183,126 @@ String Cuerpo_Tipo(NArbol actual):
 {String valor ="";
  token val;}
 {
- val=<R_Text><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_Ente><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_Deci><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_Rang><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_Cond><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_Fech><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_Hora><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_FeHo><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_Selu><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_Selm><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_Nota><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_Mult> {actual.set_ID(val.image);} valor=Cuerpo_mul(actual)<R_fin>   {return "true";}
-|val=<R_Calc><R_fin>                                                        {actual.set_ID(val.image); return "true";}
-|val=<R_AgrI><R_fin>                                                        {actual.set_ID(val.image); actual.set_agrupacion(true);return "true";}
-|val=<R_AgrF><R_fin>                                                        {actual.set_ID(val.image); actual.set_agrupacion(false);return "true";}
-|val=<R_Cici><R_fin>                                                        {actual.set_ID(val.image); actual.set_ciclo(true);return "true";}
-|val=<R_Cicf><R_fin>                                                        {actual.set_ID(val.image); actual.set_ciclo(false);return "true";}
+ val=<R_Text><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_Ente><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_Deci><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_Rang><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_Cond><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_Fech><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_Hora><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_FeHo><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_Selu><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_Selm><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_Nota><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_Mult> {actual.set_tipo(val.image);} valor=Cuerpo_mul(actual)<R_fin> {return "true";}
+|val=<R_Calc><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
+|val=<R_AgrI><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(true);return "true";}
+|val=<R_AgrF><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(false);return "true";}
+|val=<R_Cici><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(true);return "true";}
+|val=<R_Cicf><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(false);return "true";}
 }
 void Cuerpo_mul(actual):
 {Token t;}
 {
 t=<T_mul>   {actual.Set_fichero(t.image);}
-|<EOF>      {}
+|<EOF>      {System.out.println("vacio");}
 }
 /*--------------- Estructura ID---------------- */
-NArbol Est_ID(NArbol actual):
-{NArbol arbol = new NArbol();
-    String ID ="";}
+void Est_ID(NArbol actual):
+{}
 {
-  <R_idp> ID=Cuerpo_ID()   Est_eti()
+  <R_idp> Cuerpo_ID(actual) Est_eti(actual){}
 }
 
-String Cuerpo_ID(NArbol actual):
+void Cuerpo_ID(NArbol actual):
 {token ID;}
 {
-    ID=<T_ID><R_fin>{return token.image;}
+    ID=<T_ID><R_fin>{actual.set_ID(token.image);}
 }
 /*--------------- Estructura etiqueta---------------- */
-NArbol Est_eti():
-{NArbol arbol = new NArbol();
-String etiqueta="";}
+void Est_eti():
+{String etiqueta="";}
 {
-  <R_eti> etiqueta=Etiqueta_ET() Est_param()
+  <R_eti> etiqueta=Etiqueta_ET(){actual.Set_etiqueta(etiqueta);} Est_param(actual)
 }
 
 /*--------------- Estructura PARAMETRO---------------- */
-NArbol Est_param(NArbol actual): //
-{NArbol arbol = new NArbol();
- Clase_parametro param;}
-{
-<R_par> param=Cuerpo_param() Est_cacular
-}
-Clase_parametro Cuerpo_param():
-{Clase_parametro param=new Clase_parametro();}
-{
-// No se 
- <R_OP> <IGU> PARAM1()// Opcion  = Param1()
-|<R_OI> <IGU> EXP_AR() PARAM2()// Iniciar = EXP
-|<R_OF> <IGU> EXP_AR() PARAM2_1()// Finalizar = EXP
-|<R_CMIN><IGU>EXP_AR() PARAM3(1,0,0)// C_min = num 
-|<R_CMAX><IGU>EXP_AR() PARAM3(0,1,0)// C_max = num
-|<R_CFIL><IGU>EXP_AR() PARAM3(0,0,1)// C_FIl = num
-|<R_fin>{return param();}
-}
-String PARAM3(int min,int max, int fil):
-{String resultado ="";}
-{
-|<R_CMIN><IGU> resultado=EXP_AR(){min = min+1; if(min<2&&max<2&&fil<2){PARAM3(min,max,fil);}else{return "error";}}
-|<R_CMAX><IGU>EXP_AR() PARAM3(){max = max+1; if(min<2&&max<2&&fil<2){PARAM3(min,max,fil);}else{return "error";}}
-|<R_CFIL><IGU>EXP_AR() PARAM3(){fil = fil+1; if(min<2&&max<2&&fil<2){PARAM3(min,max,fil);}else{return "error";}}
-|<EOF>{return min+","+max+","+fil;}
-}
-String PARAM1():
+void Est_param(NArbol actual): //
 {}
 {
-    <C_SN>{return "S_N";}
-|   <C_VF>{return "V_F";}
+<R_par> Cuerpo_param(actual) Est_cacular(actual)
 }
-String PARAM2()
+void Cuerpo_param(NArbol actual):
+{String Respuesta="";}
+{
+ <R_OP>     <IGU>   PARAM1(NArbol actual)                                   // Opcion  = Param1(){}
+|<R_OI>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_min(resultado);}    PARAM2(NArbol actual)// Iniciar = EXP
+|<R_OF>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_max(resultado);}    PARAM2_1(NArbol actual)// Finalizar = EXP
+|<R_CMIN>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_min(resultado);}      PARAM3(NArbol actual)// C_min = num 
+|<R_CMAX>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_max(resultado);}      PARAM3(NArbol actual)// C_max = num
+|<R_CFIL>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_fil(resultado);}      PARAM3(NArbol actual)// C_FIl = num
+|<R_fin>    {}
+}
+//parametro1 V_F o S_N
+void PARAM1(NArbol actual):
+{}
+{
+    <C_SN>{actual.add_opc(1);}
+|   <C_VF>{actual.add_opc(0);}
+}
+//parametro de rango
+void PARAM2(NArbol actual):
 {String resultado="";}
 {
- <R_OF> <IGU> EXP_AR(){}
+ <R_OF> <IGU> resultado=EXP_AR(){actual.add_rango_max(resultado);} PARAM2()
+|<R_OI> <IGU> resultado=EXP_AR(){actual.add_rango_min(resultado);} PARAM2()
 |<EOF>
 }
-String PARAM2_1(){
-String resultado="";}
+//parametro de texto
+void PARAM3(NArbol actual):
+{String resultado ="";}
 {
- <R_OI> <IGU> EXP_AR()
-|<EOF>
+|<R_CMIN><IGU> resultado=EXP_AR(){actual.add_cad_min(resultado);} PARAM3()
+|<R_CMAX><IGU> resultado=EXP_AR(){actual.add_cad_max(resultado);} PARAM3()
+|<R_CFIL><IGU> resultado=EXP_AR(){actual.add_cad_fil(resultado);} PARAM3()
+|<EOF>{}
 }
+
 /*------------------------OPERACION CALCULAR-----------------------------------*/
-NArbol Est_calcular(): //calcular
-{NArbol arbol = new NArbol();}
-{
-<R_cal>Cuerpo_calcular() Est_aplicable
-}
-String Cuerpo_calcular():
-{String resultado=""}
-{
- resultado=EXP_LOG(){return resultado;}
-| <EOF>{return "";}
-}
-/*------------------------OPERACION Aplicable-----------------------------------*/
-NArbol Est_aplicable() //aplicable
-{NArbol arbol = new NArbol();}
-{
-<R_apl>Cuerpo_apli() Est_sugerir()
-}
-/*------------------------OPERACION Sugerir-----------------------------------*/
-NArbol Est_sugerir(): //sugerir
-{NArbol arbol = new NArbol();}
-{
-<R_sug>Cuerpo_suger() Est_restrin()
-}
-String Cuerpo_suger():
+void Est_calcular(NArbol actual): //calcular
 {}
 {
-//LETRAS CON ESPACIO
-<EOF>       {return "";}
+<R_cal>Cuerpo_calcular(actual) Est_aplicable(actual)
+}
+void Cuerpo_calcular(NArbol actual):
+{String resultado=""}
+{
+ resultado=EXP_LOG(){actual.Set_calcular(resultado);}
+| <R_fin>           {}
+}
+/*------------------------OPERACION Aplicable-----------------------------------*/
+void Est_aplicable(NArbol actual): //aplicable
+{}
+{
+<R_apl>Cuerpo_apli(actual) Est_sugerir(actual)
+}
+void Cuerpo_apli(NArbol actual):
+{String resultado="";}
+{
+resultado=EXP_COMP()<R_fin>{actual.set_aplicable(resultado);}
+|<R_fin>
+}
+/*------------------------OPERACION Sugerir-----------------------------------*/
+void Est_sugerir(NArbol actual): //sugerir
+{}
+{
+<R_sug>Cuerpo_suger(actual) Est_restrin(actual)
+}
+void Cuerpo_suger():
+{String mensaje="";}
+{
+ mensaje=Etiqueta_ET()  {actual.set_sugerir(mensaje);}
+|<EOF>                  {}
 }
 /*------------------------OPERACION Restringir-----------------------------------*/
 NArbol Est_restrin(): //restringir
@@ -325,9 +326,9 @@ String cuerpo_requerido():
 {String resultado="";}
 {
  resultado= EXP_AR(){return resultado;}
-|<TRUE>{return "verdadero";}
-|<FALSE>{return "falso";}
-|<EOF> {return "";}
+|<TRUE>     {return "verdadero";}
+|<FALSE>    {return "falso";}
+|<EOF>      {return "";}
 }
 /*------------------------OPERACION Restringir mensaje-----------------------------------*/
 NArbol Est_restrimen(): //restringir mensaje 

@@ -17,11 +17,11 @@ public class Nodo_Arbol {
     String tipo;
     Arbol_Nogrupo Nodo_NG;
     Arbol_Grupo Nodo_Gr;
-    ArrayList<Nodo_Arbol> Pila_arbol;
+    ArrayList<Nodo_Arbol> lista_arbol;
     boolean agrupacion, ciclo;
 
     public Nodo_Arbol() {
-        this.Pila_arbol = new ArrayList();
+        this.lista_arbol = new ArrayList();
         this.ID = "";
         this.tipo = "";
         this.Nodo_NG = new Arbol_Nogrupo();
@@ -30,11 +30,11 @@ public class Nodo_Arbol {
     }
 
     public void Add_Nodo_Arbol(Nodo_Arbol nodo) {
-        Pila_arbol.add(nodo);
+        lista_arbol.add(nodo);
     }
 
     public void set_ID(String id) {
-        this.ID = id.replace("«$", "");
+        this.ID = id;
     }
 
     public void set_agrupacion(boolean grupo) {
@@ -49,8 +49,8 @@ public class Nodo_Arbol {
         if (this.ID.equalsIgnoreCase(ID)) {
             return true;
         } else {
-            for (int i = 0; i < Pila_arbol.size(); i++) {
-                Nodo_Arbol aux = Pila_arbol.get(i);
+            for (int i = 0; i < lista_arbol.size(); i++) {
+                Nodo_Arbol aux = lista_arbol.get(i);
                 if (aux.buscar_ID(id)) {
                     return true;
                 }
@@ -60,7 +60,7 @@ public class Nodo_Arbol {
     }
 
     public void set_tipo(String tipo) {
-        this.tipo = tipo;
+        this.tipo = tipo.replace("«$", "");
     }
 
     /*----------------------------Acciones Arbol No grupo---------------------------------------*/
@@ -89,6 +89,10 @@ public class Nodo_Arbol {
         Nodo_NG.Set_etiqueta(etiqueta);
     }
 
+    public void set_sugerir(String sugerir) {
+        Nodo_NG.set_sugerir(sugerir);
+    }
+
     public void Set_calcular(String calcular) {
         Nodo_NG.Set_calcular(calcular);
     }
@@ -114,4 +118,45 @@ public class Nodo_Arbol {
         this.Nodo_Gr.Set_fichero(fichero.replace("\"", ""));
     }
 
+    public void add_cad_min(String cad) {
+        String res = Nodo_Gr.add_cad_min(cad);
+        if (!res.equalsIgnoreCase("true")) {
+
+        }
+    }
+
+    public void add_cad_max(String cad) {
+        String res = Nodo_Gr.add_cad_max(cad);
+        if (!res.equalsIgnoreCase("true")) {
+
+        }
+    }
+
+    public void add_cad_fil(String cad) {
+        String res = Nodo_Gr.add_cad_fil(cad);
+        if (!res.equalsIgnoreCase("true")) {
+
+        }
+    }
+
+    public void add_opc(int tipo) {
+        String res = Nodo_Gr.add_opc(tipo);
+        if (!res.equalsIgnoreCase("true")) {
+
+        }
+    }
+
+    public void add_rango_min(String cad) {
+        String res = Nodo_Gr.add_rango_min(cad);
+        if (!res.equalsIgnoreCase("true")) {
+
+        }
+    }
+
+    public void add_rango_max(String cad) {
+        String res = Nodo_Gr.add_rango_max(cad);
+        if (!res.equalsIgnoreCase("true")) {
+
+        }
+    }
 }
