@@ -9,12 +9,23 @@
  * @author Sergio Fernando
  */
 public class Arbol_Grupo {
+
     String codigo_pre;
     String codigo_post;
-    Clase_parametro parametro; 
-    public Arbol_Grupo(){
-    codigo_pre="";
-    codigo_post="";
-     parametro= new Clase_parametro();        
+    Clase_parametro parametro;
+
+    public Arbol_Grupo() {
+        codigo_pre = "";
+        codigo_post = "";
+        parametro = new Clase_parametro();
     }
+
+    public void set_codigoPRE(String codigo) {
+        this.codigo_pre = codigo;
+    }
+
+    public void set_codigoPOS(String codigo) {
+        this.codigo_post = codigo;
+    }
+    
 }
