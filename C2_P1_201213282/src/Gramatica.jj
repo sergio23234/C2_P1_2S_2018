@@ -45,12 +45,16 @@ options {
 PARSER_BEGIN(Gramatica)
 
 public class Gramatica {
+    
 		NArbol Gramatica(String arg[]){ 
    		try
     {
      System.out.println("entro");
+     Nodo_Arbol primero = new Nodo_Arbol();
+     primero.set_ID("«RAIZ»");
      Gramatica parser = new Gramatica(System.in);
-     return parser.Inicio() ;
+     parser.Inicio(primero);
+    return  primero;
     }
     catch(ParseException e)
     {
@@ -150,11 +154,12 @@ TOKEN :{
 <R_Cicf:"Finalizar Ciclo">
 }
 TOKEN :{
-    <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|".")*>
+    <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
 |   <#LETTER: (["a"-"z","A"-"Z"])>
 |   <INTEGER: (<DIGIT>)+>
-|   <DOUBLE: (<DIGIT>)+"."(<DIGIT>)+>
+|   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
+|   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
 |   <T_Texto:~["$»","«$","#[","@[",".",".."]>
 }
 NArbol Inicio(): 
@@ -162,41 +167,45 @@ NArbol Inicio():
 {
 	arbol=Contenido(){return arbol;}
 }
-void Contenido() ://Inicio del Cuerpo Tipo
-{   NArbol arbol = new NArbol();
-    NArbol arbol1 = new NArbol();
-    NArbol arbol2 = new NArbol();}
+NArbol Contenido() ://Inicio del Cuerpo Tipo
+{   NArbol arbol = new NArbol();}
 {
-<R_tip>arbol1=Cuerpo_Tipo(){} Est_ID(arbol1) ContenidoP()
+<R_tip>arbol1=Cuerpo_Tipo(arbol) Est_ID(arbol) {} ContenidoP()
 }
 NArbol ContenidoP():
 {NArbol arbol = new NArbol();}
 {
-<R_tip>Cuerpo_Tipo() Est_ID() ContenidoP()
+<R_tip>Cuerpo_Tipo(arbol) Est_ID(arbol){}ContenidoP()
 |<EOF>
 }
 /*--------------- Cuerpo Tipo---------------- */
-String Cuerpo_Tipo():
+String Cuerpo_Tipo(NArbol actual):
 {String valor ="";
  token val;}
 {
- val=<R_Text><R_fin>    {return val.image;}
-|val=<R_Ente><R_fin>    {return val.image;}
-|val=<R_Deci><R_fin>    {return val.image;}
-|val=<R_Rang><R_fin>    {return val.image;}
-|val=<R_Cond><R_fin>    {return val.image;}
-|val=<R_Fech><R_fin>    {return val.image;}
-|val=<R_Hora><R_fin>    {return val.image;}
-|val=<R_FeHo><R_fin>    {return val.image;}
-|val=<R_Selu><R_fin>    {return val.image;}
-|val=<R_Selm><R_fin>    {return val.image;}
-|val=<R_Nota><R_fin>    {return val.image;}
-|val=<R_Mult><R_fin>    {return val.image;}
-|val=<R_Calc><R_fin>    {return val.image;}
-|val=<R_AgrI><R_fin>    {return val.image;}
-|val=<R_AgrF><R_fin>    {return val.image;}
-|val=<R_Cici><R_fin>    {return val.image;}
-|val=<R_Cicf><R_fin>    {return val.image;}
+ val=<R_Text><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_Ente><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_Deci><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_Rang><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_Cond><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_Fech><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_Hora><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_FeHo><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_Selu><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_Selm><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_Nota><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_Mult> {actual.set_ID(val.image);} valor=Cuerpo_mul(actual)<R_fin>   {return "true";}
+|val=<R_Calc><R_fin>                                                        {actual.set_ID(val.image); return "true";}
+|val=<R_AgrI><R_fin>                                                        {actual.set_ID(val.image); actual.set_agrupacion(true);return "true";}
+|val=<R_AgrF><R_fin>                                                        {actual.set_ID(val.image); actual.set_agrupacion(false);return "true";}
+|val=<R_Cici><R_fin>                                                        {actual.set_ID(val.image); actual.set_ciclo(true);return "true";}
+|val=<R_Cicf><R_fin>                                                        {actual.set_ID(val.image); actual.set_ciclo(false);return "true";}
+}
+void Cuerpo_mul(actual):
+{Token t;}
+{
+t=<T_mul>   {actual.Set_fichero(t.image);}
+|<EOF>      {}
 }
 /*--------------- Estructura ID---------------- */
 NArbol Est_ID(NArbol actual):
@@ -205,6 +214,7 @@ NArbol Est_ID(NArbol actual):
 {
   <R_idp> ID=Cuerpo_ID()   Est_eti()
 }
+
 String Cuerpo_ID(NArbol actual):
 {token ID;}
 {

@@ -2,6 +2,7 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -147,6 +148,11 @@ public class Principal extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_GenerarActionPerformed
+    
+    public void Analizar() {
+        ArrayList<Nodo_Arbol> Arboles = new ArrayList();
+        
+    }
 
     private void Leer_archivo(String path) {
         try {
@@ -206,11 +212,11 @@ public class Principal extends javax.swing.JFrame {
                             contador++;
                         }
                     } else {
-                        if(uno){
+                        if (uno) {
                             System.out.println("Hay columnas repetidas");
-                        }else if(dos){
+                        } else if (dos) {
                             System.out.println("Hay columnas con nombres equivocados");
-                        }else{
+                        } else {
                             System.out.println("No estan las columnas minimas");
                         }
                         errores = true;
@@ -218,7 +224,7 @@ public class Principal extends javax.swing.JFrame {
 
                 }
             }
-            if(!errores){
+            if (!errores) {
                 recorrer_lista();
                 lista.escribir_lista();
             }
