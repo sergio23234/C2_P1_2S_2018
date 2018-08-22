@@ -404,7 +404,7 @@ String resultado="";
 | <EOF>                 {return "";}
 }
 /*------------------------OPERACION lectura-----------------------------------*/
-NArbol Est_multimed():{
+void Est_multimed():{
 }
 {
 <R_mul>Cuerpo_multimed() Est_codigoPRE()
@@ -418,12 +418,12 @@ String Cuerpo_multimed():
 |<EOF>              {return "";}
 }
 /*------------------------OPERACION Codigo PRE-----------------------------------*/
-NArbol Est_codigoPRE(): //codigo pre 
+void Est_codigoPRE(): //codigo pre 
 {NArbol arbol = new NArbol();}
 {
 <R_pre>Cuerpo_pre() Est_codigoPOST
 }
-NArbol Est_codigoPOST() //codigo post
+void Est_codigoPOST() //codigo post
 {NArbol arbol = new NArbol();}
 {
 <R_pos>Cuerpo_post()
