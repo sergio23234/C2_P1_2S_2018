@@ -19,7 +19,7 @@ public class Arbol_Nogrupo {
     String Calcular;
     String Ruta;
     String sugerir;
-
+    String lectura;
     public Arbol_Nogrupo() {
         etiqueta = "";
         requerido = "falso";
@@ -30,6 +30,7 @@ public class Arbol_Nogrupo {
         Calcular = "";
         Ruta = "";
         sugerir = "";
+        lectura="";
     }
 
     public void set_requerido() {
@@ -77,5 +78,9 @@ public class Arbol_Nogrupo {
 
     public void Set_ruta(String rut) {
         this.Ruta = rut;
+    }
+    
+    public void Set_lectura(String rut) {
+        this.lectura = rut;
     }
 }

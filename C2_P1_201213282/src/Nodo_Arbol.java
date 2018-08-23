@@ -100,6 +100,10 @@ public class Nodo_Arbol {
     public void Set_ruta(String ruta) {
         Nodo_NG.Set_ruta(ruta);
     }
+    
+    public void Set_lectura(String lectura){
+        Nodo_NG.Set_lectura(lectura);
+    }
 
 //*----------------------------Acciones Arbol Grupo---------------------------------------*/
     public void set_codigoPRE(String codigo) {
@@ -156,6 +160,14 @@ public class Nodo_Arbol {
     public void add_rango_max(String cad) {
         String res = Nodo_Gr.add_rango_max(cad);
         if (!res.equalsIgnoreCase("true")) {
+
+        }
+    }
+
+    public void add_repetir(String repetir) {
+        if (ciclo) {
+            Nodo_Gr.add_repetir(repetir);
+        } else {
 
         }
     }

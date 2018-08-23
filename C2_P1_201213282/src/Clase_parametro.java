@@ -79,7 +79,7 @@ public class Clase_parametro {
             rangos[0] = cad;
             return "true";
         }
-        return "ERROR YA HAY UN RANGO MINIMO DEFINIDO";
+        return "YA HAY UN RANGO MINIMO DEFINIDO";
     }
 
     public String add_rango_max(String cad) {
@@ -88,6 +88,6 @@ public class Clase_parametro {
             rangos[1] = cad;
             return "true";
         }
-        return "ERROR YA HAY UN RANGO MAXIMO DEFINIDO";
+        return "YA HAY UN RANGO MAXIMO DEFINIDO";
     }
 }

@@ -15,12 +15,14 @@ public class Arbol_Grupo {
     String aplicable;
     Clase_parametro parametro;
     String tipo_fichero;
+    String repetir;
 
     public Arbol_Grupo() {
         codigo_pre = "";
         codigo_post = "";
         aplicable = "";
         tipo_fichero = "";
+        repetir = "";
         parametro = new Clase_parametro();
     }
 
@@ -66,6 +68,10 @@ public class Arbol_Grupo {
 
     public String add_rango_max(String cad) {
         return parametro.add_rango_max(cad);
+    }
+
+    public void add_repetir(String repetir) {
+        this.repetir = repetir;
     }
 
 }

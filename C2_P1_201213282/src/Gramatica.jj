@@ -357,76 +357,89 @@ mensaje=Etiqueta_ET()  <R_fin>  {actual.set_men_reque(mensaje);}
 void Est_predeter(NArbol actual): //predeterminado 
 {}
 {
-<R_prd> Cuerpo_prede() Est_repetir()
+<R_prd> Cuerpo_prede(actual) Est_repetir(actual)
 }
 void Cuerpo_prede(NArbol actual):
 {String resultado="";}
 {
-resultado=EXP_COND  {return resultado;}
-|<EOF>              {return "";}
+resultado=EXP_COND      {actual.set_predeterminado(resultado);}
+|<R_fin>                {}
 }
 /*------------------------OPERACION repetir-----------------------------------*/
 void Est_repetir(NArbol actual): //repeticion 
 {}
 {
-<R_rep>Cuerpo_repetir() Est_apariencia()
+<R_rep>Cuerpo_repetir(actual) Est_apariencia(actual)
 }
 void Cuerpo_repetir(NArbol actual):{
 String resultado="";}
 {
-  resultado = EXP_AR(){return resultado;}
-| <EOF>{return "";}
+  resultado = EXP_AR()  {actual.add_repetir(resultado);}
+| <R_fin>               {}
 }
 /*------------------------OPERACION apariencia-----------------------------------*/
 void Est_apariencia(NArbol actual): //apariencia 
 {}
 {
-<R_apa>Cuerpo_aparien() Est_Lectura()
+<R_apa>Cuerpo_aparien(actual) Est_Lectura(actual)
 }
 void Cuerpo_aparien(NArbol actual):
-{}
+{Token t;}
 {
-<EOF> {return "";}
+t=<T_ID><R_fin> {actual.set_apariencia(t.image);}
+<R_fin>         {}
 }
 /*------------------------OPERACION lectura-----------------------------------*/
 void Est_Lectura(NArbol actual):
 {}
 {
-<R_lec> Cuerpo_lectura() Est_multimed()
+<R_lec> Cuerpo_lectura(actual) Est_multimed(actual)
 }
 void Cuerpo_lectura(NArbol actual):{
 String resultado="";
 }
 {
-  <TRUE>                {return "verdadero";}
-| <FALSE>               {return "falso";}
-| resultado=EXP_AR()    {return resultado;}
-| <EOF>                 {return "";}
+  <TRUE>                <R_fin> {actual.Set_lectura("verdadero");}
+| <FALSE>               <R_fin> {actual.Set_lectura("falso");}
+| resultado=EXP_AR()    <R_fin> {actual.Set_lectura(resultado);}
+| <R_fin>                       {}
 }
-/*------------------------OPERACION lectura-----------------------------------*/
-void Est_multimed():{
+/*------------------------OPERACION multimedia-----------------------------------*/
+void Est_multimed(NArbol actual):{
 }
 {
-<R_mul>Cuerpo_multimed() Est_codigoPRE()
+<R_mul>Cuerpo_multimed(actual) Est_codigoPRE(actual)
 }
-String Cuerpo_multimed():
+void Cuerpo_multimed(NArbol actual):
 {String resultado="";}
 {
- <R_MIMG><T_MUL>    {}
-|<R_MAUD><T_MUL>    {}
-|<R_MVID><T_MUL>    {}
-|<EOF>              {return "";}
+ <R_MIMG><T_MUL><R_fin>    {}
+|<R_MAUD><T_MUL><R_fin>    {}
+|<R_MVID><T_MUL><R_fin>    {}
+|<R_fin>             {return "";}
 }
 /*------------------------OPERACION Codigo PRE-----------------------------------*/
-void Est_codigoPRE(): //codigo pre 
-{NArbol arbol = new NArbol();}
+void Est_codigoPRE(NArbol actual): //codigo pre 
+{}
 {
-<R_pre>Cuerpo_pre() Est_codigoPOST
+<R_pre>Cuerpo_pre(actual) Est_codigoPOST(actual)
 }
-void Est_codigoPOST() //codigo post
-{NArbol arbol = new NArbol();}
+void Cuerpo_pre(NArbol actual):
+{String resultado="";}
 {
-<R_pos>Cuerpo_post()
+mensaje=Etiqueta_ET()  <R_fin>  {actual.set_codigoPRE(mensaje);}
+|<R_fin>                        {}
+}
+void Est_codigoPOST(NArbol actual) //codigo post
+{}
+{
+<R_pos>Cuerpo_post(actual)
+}
+void Cuerpo_post(NArbol actual):
+{String resultado="";}
+{
+mensaje=Etiqueta_ET()  <R_fin>  {actual.set_codigoPOS(mensaje);}
+|<R_fin>                        {}
 }
 /*---------------------Operaciones Aritmeticas---------------------- */
 String EXP_AR(): //SUMA Y RESTA
