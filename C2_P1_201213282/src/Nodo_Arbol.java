@@ -65,7 +65,6 @@ public class Nodo_Arbol {
 
     /*----------------------------Acciones Arbol No grupo---------------------------------------*/
     public void set_requerido() {
-
         Nodo_NG.set_requerido();
     }
 
@@ -100,9 +99,17 @@ public class Nodo_Arbol {
     public void Set_ruta(String ruta) {
         Nodo_NG.Set_ruta(ruta);
     }
-    
-    public void Set_lectura(String lectura){
+
+    public void Set_lectura(String lectura) {
         Nodo_NG.Set_lectura(lectura);
+    }
+
+    public void Set_multimedia(String multi, int tipo) {
+        Nodo_NG.Set_multimedia(multi, tipo);
+    }
+
+    public void Set_automul(String multi) {
+        Nodo_NG.Set_automul(multi);
     }
 
 //*----------------------------Acciones Arbol Grupo---------------------------------------*/

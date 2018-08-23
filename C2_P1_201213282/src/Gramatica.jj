@@ -125,6 +125,7 @@ TOKEN :{
 <R_MIMG:"Media_imagen">
 <R_MVID:"Media_video">
 <R_MAUD:"Media_audio">
+<R_repro:"reproduccion">
 <R_OP:"Opcion">
 <C_VF:"V_F">
 <C_SN:"S_N">
@@ -411,12 +412,20 @@ void Est_multimed(NArbol actual):{
 <R_mul>Cuerpo_multimed(actual) Est_codigoPRE(actual)
 }
 void Cuerpo_multimed(NArbol actual):
-{String resultado="";}
+{String resultado="";
+ Token t;}
 {
- <R_MIMG><T_MUL><R_fin>    {}
-|<R_MAUD><T_MUL><R_fin>    {}
-|<R_MVID><T_MUL><R_fin>    {}
-|<R_fin>             {return "";}
+ <R_MIMG>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                   Cuerpo_multimed(actual)
+|<R_MAUD>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                   Cuerpo_multimed(actual)
+|<R_MVID>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                   Cuerpo_multimed(actual)
+|<R_repro><IGU> resultado=Cuerpo_RE(){actual.Set_automul(resultado);}   Cuerpo_multimed(actual)       
+|<R_fin>             {}
+}
+String Cuerpo_RE(NArbol actual):
+{}
+{
+<TRUE>      {return "verdadero";}
+|<FALSE>    {return "falso";}
 }
 /*------------------------OPERACION Codigo PRE-----------------------------------*/
 void Est_codigoPRE(NArbol actual): //codigo pre 
@@ -474,7 +483,7 @@ String Est_MDP():
 String Est_ID():
 {String resultado="";}
 {
-   <PAI>EXP_AR<PAF>
+   <PAI>resultado=EXP_AR<PAF>{return "("+resultado+")"}
 |   Var_ID()
 }
 /*---------------------Operaciones de Logias---------------------- */

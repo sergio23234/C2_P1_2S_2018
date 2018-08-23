@@ -20,6 +20,10 @@ public class Arbol_Nogrupo {
     String Ruta;
     String sugerir;
     String lectura;
+    String auto_mult;
+    String multimedia;
+    String tipo_mul;
+
     public Arbol_Nogrupo() {
         etiqueta = "";
         requerido = "falso";
@@ -30,7 +34,9 @@ public class Arbol_Nogrupo {
         Calcular = "";
         Ruta = "";
         sugerir = "";
-        lectura="";
+        lectura = "";
+        auto_mult = "";
+        multimedia = "";
     }
 
     public void set_requerido() {
@@ -79,8 +85,40 @@ public class Arbol_Nogrupo {
     public void Set_ruta(String rut) {
         this.Ruta = rut;
     }
-    
+
     public void Set_lectura(String rut) {
         this.lectura = rut;
+    }
+
+    public String Set_multimedia(String multi, int tipo) {
+        if (multimedia.equals("")) {
+            this.multimedia = multi;
+            Set_tipo(tipo);
+            return "true";
+        } else {
+            return "YA EXISTE UN ARCHIVO MULTIMEDIA";
+        }
+    }
+
+    public String Set_automul(String multi) {
+        if (this.auto_mult.equals("")) {
+            this.auto_mult = multi;
+            return "true";
+        } else {
+            return "YA SE HA FIJADO LA REPRODUCCION";
+        }
+    }
+
+    private void Set_tipo(int tipo) {
+        switch (tipo) {
+            case 0:
+                this.tipo_mul = "Imagen";
+                break;
+            case 1:
+                this.tipo_mul = "Audio";
+                break;
+            default:
+                this.tipo_mul = "Video";
+        }
     }
 }
