@@ -1,5 +1,7 @@
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -168,6 +170,32 @@ public class lista_celdas {
                 //Logger.getLogger(fileChooser.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public Nodo_Arbol leer_lista(){
+        Nodo_Arbol nodo = new Nodo_Arbol();
+        FileReader FR = null;
+        BufferedReader BR = null;
+        String linea="";
+        try {
+            int contador = 0;
+            FR = new FileReader("path.txt");
+            BR = new BufferedReader(FR);
+           BR.close();
+        } catch (IOException e) {
+            System.out.println("error en:"+e.getMessage());
+        }finally {
+            try {
+                if (null != FR) {
+                    FR.close();
+                    return nodo;
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                //Logger.getLogger(fileChooser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return nodo;
     }
 
 }

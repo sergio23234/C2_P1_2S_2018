@@ -150,8 +150,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_GenerarActionPerformed
     
     public void Analizar() {
-        ArrayList<Nodo_Arbol> Arboles = new ArrayList();
-        
+       Nodo_Arbol lista1 =lista.leer_lista();
+               
     }
 
     private void Leer_archivo(String path) {
@@ -227,6 +227,7 @@ public class Principal extends javax.swing.JFrame {
             if (!errores) {
                 recorrer_lista();
                 lista.escribir_lista();
+                Analizar();
             }
         } catch (IOException e) {
             System.err.println(e.getMessage());
