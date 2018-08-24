@@ -63,6 +63,14 @@ public class Nodo_Arbol {
         this.tipo = tipo.replace("«$", "");
     }
 
+    public boolean get_ciclo() {
+        return this.ciclo;
+    }
+
+    public boolean get_agrupacion() {
+        return this.agrupacion;
+    }
+
     /*----------------------------Acciones Arbol No grupo---------------------------------------*/
     public void set_requerido() {
         Nodo_NG.set_requerido();

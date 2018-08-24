@@ -163,44 +163,49 @@ TOKEN :{
 |   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
 |   <T_Texto:~["$»","«$","#[","@[",".",".."]>
 }
-NArbol Inicio(): 
+NArbol Inicio(NArbol arbol): 
 {NArbol arbol=new NArbol(); }
 {
-	arbol=Contenido(){return arbol;}
+	Contenido(arbol){return arbol;}
 }
-NArbol Contenido() ://Inicio del Cuerpo Tipo
+void Contenido(NArbol arbol) ://Inicio del Cuerpo Tipo
 {   NArbol arbol = new NArbol();}
 {
-<R_tip>arbol1=Cuerpo_Tipo(arbol) Est_ID(arbol){} ContenidoP()
+<R_tip>Inicial_Cont(arbol){} ContenidoP()
 }
-NArbol ContenidoP():
+void ContenidoP():
 {NArbol arbol = new NArbol();}
 {
-<R_tip>Cuerpo_Tipo(arbol) Est_ID(arbol){}ContenidoP()
-|<EOF>
+<R_tip>arbol=Inicial_Cont(arbol){}ContenidoP()
+|<EOF>{}
+}
+void Inicial_Cont(NArbol arbol):
+{}
+{
+Cuerpo_Tipo(arbol) Est_ID(arbol){}
 }
 /*--------------- Cuerpo Tipo---------------- */
-String Cuerpo_Tipo(NArbol actual):
+void Cuerpo_Tipo(NArbol actual):
 {String valor ="";
  token val;}
 {
- val=<R_Text><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_Ente><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_Deci><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_Rang><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_Cond><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_Fech><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_Hora><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_FeHo><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_Selu><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_Selm><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_Nota><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_Mult> {actual.set_tipo(val.image);} valor=Cuerpo_mul(actual)<R_fin> {return "true";}
-|val=<R_Calc><R_fin>                                                        {actual.set_tipo(val.image); return "true";}
-|val=<R_AgrI><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(true);return "true";}
-|val=<R_AgrF><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(false);return "true";}
-|val=<R_Cici><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(true);return "true";}
-|val=<R_Cicf><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(false);return "true";}
+ val=<R_Text><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_Ente><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_Deci><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_Rang><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_Cond><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_Fech><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_Hora><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_FeHo><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_Selu><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_Selm><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_Nota><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_Mult> {actual.set_tipo(val.image);} valor=Cuerpo_mul(actual)<R_fin> { }
+|val=<R_Calc><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_AgrI><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(true);}
+|val=<R_AgrF><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(false);}
+|val=<R_Cici><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(true);}
+|val=<R_Cicf><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(false);}
 }
 void Cuerpo_mul(actual):
 {Token t;}
