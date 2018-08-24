@@ -236,6 +236,7 @@ public class Principal extends javax.swing.JFrame {
     public void recorrer_lista() {
         lista.llenar_Vacias();
         lista.recorrer_lista();
+        
     }
 
     /**

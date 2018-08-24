@@ -26,7 +26,7 @@ options {
   LOOKAHEAD = 10;
   CHOICE_AMBIGUITY_CHECK = 2;
   OTHER_AMBIGUITY_CHECK = 1;
-  STATIC = true;
+  STATIC = false;
   DEBUG_PARSER = false;
   DEBUG_LOOKAHEAD = false;
   DEBUG_TOKEN_MANAGER = false;
@@ -39,16 +39,16 @@ options {
   BUILD_PARSER = true;
   BUILD_TOKEN_MANAGER = true;
   SANITY_CHECK = true;
-  FORCE_LA_CHECK = false;
+  FORCE_LA_CHECK = true;
 }
 
 PARSER_BEGIN(Gramatica)
+import java.util.Stack;
 
 public class Gramatica {
-    
-		NArbol Gramatica(String arg[]){ 
-   		try
-    {
+    Stack<Nodo_Arbol> Pila = new Stack();
+    Nodo_Arbol Gramatica(String arg[]){ 
+     try{
      System.out.println("entro");
      Nodo_Arbol primero = new Nodo_Arbol();
      primero.set_ID("«RAIZ»");
@@ -58,14 +58,13 @@ public class Gramatica {
     }
     catch(ParseException e)
     {
+    
       System.out.println(e.getMessage());
       System.out.println("Analizador: Se han encontrado errores en el analisis.");
       return null;
     }	  
   }
   }
-
-}
 
 PARSER_END(Gramatica)
 SKIP:{
@@ -97,62 +96,59 @@ TOKEN:
  |	<NCO:"#[">
  |      <COR:"]">
 }
-TOKEN:{
-
-}
-
-TOKEN :{
+TOKEN:
+{
 <R_tip:"Tipo«$">
-<R_idp:"idpregunta«$">
-<R_eti:"etiqueta«$">
-<R_par:"parametro«$">
-<R_cal:"calculo«$">
-<R_apl:"aplicable«$">
-<R_sug:"sugerir«$">
-<R_res:"restringir«$">
-<R_req:"requerido«$">
-<R_rsm:"restringirmsn«$">
-<R_rqm:"requeridomsn«$">
-<R_prd"predeterminado«$">
-<R_rep:"repeticion«$">
-<R_mul:"multimedia«$">
-<R_lec:"lectura«$">
-<R_apa:"apariencia«$">
-<R_pre:"codigo_pre«$">
-<R_pos:"codigo_post«$">
+|<R_idp:"idpregunta«$">
+|<R_eti:"etiqueta«$">
+|<R_par:"parametro«$">
+|<R_cal:"calculo«$">
+|<R_apl:"aplicable«$">
+|<R_sug:"sugerir«$">
+|<R_res:"restringir«$">
+|<R_req:"requerido«$">
+|<R_rsm:"restringirmsn«$">
+|<R_rqm:"requeridomsn«$">
+|<R_prd:"predeterminado«$">
+|<R_rep:"repeticion«$">
+|<R_mul:"multimedia«$">
+|<R_lec:"lectura«$">
+|<R_apa:"apariencia«$">
+|<R_pre:"codigo_pre«$">
+|<R_pos:"codigo_post«$">
 }
 TOKEN :{
 <R_MIMG:"Media_imagen">
-<R_MVID:"Media_video">
-<R_MAUD:"Media_audio">
-<R_repro:"reproduccion">
-<R_OP:"Opcion">
-<C_VF:"V_F">
-<C_SN:"S_N">
-<TRUE:"verdadero">
-<FALSE:"falso">
-<R_OF:"Finalizar">
-<R_OI:"Iniciar">
-<R_CMIN:"Cad_min">
-<R_CMAX:"Cad_max">
-<R_CFIL:"Cad_fil">
-<R_Text:"Texto">
-<R_Ente:"Entero">
-<R_Deci:"Decimal">
-<R_Rang:"Rango">
-<R_Cond:"Condicion">
-<R_Fech:"Fecha">
-<R_Hora:"Hora">
-<R_FeHo:"FechaHora">
-<R_Selu:"Seleccion_uno">
-<R_Selm:"Seleccion_multiples">
-<R_Nota:"Nota">
-<R_Mult:"Fichero">
-<R_Calc:"Calcular">
-<R_AgrI:"Iniciar agrupacion">
-<R_AgrF:"Finalizar agrupacion">
-<R_Cici:"Iniciar Ciclo">
-<R_Cicf:"Finalizar Ciclo">
+|<R_MVID:"Media_video">
+|<R_MAUD:"Media_audio">
+|<R_repro:"reproduccion">
+|<R_OP:"Opcion">
+|<C_VF:"V_F">
+|<C_SN:"S_N">
+|<TRUE:"verdadero">
+|<FALSE:"falso">
+|<R_OF:"Finalizar">
+|<R_OI:"Iniciar">
+|<R_CMIN:"Cad_min">
+|<R_CMAX:"Cad_max">
+|<R_CFIL:"Cad_fil">
+|<R_Text:"Texto">
+|<R_Ente:"Entero">
+|<R_Deci:"Decimal">
+|<R_Rang:"Rango">
+|<R_Cond:"Condicion">
+|<R_Fech:"Fecha">
+|<R_Hora:"Hora">
+|<R_FeHo:"FechaHora">
+|<R_Selu:"Seleccion_uno">
+|<R_Selm:"Seleccion_multiples">
+|<R_Nota:"Nota">
+|<R_Mult:"Fichero">
+|<R_Calc:"Calcular">
+|<R_AgrI:"Iniciar agrupacion">
+|<R_AgrF:"Finalizar agrupacion">
+|<R_Cici:"Iniciar Ciclo">
+|<R_Cicf:"Finalizar Ciclo">
 }
 TOKEN :{
     <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
@@ -161,33 +157,33 @@ TOKEN :{
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
 |   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
-|   <T_Texto:~["$»","«$","#[","@[",".",".."]>
+|   <T_Texto:(~["<",">","$","#","[","@","]","."])+>
 }
-NArbol Inicio(NArbol arbol): 
-{NArbol arbol=new NArbol(); }
+Nodo_Arbol Inicio(Nodo_Arbol arbol): 
+{}
 {
 	Contenido(arbol){return arbol;}
 }
-void Contenido(NArbol arbol) ://Inicio del Cuerpo Tipo
-{   NArbol arbol = new NArbol();}
+void Contenido(Nodo_Arbol arbol) ://Inicio del Cuerpo Tipo
+{   Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
-<R_tip>Inicial_Cont(arbol){} ContenidoP()
+<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
 }
-void ContenidoP():
-{NArbol arbol = new NArbol();}
+void ContenidoP(Nodo_Arbol arbol):
+{Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
-<R_tip>arbol=Inicial_Cont(arbol){}ContenidoP()
+<R_tip>Inicial_Cont(arbol_1){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} 
 |<EOF>{}
 }
-void Inicial_Cont(NArbol arbol):
+void Inicial_Cont(Nodo_Arbol arbol):
 {}
 {
-Cuerpo_Tipo(arbol) Est_ID(arbol){}
+Cuerpo_Tipo(arbol) Estruct_ID(arbol){}
 }
 /*--------------- Cuerpo Tipo---------------- */
-void Cuerpo_Tipo(NArbol actual):
+void Cuerpo_Tipo(Nodo_Arbol actual):
 {String valor ="";
- token val;}
+ Token val;}
 {
  val=<R_Text><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_Ente><R_fin>                                                        {actual.set_tipo(val.image); }
@@ -200,135 +196,135 @@ void Cuerpo_Tipo(NArbol actual):
 |val=<R_Selu><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_Selm><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_Nota><R_fin>                                                        {actual.set_tipo(val.image); }
-|val=<R_Mult> {actual.set_tipo(val.image);} valor=Cuerpo_mul(actual)<R_fin> { }
+|val=<R_Mult> {actual.set_tipo(val.image);} Cuerpo_mul(actual)<R_fin>       { }
 |val=<R_Calc><R_fin>                                                        {actual.set_tipo(val.image); }
-|val=<R_AgrI><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(true);}
-|val=<R_AgrF><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(false);}
-|val=<R_Cici><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(true);}
-|val=<R_Cicf><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(false);}
+|val=<R_AgrI><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(1);}
+|val=<R_AgrF><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(-1);}
+|val=<R_Cici><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(1);}
+|val=<R_Cicf><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(-1);}
 }
-void Cuerpo_mul(actual):
+void Cuerpo_mul(Nodo_Arbol actual):
 {Token t;}
 {
-t=<T_mul>   {actual.Set_fichero(t.image);}
+t=<T_MUL>   {actual.Set_fichero(t.image);}
 |<EOF>      {System.out.println("vacio");}
 }
 /*--------------- Estructura ID---------------- */
-void Est_ID(NArbol actual):
+void Estruct_ID(Nodo_Arbol actual):
 {}
 {
   <R_idp> Cuerpo_ID(actual) Est_eti(actual){}
 }
 
-void Cuerpo_ID(NArbol actual):
-{token ID;}
+void Cuerpo_ID(Nodo_Arbol actual):
+{Token ID;}
 {
     ID=<T_ID><R_fin>{actual.set_ID(token.image);}
 }
 /*--------------- Estructura etiqueta---------------- */
-void Est_eti():
+void Est_eti(Nodo_Arbol actual):
 {String etiqueta="";}
 {
   <R_eti> etiqueta=Etiqueta_ET(){actual.Set_etiqueta(etiqueta);} Est_param(actual)
 }
 
 /*--------------- Estructura PARAMETRO---------------- */
-void Est_param(NArbol actual): //
+void Est_param(Nodo_Arbol actual): //
 {}
 {
-<R_par> Cuerpo_param(actual) Est_cacular(actual)
+<R_par> Cuerpo_param(actual) Est_calcular(actual)
 }
-void Cuerpo_param(NArbol actual):
+void Cuerpo_param(Nodo_Arbol actual):
 {String Respuesta="";}
 {
- <R_OP>     <IGU>   PARAM1(NArbol actual)                                   // Opcion  = Param1(){}
-|<R_OI>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_min(resultado);}    PARAM2(NArbol actual)// Iniciar = EXP
-|<R_OF>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_max(resultado);}    PARAM2_1(NArbol actual)// Finalizar = EXP
-|<R_CMIN>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_min(resultado);}      PARAM3(NArbol actual)// C_min = num 
-|<R_CMAX>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_max(resultado);}      PARAM3(NArbol actual)// C_max = num
-|<R_CFIL>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_fil(resultado);}      PARAM3(NArbol actual)// C_FIl = num
+ <R_OP>     <IGU>   PARAM1(actual)                                   // Opcion  = Param1(){}
+|<R_OI>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_min(Respuesta);}    PARAM2(actual)// Iniciar = EXP
+|<R_OF>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_max(Respuesta);}    PARAM2(actual)// Finalizar = EXP
+|<R_CMIN>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_min(Respuesta);}      PARAM3(actual)// C_min = num 
+|<R_CMAX>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_max(Respuesta);}      PARAM3(actual)// C_max = num
+|<R_CFIL>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_fil(Respuesta);}      PARAM3(actual)// C_FIl = num
 |<R_fin>    {}
 }
 //parametro1 V_F o S_N
-void PARAM1(NArbol actual):
+void PARAM1(Nodo_Arbol actual):
 {}
 {
     <C_SN>{actual.add_opc(1);}
 |   <C_VF>{actual.add_opc(0);}
 }
 //parametro de rango
-void PARAM2(NArbol actual):
+void PARAM2(Nodo_Arbol actual):
 {String resultado="";}
 {
- <R_OF> <IGU> resultado=EXP_AR(){actual.add_rango_max(resultado);} PARAM2()
-|<R_OI> <IGU> resultado=EXP_AR(){actual.add_rango_min(resultado);} PARAM2()
+ <R_OF> <IGU> resultado=EXP_AR(){actual.add_rango_max(resultado);} PARAM2(actual)
+|<R_OI> <IGU> resultado=EXP_AR(){actual.add_rango_min(resultado);} PARAM2(actual)
 |<EOF>
 }
 //parametro de texto
-void PARAM3(NArbol actual):
+void PARAM3(Nodo_Arbol actual):
 {String resultado ="";}
 {
-|<R_CMIN><IGU> resultado=EXP_AR(){actual.add_cad_min(resultado);} PARAM3()
-|<R_CMAX><IGU> resultado=EXP_AR(){actual.add_cad_max(resultado);} PARAM3()
-|<R_CFIL><IGU> resultado=EXP_AR(){actual.add_cad_fil(resultado);} PARAM3()
+<R_CMIN><IGU> resultado=EXP_AR(){actual.add_cad_min(resultado);} PARAM3(actual)
+|<R_CMAX><IGU> resultado=EXP_AR(){actual.add_cad_max(resultado);} PARAM3(actual)
+|<R_CFIL><IGU> resultado=EXP_AR(){actual.add_cad_fil(resultado);} PARAM3(actual)
 |<EOF>{}
 }
 
 /*------------------------OPERACION CALCULAR-----------------------------------*/
-void Est_calcular(NArbol actual): //calcular
+void Est_calcular(Nodo_Arbol actual): //calcular
 {}
 {
 <R_cal>Cuerpo_calcular(actual) Est_aplicable(actual)
 }
-void Cuerpo_calcular(NArbol actual):
-{String resultado=""}
+void Cuerpo_calcular(Nodo_Arbol actual):
+{String resultado="";}
 {
  resultado=EXP_LOG(){actual.Set_calcular(resultado);}
 | <R_fin>           {}
 }
 /*------------------------OPERACION Aplicable-----------------------------------*/
-void Est_aplicable(NArbol actual): //aplicable
+void Est_aplicable(Nodo_Arbol actual): //aplicable
 {}
 {
 <R_apl>Cuerpo_apli(actual) Est_sugerir(actual)
 }
-void Cuerpo_apli(NArbol actual):
+void Cuerpo_apli(Nodo_Arbol actual):
 {String resultado="";}
 {
 resultado=EXP_COMP()<R_fin>{actual.set_aplicable(resultado);}
 |<R_fin>
 }
 /*------------------------OPERACION Sugerir-----------------------------------*/
-void Est_sugerir(NArbol actual): //sugerir
+void Est_sugerir(Nodo_Arbol actual): //sugerir
 {}
 {
 <R_sug>Cuerpo_suger(actual) Est_restrin(actual)
 }
-void Cuerpo_suger():
+void Cuerpo_suger(Nodo_Arbol actual):
 {String mensaje="";}
 {
  mensaje=Etiqueta_ET()  <R_fin>  {actual.set_sugerir(mensaje);}
 |<R_fin>                         {}
 }
 /*------------------------OPERACION Restringir-----------------------------------*/
-void Est_restrin(NArbol actual): //restringir
+void Est_restrin(Nodo_Arbol actual): //restringir
 {}
 {
 <R_res>Cuerpo_restringir(actual) Est_requerido(actual)
 }
-void Cuerpo_restringir(NArbol actual):
+void Cuerpo_restringir(Nodo_Arbol actual):
 {String resultado="";}
 {
  resultado=EXP_COMP()   {actual.set_restringir(resultado);}
 |<R_fin>                {}
 }
 /*------------------------OPERACION Requerido-----------------------------------*/
-void Est_requerido(NArbol actual): //requerido
+void Est_requerido(Nodo_Arbol actual): //requerido
 {}
 {
 <R_req>Cuerpo_requerido(actual) Est_restrimen(actual) 
 }
-void cuerpo_requerido(NArbol actual):
+void Cuerpo_requerido(Nodo_Arbol actual):
 {}
 {
  <TRUE>     {actual.set_requerido();}
@@ -336,72 +332,72 @@ void cuerpo_requerido(NArbol actual):
 |<R_fin>    {}
 }
 /*------------------------OPERACION Restringir mensaje-----------------------------------*/
-void Est_restrimen(NArbol actual): //restringir mensaje 
+void Est_restrimen(Nodo_Arbol actual): //restringir mensaje 
 {}
 {
 <R_rsm>Cuerpo_resmensaje(actual) Est_resquemen(actual)
 }
-void cuerpo_resmensaje(NArbol actual):
+void Cuerpo_resmensaje(Nodo_Arbol actual):
 {String mensaje="";}
 {
 mensaje=Etiqueta_ET()  <R_fin>  {actual.set_men_rest(mensaje);}
 |<R_fin>                        {}
 }
 /*------------------------OPERACION Requerido mensaje-----------------------------------*/
-void Est_resquemen(NArbol actual): //requerido mensaje 
+void Est_resquemen(Nodo_Arbol actual): //requerido mensaje 
 {}
 {
     <R_rqm>cuerpo_requemen(actual) Est_predeter(actual)
 }
-String cuerpo_requemen(NArbol actual):
+String cuerpo_requemen(Nodo_Arbol actual):
 {String mensaje="";}
 {
 mensaje=Etiqueta_ET()  <R_fin>  {actual.set_men_reque(mensaje);}
 |<R_fin>{return "";}
 }
 /*------------------------OPERACION Predeterminado-----------------------------------*/
-void Est_predeter(NArbol actual): //predeterminado 
+void Est_predeter(Nodo_Arbol actual): //predeterminado 
 {}
 {
 <R_prd> Cuerpo_prede(actual) Est_repetir(actual)
 }
-void Cuerpo_prede(NArbol actual):
+void Cuerpo_prede(Nodo_Arbol actual):
 {String resultado="";}
 {
-resultado=EXP_COND      {actual.set_predeterminado(resultado);}
+resultado=EXP_LOG()    {actual.set_predeterminado(resultado);}
 |<R_fin>                {}
 }
 /*------------------------OPERACION repetir-----------------------------------*/
-void Est_repetir(NArbol actual): //repeticion 
+void Est_repetir(Nodo_Arbol actual): //repeticion 
 {}
 {
 <R_rep>Cuerpo_repetir(actual) Est_apariencia(actual)
 }
-void Cuerpo_repetir(NArbol actual):{
+void Cuerpo_repetir(Nodo_Arbol actual):{
 String resultado="";}
 {
   resultado = EXP_AR()  {actual.add_repetir(resultado);}
 | <R_fin>               {}
 }
 /*------------------------OPERACION apariencia-----------------------------------*/
-void Est_apariencia(NArbol actual): //apariencia 
+void Est_apariencia(Nodo_Arbol actual): //apariencia 
 {}
 {
 <R_apa>Cuerpo_aparien(actual) Est_Lectura(actual)
 }
-void Cuerpo_aparien(NArbol actual):
+void Cuerpo_aparien(Nodo_Arbol actual):
 {Token t;}
 {
 t=<T_ID><R_fin> {actual.set_apariencia(t.image);}
 <R_fin>         {}
 }
 /*------------------------OPERACION lectura-----------------------------------*/
-void Est_Lectura(NArbol actual):
+void Est_Lectura(Nodo_Arbol actual):
 {}
 {
 <R_lec> Cuerpo_lectura(actual) Est_multimed(actual)
 }
-void Cuerpo_lectura(NArbol actual):{
+void Cuerpo_lectura(Nodo_Arbol actual):{
 String resultado="";
 }
 {
@@ -411,46 +407,46 @@ String resultado="";
 | <R_fin>                       {}
 }
 /*------------------------OPERACION multimedia-----------------------------------*/
-void Est_multimed(NArbol actual):{
+void Est_multimed(Nodo_Arbol actual):{
 }
 {
 <R_mul>Cuerpo_multimed(actual) Est_codigoPRE(actual)
 }
-void Cuerpo_multimed(NArbol actual):
+void Cuerpo_multimed(Nodo_Arbol actual):
 {String resultado="";
  Token t;}
 {
- <R_MIMG>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                   Cuerpo_multimed(actual)
-|<R_MAUD>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                   Cuerpo_multimed(actual)
-|<R_MVID>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                   Cuerpo_multimed(actual)
-|<R_repro><IGU> resultado=Cuerpo_RE(){actual.Set_automul(resultado);}   Cuerpo_multimed(actual)       
+ <R_MIMG>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                         Cuerpo_multimed(actual)
+|<R_MAUD>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                         Cuerpo_multimed(actual)
+|<R_MVID>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                         Cuerpo_multimed(actual)
+|<R_repro><IGU> resultado=Cuerpo_RE(actual){actual.Set_automul(resultado);}   Cuerpo_multimed(actual)       
 |<R_fin>             {}
 }
-String Cuerpo_RE(NArbol actual):
+String Cuerpo_RE(Nodo_Arbol actual):
 {}
 {
 <TRUE>      {return "verdadero";}
 |<FALSE>    {return "falso";}
 }
 /*------------------------OPERACION Codigo PRE-----------------------------------*/
-void Est_codigoPRE(NArbol actual): //codigo pre 
+void Est_codigoPRE(Nodo_Arbol actual): //codigo pre 
 {}
 {
 <R_pre>Cuerpo_pre(actual) Est_codigoPOST(actual)
 }
-void Cuerpo_pre(NArbol actual):
-{String resultado="";}
+void Cuerpo_pre(Nodo_Arbol actual):
+{String mensaje="";}
 {
 mensaje=Etiqueta_ET()  <R_fin>  {actual.set_codigoPRE(mensaje);}
 |<R_fin>                        {}
 }
-void Est_codigoPOST(NArbol actual) //codigo post
+void Est_codigoPOST(Nodo_Arbol actual): //codigo post
 {}
 {
 <R_pos>Cuerpo_post(actual)
 }
-void Cuerpo_post(NArbol actual):
-{String resultado="";}
+void Cuerpo_post(Nodo_Arbol actual):
+{String mensaje="";}
 {
 mensaje=Etiqueta_ET()  <R_fin>  {actual.set_codigoPOS(mensaje);}
 |<R_fin>                        {}
@@ -488,8 +484,8 @@ String Est_MDP():
 String Est_ID():
 {String resultado="";}
 {
-   <PAI>resultado=EXP_AR<PAF>{return "("+resultado+")"}
-|   Var_ID()
+   <PAI>resultado=EXP_AR()<PAF>{return "("+resultado+")";}
+|   resultado=Var_ID(){return resultado;}
 }
 /*---------------------Operaciones de Logias---------------------- */
 String EXP_LOG(): //AND y OR
@@ -539,12 +535,12 @@ String EXP_COMP3(): //NOT
 {String resultado="";}
 {
   resultado=EXP_AR()            {return resultado;}  
-
+}
 /*---------------------Propuesta de ID---------------------- */
 String Etiqueta_ET() :
 {String Cad;String total="";}
 {
-  (Cad = ETIQ() {System.out.println(Cad);String total = total+Cad;})+ <EOF>{return total;}
+  (Cad = ETIQ() {System.out.println(Cad); total = total+Cad;})+ <EOF>{return total;}
 }
 String ETIQ() :
 {String Cad;
@@ -557,7 +553,7 @@ String ETIQ2() :
 {String Cad;
 String aux;}
 {
- Cad = T() aux = ETQI2() {Cad = Cad + aux;  return Cad;}
+ Cad = T() aux = ETIQ2() {Cad = Cad + aux;  return Cad;}
 | <EOF> {return "";}
 }
 

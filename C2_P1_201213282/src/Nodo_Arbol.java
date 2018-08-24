@@ -18,7 +18,7 @@ public class Nodo_Arbol {
     Arbol_Nogrupo Nodo_NG;
     Arbol_Grupo Nodo_Gr;
     ArrayList<Nodo_Arbol> lista_arbol;
-    boolean agrupacion, ciclo;
+    int agrupacion, ciclo;
 
     public Nodo_Arbol() {
         this.lista_arbol = new ArrayList();
@@ -26,7 +26,7 @@ public class Nodo_Arbol {
         this.tipo = "";
         this.Nodo_NG = new Arbol_Nogrupo();
         this.Nodo_Gr = new Arbol_Grupo();
-        agrupacion = ciclo = false;
+        agrupacion = ciclo = 0;
     }
 
     public void Add_Nodo_Arbol(Nodo_Arbol nodo) {
@@ -37,11 +37,11 @@ public class Nodo_Arbol {
         this.ID = id;
     }
 
-    public void set_agrupacion(boolean grupo) {
+    public void set_agrupacion(int grupo) {
         this.agrupacion = grupo;
     }
 
-    public void set_ciclo(boolean grupo) {
+    public void set_ciclo(int grupo) {
         this.ciclo = grupo;
     }
 
@@ -63,12 +63,22 @@ public class Nodo_Arbol {
         this.tipo = tipo.replace("«$", "");
     }
 
-    public boolean get_ciclo() {
+    public int get_ciclo() {
         return this.ciclo;
     }
 
-    public boolean get_agrupacion() {
+    public int get_agrupacion() {
         return this.agrupacion;
+    }
+
+    public int get_anidado() {
+        if (ciclo == 1 || agrupacion == 1) {
+            return 1;
+        } else if (ciclo == 0 && agrupacion == 0) {
+            return 0;
+        } else {
+            return -1;
+        }
     }
 
     /*----------------------------Acciones Arbol No grupo---------------------------------------*/
@@ -180,10 +190,15 @@ public class Nodo_Arbol {
     }
 
     public void add_repetir(String repetir) {
-        if (ciclo) {
+        if (ciclo == 1) {
             Nodo_Gr.add_repetir(repetir);
         } else {
 
         }
     }
+
+    public void set_apariencia(String apar) {
+
+    }
+
 }
