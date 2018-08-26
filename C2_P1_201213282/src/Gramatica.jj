@@ -24,21 +24,8 @@
 
 options {
   LOOKAHEAD = 1000;
-  CHOICE_AMBIGUITY_CHECK = 2;
-  OTHER_AMBIGUITY_CHECK = 1;
   STATIC = false;
-  DEBUG_PARSER = false;
-  DEBUG_LOOKAHEAD = false;
-  DEBUG_TOKEN_MANAGER = false;
-  ERROR_REPORTING = true;
-  JAVA_UNICODE_ESCAPE = false;
-  UNICODE_INPUT = false;
-  IGNORE_CASE = true;
-  USER_TOKEN_MANAGER = false;
-  USER_CHAR_STREAM = false;
-  BUILD_PARSER = true;
-  BUILD_TOKEN_MANAGER = true;
-  SANITY_CHECK = true;
+  IGNORE_CASE =true;
   FORCE_LA_CHECK = true;
 }
 
@@ -53,7 +40,7 @@ public class Gramatica {
     public void Gramatica(String arg){ 
     try{
      System.out.println("entro");
-     primero.set_ID("~RAIZ~");
+     primero.set_ID("~$RAIZ~$");
      Gramatica parser = new Gramatica(new BufferedReader(new FileReader("path.txt")));
      parser.Inicio(primero);
     }
@@ -67,13 +54,6 @@ public class Gramatica {
   }
 
 PARSER_END(Gramatica)
-SKIP:{
-" "
-|"\t"
-|"\n"
-|"\r"
-|"\f"
-}
 TOKEN:
 {
   	<MAS:"+">
@@ -90,7 +70,7 @@ TOKEN:
  |	<MAY:">">
  |      <DPUN:"..">
  |      <PUN:".">
- |      <R_fin:"$~">
+ |  <R_fin:"$/~$">
  |	<MOD:"mod">
  |	<DIV:"div">
  |	<ARR:"@[">
@@ -130,6 +110,33 @@ TOKEN :{
 |<R_Cici:"Iniciar Ciclo">
 |<R_Cicf:"Finalizar Ciclo">
 }
+
+TOKEN:
+{
+<R_tip:"~$tipo~$">
+|<R_idp:"~$idpregunta~$">
+|<R_eti:"~$etiqueta~$">
+|<R_par:"~$parametro~$">
+|<R_cal:"~$calculo~$">
+|<R_apl:"~$aplicable~$">
+|<R_sug:"~$sugerir~$">
+|<R_res:"~$restringir~$">
+|<R_req:"~$requerido~$">
+|<R_rsm:"~$restringirmsn~$">
+|<R_rqm:"~$requeridomsn~$">
+|<R_prd:"~$predeterminado~$">
+|<R_rep:"~$repeticion~$">
+|<R_mul:"~$multimedia~$">
+|<R_lec:"~$lectura~$">
+|<R_apa:"~$apariencia~$">
+|<R_pre:"~$codigo_pre~$">
+|<R_pos:"~$codigo_post~$">
+}
+SKIP:{
+" "
+| <"\r" | "\t" | " "|"\n"|"\f">
+|"\ufeff"
+}
 TOKEN :{
     <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
 |   <#LETTER: (["a"-"z","A"-"Z"])>
@@ -137,30 +144,9 @@ TOKEN :{
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
 |   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
-|   <T_Texto:(~["~","$","#","[","@","]","."," "])+>
+|   <T_Texto:(~["~","$","#","[","@"," ","]",".","\f","\n","\r"])+>
 }
 
-TOKEN:
-{
-<R_tip:"~tipo~$">
-|<R_idp:"~idpregunta~$">
-|<R_eti:"~etiqueta~$">
-|<R_par:"~parametro~$">
-|<R_cal:"~calculo~$">
-|<R_apl:"~aplicable~$">
-|<R_sug:"~sugerir~$">
-|<R_res:"~restringir~$">
-|<R_req:"~requerido~$">
-|<R_rsm:"~restringirmsn~$">
-|<R_rqm:"~requeridomsn~$">
-|<R_prd:"~predeterminado~$">
-|<R_rep:"~repeticion~$">
-|<R_mul:"~multimedia~$">
-|<R_lec:"~lectura~$">
-|<R_apa:"~apariencia~$">
-|<R_pre:"~codigo_pre~$">
-|<R_pos:"~codigo_post~$">
-}
 
 Nodo_Arbol Inicio(Nodo_Arbol arbol): 
 {}
@@ -543,21 +529,27 @@ String EXP_COMP3(): //NOT
 String Etiqueta_ET() :
 {String Cad;String total="";}
 {
-  (Cad = ETIQ() {System.out.println(Cad); total = total+Cad;})+ <EOF>{return total;}
+  total = ETIQ()Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;}
+}
+String Etiqueta_ET1() :
+{String Cad;String total="";}
+{
+  Cad = ETIQ(){total=total+Cad;} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;} 
+ |<EOF>{return "";}
 }
 String ETIQ() :
 {String Cad;
 String aux;}
 {
-Cad = T() {System.out.println("redujo"+Cad);} aux = ETIQ2() {Cad = Cad + aux;  return Cad;}
+Cad = T() {System.out.println("redujo"+Cad);} aux = ETIQ2() { System.out.println("1");Cad = Cad + aux;  return Cad;}
 }
 
 String ETIQ2() :
 {String Cad="";
 String aux="";}
 {
- {System.out.println("no retorna nada1");} Cad = T() aux = ETIQ2() {Cad = Cad + aux;  return Cad;}
-|{System.out.println("no retorna nada");} <EOF> {return "";}
+ Cad = T() aux = ETIQ2() {Cad = Cad + aux;  return Cad;}
+|<EOF> {return "";}
 }
 
 String T() :
