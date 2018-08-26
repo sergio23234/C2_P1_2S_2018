@@ -151,7 +151,7 @@ public class Principal extends javax.swing.JFrame {
     
     public void Analizar() {
        Nodo_Arbol lista1 =lista.leer_lista();
-               
+       System.out.println("Resultado"+lista1.ID);
     }
 
     private void Leer_archivo(String path) {

@@ -1,456 +1,456 @@
-tipo«$Iniciar Agrupacion$»
-idpregunta«$info1$»
-etiqueta«$Agrupación 1$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$texto$»
-idpregunta«$nombre$»
-etiqueta«$Cual es tu nombre?$»
-parametro«$cad_min=5 cad_fila= 1$»
-calculo«$$»
-aplicable«$$»
-sugerir«$Esta pregunta no se puede omitir$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$Ingrese un nombre$»
-requerido«$verdadero$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$fecha$»
-idpregunta«$hoyes$»
-etiqueta«$Que fecha es hoy?$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$hoy()$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$Nota$»
-idpregunta«$nota_dato$»
-etiqueta«$Se llenara dos arboles Binarios$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$finalizar Agrupacion$»
-idpregunta«$info1$»
-etiqueta«$$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$Iniciar Agrupacion$»
-idpregunta«$info2$»
-etiqueta«$Agrupación 2$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$Nota$»
-idpregunta«$arbol1$»
-etiqueta«$Se incio la instancia del primer Arbol?$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$abo1 = nuevo ArbolBinario();$»
-tipo«$Iniciar Ciclo$»
-idpregunta«$llenar1$»
-etiqueta«$Ciclo Arbol 1$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$entero $»
-idpregunta«$insertar1$»
-etiqueta«$Dame un numero @{color: #FFFF00, tam:15, negrilla }: { Mayor }@ a 1 
-y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$. >= 1 && . <= 20$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$verdadero$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$abo1.insertar (@);$»
-tipo«$finalizar ciclo$»
-idpregunta«$llenar1$»
-etiqueta«$$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$finalizar Agrupacion$»
-idpregunta«$info2$»
-etiqueta«$$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$iniciar agrupacion$»
-idpregunta«$info3$»
-etiqueta«$Agrupación 3$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$Nota$»
-idpregunta«$arbol2$»
-etiqueta«$Se incio la instancia del segundo arbol$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$abo2 = nuevo ArbolBinario();$»
-tipo«$Iniciar Ciclo$»
-idpregunta«$llenar2$»
-etiqueta«$$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$rango $»
-idpregunta«$insertar2$»
-etiqueta«$Dame un numero @{color: #FFFF00, tam:15, negrilla }: { Mayor }@ a 20
-y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30$»
-parametro«$iniciar =20 finalizar= 30$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$verdadero$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$abo2.insertar (@);$»
-tipo«$finalizar ciclo$»
-idpregunta«$llenar2$»
-etiqueta«$$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$finalizar Agrupacion$»
-idpregunta«$info3$»
-etiqueta«$$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$Iniciar Agrupacion $»
-idpregunta«$impresion$»
-etiqueta«$Salida De Resultados$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$Iniciar Ciclo$»
-idpregunta«$llenar3$»
-etiqueta«$$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$selecciona_uno elegir$»
-idpregunta«$impre_1$»
-etiqueta«$Que Arbol desea imprimir: 
+~tipo~$Iniciar Agrupacion$~
+~idpregunta~$info1$~
+~etiqueta~$Agrupación 1$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$texto$~
+~idpregunta~$nombre$~
+~etiqueta~$Cual es tu nombre?$~
+~parametro~$cad_min=5 cad_fila= 1$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$Esta pregunta no se puede omitir$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$Ingrese un nombre$~
+~requerido~$verdadero$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$fecha$~
+~idpregunta~$hoyes$~
+~etiqueta~$Que fecha es hoy?$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$hoy()$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$Nota$~
+~idpregunta~$nota_dato$~
+~etiqueta~$Se llenara dos arboles Binarios$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$finalizar Agrupacion$~
+~idpregunta~$info1$~
+~etiqueta~$$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$Iniciar Agrupacion$~
+~idpregunta~$info2$~
+~etiqueta~$Agrupación 2$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$Nota$~
+~idpregunta~$arbol1$~
+~etiqueta~$Se incio la instancia del primer Arbol?$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$abo1 = nuevo ArbolBinario();$~
+~tipo~$Iniciar Ciclo$~
+~idpregunta~$llenar1$~
+~etiqueta~$Ciclo Arbol 1$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$entero $~
+~idpregunta~$insertar1$~
+~etiqueta~$Dame un numero @{color: #FFFF00, tam:15, negrilla }: { Mayor }@ a 1 
+y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$. >= 1 && . <= 20$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$verdadero$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$abo1.insertar (@);$~
+~tipo~$finalizar ciclo$~
+~idpregunta~$llenar1$~
+~etiqueta~$$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$finalizar Agrupacion$~
+~idpregunta~$info2$~
+~etiqueta~$$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$iniciar agrupacion$~
+~idpregunta~$info3$~
+~etiqueta~$Agrupación 3$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$Nota$~
+~idpregunta~$arbol2$~
+~etiqueta~$Se incio la instancia del segundo arbol$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$abo2 = nuevo ArbolBinario();$~
+~tipo~$Iniciar Ciclo$~
+~idpregunta~$llenar2$~
+~etiqueta~$$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$rango $~
+~idpregunta~$insertar2$~
+~etiqueta~$Dame un numero @{color: #FFFF00, tam:15, negrilla }: { Mayor }@ a 20
+y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30$~
+~parametro~$iniciar =20 finalizar= 30$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$verdadero$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$abo2.insertar (@);$~
+~tipo~$finalizar ciclo$~
+~idpregunta~$llenar2$~
+~etiqueta~$$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$finalizar Agrupacion$~
+~idpregunta~$info3$~
+~etiqueta~$$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$Iniciar Agrupacion $~
+~idpregunta~$impresion$~
+~etiqueta~$Salida De Resultados$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$Iniciar Ciclo$~
+~idpregunta~$llenar3$~
+~etiqueta~$$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$selecciona_uno elegir$~
+~idpregunta~$impre_1$~
+~etiqueta~$Que Arbol desea imprimir: 
 1 - Imprimir el Arbol 1
-2 - Imprimir el Arbol 2$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$Nota$»
-idpregunta«$impreA$»
-etiqueta«$Se imprimira el Arbol #[impre_1]$»
-parametro«$$»
-calculo«$$»
-aplicable«$#[impre_1] = "a1"$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$imprimir (Preorden: Arbol " + #[impre_1]);
-abo1.imprimirPre ();$»
-tipo«$Nota$»
-idpregunta«$impreB$»
-etiqueta«$Se imprimira el Arbol #[impre_1]$»
-parametro«$$»
-calculo«$$»
-aplicable«$#[impre_1] = "a2"$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$imprimir (Preorden: Arbol " + #[impre_1]);
-abo2.imprimirPre ();$»
-tipo«$Nota$»
-idpregunta«$error$»
-etiqueta«$NO existe la Opcion #[impre_1]$»
-parametro«$$»
-calculo«$$»
-aplicable«$#[impre_1] >= "a1" && #[impre_1] <= "a2"$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$finalizar ciclo$»
-idpregunta«$llenar3$»
-etiqueta«$$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
-tipo«$finalizar Agrupacion$»
-idpregunta«$impresion$»
-etiqueta«$$»
-parametro«$$»
-calculo«$$»
-aplicable«$$»
-sugerir«$$»
-restringir«$$»
-restringirmsn«$$»
-requeridomsn«$$»
-requerido«$$»
-predeterminado«$$»
-repeticion«$$»
-apariencia«$$»
-lectura«$$»
-multimedia«$$»
-codigo_pre«$$»
-codigo_post«$$»
+2 - Imprimir el Arbol 2$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$Nota$~
+~idpregunta~$impreA$~
+~etiqueta~$Se imprimira el Arbol #[impre_1]$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$#[impre_1] = "a1"$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$imprimir (Preorden: Arbol " + #[impre_1]);
+abo1.imprimirPre ();$~
+~tipo~$Nota$~
+~idpregunta~$impreB$~
+~etiqueta~$Se imprimira el Arbol #[impre_1]$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$#[impre_1] = "a2"$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$imprimir (Preorden: Arbol " + #[impre_1]);
+abo2.imprimirPre ();$~
+~tipo~$Nota$~
+~idpregunta~$error$~
+~etiqueta~$NO existe la Opcion #[impre_1]$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$#[impre_1] >= "a1" && #[impre_1] <= "a2"$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$finalizar ciclo$~
+~idpregunta~$llenar3$~
+~etiqueta~$$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~
+~tipo~$finalizar Agrupacion$~
+~idpregunta~$impresion$~
+~etiqueta~$$~
+~parametro~$$~
+~calculo~$$~
+~aplicable~$$~
+~sugerir~$$~
+~restringir~$$~
+~restringirmsn~$$~
+~requeridomsn~$$~
+~requerido~$$~
+~predeterminado~$$~
+~repeticion~$$~
+~apariencia~$$~
+~lectura~$$~
+~multimedia~$$~
+~codigo_pre~$$~
+~codigo_post~$$~

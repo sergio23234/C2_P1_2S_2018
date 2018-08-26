@@ -23,7 +23,7 @@
 
 
 options {
-  LOOKAHEAD = 10;
+  LOOKAHEAD = 1000;
   CHOICE_AMBIGUITY_CHECK = 2;
   OTHER_AMBIGUITY_CHECK = 1;
   STATIC = false;
@@ -33,7 +33,7 @@ options {
   ERROR_REPORTING = true;
   JAVA_UNICODE_ESCAPE = false;
   UNICODE_INPUT = false;
-  IGNORE_CASE = false;
+  IGNORE_CASE = true;
   USER_TOKEN_MANAGER = false;
   USER_CHAR_STREAM = false;
   BUILD_PARSER = true;
@@ -44,24 +44,24 @@ options {
 
 PARSER_BEGIN(Gramatica)
 import java.util.Stack;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class Gramatica {
     Stack<Nodo_Arbol> Pila = new Stack();
-    Nodo_Arbol Gramatica(String arg[]){ 
-     try{
+    Nodo_Arbol primero = new Nodo_Arbol();
+    public void Gramatica(String arg){ 
+    try{
      System.out.println("entro");
-     Nodo_Arbol primero = new Nodo_Arbol();
-     primero.set_ID("«RAIZ»");
-     Gramatica parser = new Gramatica(System.in);
+     primero.set_ID("~RAIZ~");
+     Gramatica parser = new Gramatica(new BufferedReader(new FileReader("path.txt")));
      parser.Inicio(primero);
-    return  primero;
     }
-    catch(ParseException e)
+    catch(Exception e)
     {
     
       System.out.println(e.getMessage());
       System.out.println("Analizador: Se han encontrado errores en el analisis.");
-      return null;
     }	  
   }
   }
@@ -72,6 +72,7 @@ SKIP:{
 |"\t"
 |"\n"
 |"\r"
+|"\f"
 }
 TOKEN:
 {
@@ -89,33 +90,12 @@ TOKEN:
  |	<MAY:">">
  |      <DPUN:"..">
  |      <PUN:".">
- |      <R_fin:"»$">
+ |      <R_fin:"$~">
  |	<MOD:"mod">
  |	<DIV:"div">
  |	<ARR:"@[">
  |	<NCO:"#[">
  |      <COR:"]">
-}
-TOKEN:
-{
-<R_tip:"Tipo«$">
-|<R_idp:"idpregunta«$">
-|<R_eti:"etiqueta«$">
-|<R_par:"parametro«$">
-|<R_cal:"calculo«$">
-|<R_apl:"aplicable«$">
-|<R_sug:"sugerir«$">
-|<R_res:"restringir«$">
-|<R_req:"requerido«$">
-|<R_rsm:"restringirmsn«$">
-|<R_rqm:"requeridomsn«$">
-|<R_prd:"predeterminado«$">
-|<R_rep:"repeticion«$">
-|<R_mul:"multimedia«$">
-|<R_lec:"lectura«$">
-|<R_apa:"apariencia«$">
-|<R_pre:"codigo_pre«$">
-|<R_pos:"codigo_post«$">
 }
 TOKEN :{
 <R_MIMG:"Media_imagen">
@@ -157,8 +137,31 @@ TOKEN :{
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
 |   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
-|   <T_Texto:(~["<",">","$","#","[","@","]","."])+>
+|   <T_Texto:(~["~","$","#","[","@","]","."," "])+>
 }
+
+TOKEN:
+{
+<R_tip:"~tipo~$">
+|<R_idp:"~idpregunta~$">
+|<R_eti:"~etiqueta~$">
+|<R_par:"~parametro~$">
+|<R_cal:"~calculo~$">
+|<R_apl:"~aplicable~$">
+|<R_sug:"~sugerir~$">
+|<R_res:"~restringir~$">
+|<R_req:"~requerido~$">
+|<R_rsm:"~restringirmsn~$">
+|<R_rqm:"~requeridomsn~$">
+|<R_prd:"~predeterminado~$">
+|<R_rep:"~repeticion~$">
+|<R_mul:"~multimedia~$">
+|<R_lec:"~lectura~$">
+|<R_apa:"~apariencia~$">
+|<R_pre:"~codigo_pre~$">
+|<R_pos:"~codigo_post~$">
+}
+
 Nodo_Arbol Inicio(Nodo_Arbol arbol): 
 {}
 {
@@ -213,7 +216,7 @@ t=<T_MUL>   {actual.Set_fichero(t.image);}
 void Estruct_ID(Nodo_Arbol actual):
 {}
 {
-  <R_idp> Cuerpo_ID(actual) Est_eti(actual){}
+  <R_idp> Cuerpo_ID(actual) {System.out.println("entro1");}Est_eti(actual)
 }
 
 void Cuerpo_ID(Nodo_Arbol actual):
@@ -225,7 +228,7 @@ void Cuerpo_ID(Nodo_Arbol actual):
 void Est_eti(Nodo_Arbol actual):
 {String etiqueta="";}
 {
-  <R_eti> etiqueta=Etiqueta_ET(){actual.Set_etiqueta(etiqueta);} Est_param(actual)
+  <R_eti> {System.out.println("entro2");}etiqueta=Etiqueta_ET(){System.out.println("QUE PASO");}<R_fin>{actual.Set_etiqueta(etiqueta);} Est_param(actual)
 }
 
 /*--------------- Estructura PARAMETRO---------------- */
@@ -546,21 +549,21 @@ String ETIQ() :
 {String Cad;
 String aux;}
 {
-Cad = T() aux = ETIQ2() {Cad = Cad + aux;  return Cad;}
+Cad = T() {System.out.println("redujo"+Cad);} aux = ETIQ2() {Cad = Cad + aux;  return Cad;}
 }
 
 String ETIQ2() :
-{String Cad;
-String aux;}
+{String Cad="";
+String aux="";}
 {
- Cad = T() aux = ETIQ2() {Cad = Cad + aux;  return Cad;}
-| <EOF> {return "";}
+ {System.out.println("no retorna nada1");} Cad = T() aux = ETIQ2() {Cad = Cad + aux;  return Cad;}
+|{System.out.println("no retorna nada");} <EOF> {return "";}
 }
 
 String T() :
 {Token t;}
 {
-t = <T_Texto> {return t.image + " ";}
+{System.out.println("entro3");}t = <T_Texto>{return t.image + " ";}
 |<NCO> t=<T_ID> <COR> {return t.image + " ";}
 | <PUN> {return "yo ";}
 | <DPUN> {return "padre";}
