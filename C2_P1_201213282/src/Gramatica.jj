@@ -23,7 +23,7 @@
 
 
 options {
-  LOOKAHEAD = 1000;
+  LOOKAHEAD = 10;
   STATIC = false;
   IGNORE_CASE =true;
   FORCE_LA_CHECK = true;
@@ -70,12 +70,13 @@ TOKEN:
  |	<MAY:">">
  |      <DPUN:"..">
  |      <PUN:".">
- |  <R_fin:"$/~$">
  |	<MOD:"mod">
  |	<DIV:"div">
- |	<ARR:"@[">
- |	<NCO:"#[">
+ |	<ARR:"@">
+ |	<NCO:"#">
+ |      <CORI:"[">
  |      <COR:"]">
+ |  <R_fin:"@[/]@">
 }
 TOKEN :{
 <R_MIMG:"Media_imagen">
@@ -113,24 +114,24 @@ TOKEN :{
 
 TOKEN:
 {
-<R_tip:"<$tipo$>">
-|<R_idp:"<$idpregunta$>">
-|<R_eti:"<$etiqueta$>">
-|<R_par:"<$parametro$>">
-|<R_cal:"<$calculo$>">
-|<R_apl:"<$aplicable$>">
-|<R_sug:"<$sugerir$>">
-|<R_res:"<$restringir$>">
-|<R_req:"<$requerido$>">
-|<R_rsm:"<$restringirmsn$>">
-|<R_rqm:"<$requeridomsn$>">
-|<R_prd:"<$predeterminado$>">
-|<R_rep:"<$repeticion$>">
-|<R_mul:"<$multimedia$>">
-|<R_lec:"<$lectura$>">
-|<R_apa:"<$apariencia$>">
-|<R_pre:"<$codigo_pre$>">
-|<R_pos:"<$codigo_post$>">
+<R_tip:"@[tipo]@">
+|<R_idp:"@[idpregunta]@">
+|<R_eti:"@[etiqueta]@">
+|<R_par:"@[parametro]@">
+|<R_cal:"@[calculo]@">
+|<R_apl:"@[aplicable]@">
+|<R_sug:"@[sugerir]@">
+|<R_res:"@[restringir]@">
+|<R_req:"@[requerido]@">
+|<R_rsm:"@[restringirmsn]@">
+|<R_rqm:"@[requeridomsn]@">
+|<R_prd:"@[predeterminado]@">
+|<R_rep:"@[repeticion]@">
+|<R_mul:"@[multimedia]@">
+|<R_lec:"@[lectura]@">
+|<R_apa:"@[apariencia]@">
+|<R_pre:"@[codigo_pre]@">
+|<R_pos:"@[codigo_post]@">
 }
 SKIP:{
 "\ufeff"
@@ -146,7 +147,7 @@ TOKEN :{
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
 |   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
-|   <T_Texto:(~["~","$","#","[","@"," ","]",".","\f","\n","\r","\ufeff"])+>
+|   <T_Texto:(~["#","[","@"," ","]",".","\t"," ","\f","\r","\n","\ufeff"])+>
 }
 
 
@@ -216,7 +217,7 @@ void Cuerpo_ID(Nodo_Arbol actual):
 void Est_eti(Nodo_Arbol actual):
 {String etiqueta="";}
 {
-  <R_eti> {System.out.println("entro2");}etiqueta=Etiqueta_ET(){System.out.println("QUE PASO");}<R_fin>{actual.Set_etiqueta(etiqueta);} Est_param(actual)
+  <R_eti> {System.out.println("entro2");}etiqueta=Etiqueta_ET() {actual.Set_etiqueta(etiqueta);} Est_param(actual)
 }
 
 /*--------------- Estructura PARAMETRO---------------- */
@@ -531,13 +532,13 @@ String EXP_COMP3(): //NOT
 String Etiqueta_ET() :
 {String Cad;String total="";}
 {
-  total = ETIQ()Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;}
+  total = ETIQ() {System.out.println("Si redujo etiqueta");} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;}
 }
 String Etiqueta_ET1() :
 {String Cad;String total="";}
 {
-  Cad = ETIQ(){total=total+Cad;} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;} 
- |<EOF>{return "";}
+  //Cad = ETIQ(){total=total+Cad;} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;} 
+<R_fin>{return "";}
 }
 String ETIQ() :
 {String Cad;
@@ -550,15 +551,17 @@ String ETIQ2() :
 {String Cad="";
 String aux="";}
 {
- Cad = T() aux = ETIQ2() {Cad = Cad + aux;  return Cad;}
-|<EOF> {return "";}
+//Cad = T() <EOF>{Cad = Cad + aux;  return Cad;}
+<ESPACIO>{return " ";}
+|<EOF> {return aux;}
 }
 
 String T() :
 {Token t;}
 {
-{System.out.println("entro3");}t = <T_Texto>{return t.image + " ";}
-|<NCO> t=<T_ID> <COR> {return t.image + " ";}
+{System.out.println("entro3");}
+t = <T_Texto>{return t.image + " ";}
+|<NCO><CORI> t=<T_ID> <COR> {return t.image + " ";}
 | <PUN> {return "yo ";}
 | <DPUN> {return "padre";}
 }

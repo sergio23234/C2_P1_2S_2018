@@ -60,24 +60,24 @@ public class lista_celdas {
         lista.add(new Nodo_celda("multimedia"));
         lista.add(new Nodo_celda("codigo_pre"));
         lista.add(new Nodo_celda("codigo_post"));
-        matriz[0]="~tipo~$";
-        matriz[1]="~idpregunta~$";
-        matriz[2]="~etiqueta~$";
-        matriz[3]="~parametro~$";
-        matriz[4]="~calculo~$";
-        matriz[5]="~aplicable~$";
-        matriz[6]="~sugerir~$";
-        matriz[7]="~restringir~$";
-        matriz[8]="~restringirmsn~$";
-        matriz[9]="~requeridomsn~$";
-        matriz[10]="~requerido~$";
-        matriz[11]="~predeterminado~$";
-        matriz[12]="~repeticion~$";
-        matriz[13]="~apariencia~$";
-        matriz[14]="~lectura~$";
-        matriz[15]="~multimedia~$";
-        matriz[16]="~codigo_pre~$";
-        matriz[17]="~codigo_post~$";
+        matriz[0]="@[tipo]@";
+        matriz[1]="@[idpregunta]@";
+        matriz[2]="@[etiqueta]@";
+        matriz[3]="@[parametro]@";
+        matriz[4]="@[calculo]@";
+        matriz[5]="@[aplicable]@";
+        matriz[6]="@[sugerir]@";
+        matriz[7]="@[restringir]@";
+        matriz[8]="@[restringirmsn]@";
+        matriz[9]="@[requeridomsn]@";
+        matriz[10]="@[requerido]@";
+        matriz[11]="@[predeterminado]@";
+        matriz[12]="@[repeticion]@";
+        matriz[13]="@[apariencia]@";
+        matriz[14]="@[lectura]@";
+        matriz[15]="@[multimedia]@";
+        matriz[16]="@[codigo_pre]@";
+        matriz[17]="@[codigo_post]@";
     }
 
     public void llenar_Vacias() {
@@ -152,7 +152,7 @@ public class lista_celdas {
                 linea ="";
                 for(int j=0;j<lista.size();j++){
                     Nodo_celda nodo=lista.get(j);
-                  String es_nodo = matriz[j]+nodo.celdas.get(i)+"$~\n";
+                  String es_nodo = matriz[j]+nodo.celdas.get(i)+"@[/]@\r\n";
                   linea = linea +es_nodo;
                 }
                 BR.write(linea);
