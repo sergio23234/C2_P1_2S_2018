@@ -147,19 +147,21 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int R_pos = 69;
   /** RegularExpression Id. */
-  int T_ID = 73;
+  int ESPACIO = 73;
   /** RegularExpression Id. */
-  int LETTER = 74;
+  int T_ID = 74;
   /** RegularExpression Id. */
-  int INTEGER = 75;
+  int LETTER = 75;
   /** RegularExpression Id. */
-  int DOUBLE = 76;
+  int INTEGER = 76;
   /** RegularExpression Id. */
-  int DIGIT = 77;
+  int DOUBLE = 77;
   /** RegularExpression Id. */
-  int T_MUL = 78;
+  int DIGIT = 78;
   /** RegularExpression Id. */
-  int T_Texto = 79;
+  int T_MUL = 79;
+  /** RegularExpression Id. */
+  int T_Texto = 80;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -236,9 +238,10 @@ public interface GramaticaConstants {
     "\"~$apariencia~$\"",
     "\"~$codigo_pre~$\"",
     "\"~$codigo_post~$\"",
-    "\" \"",
-    "<token of kind 71>",
     "\"\\ufeff\"",
+    "\"\\r\"",
+    "\"\\n\"",
+    "<ESPACIO>",
     "<T_ID>",
     "<LETTER>",
     "<INTEGER>",

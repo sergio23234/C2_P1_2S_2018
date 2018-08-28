@@ -113,38 +113,40 @@ TOKEN :{
 
 TOKEN:
 {
-<R_tip:"~$tipo~$">
-|<R_idp:"~$idpregunta~$">
-|<R_eti:"~$etiqueta~$">
-|<R_par:"~$parametro~$">
-|<R_cal:"~$calculo~$">
-|<R_apl:"~$aplicable~$">
-|<R_sug:"~$sugerir~$">
-|<R_res:"~$restringir~$">
-|<R_req:"~$requerido~$">
-|<R_rsm:"~$restringirmsn~$">
-|<R_rqm:"~$requeridomsn~$">
-|<R_prd:"~$predeterminado~$">
-|<R_rep:"~$repeticion~$">
-|<R_mul:"~$multimedia~$">
-|<R_lec:"~$lectura~$">
-|<R_apa:"~$apariencia~$">
-|<R_pre:"~$codigo_pre~$">
-|<R_pos:"~$codigo_post~$">
+<R_tip:"<$tipo$>">
+|<R_idp:"<$idpregunta$>">
+|<R_eti:"<$etiqueta$>">
+|<R_par:"<$parametro$>">
+|<R_cal:"<$calculo$>">
+|<R_apl:"<$aplicable$>">
+|<R_sug:"<$sugerir$>">
+|<R_res:"<$restringir$>">
+|<R_req:"<$requerido$>">
+|<R_rsm:"<$restringirmsn$>">
+|<R_rqm:"<$requeridomsn$>">
+|<R_prd:"<$predeterminado$>">
+|<R_rep:"<$repeticion$>">
+|<R_mul:"<$multimedia$>">
+|<R_lec:"<$lectura$>">
+|<R_apa:"<$apariencia$>">
+|<R_pre:"<$codigo_pre$>">
+|<R_pos:"<$codigo_post$>">
 }
 SKIP:{
-" "
-| <"\r" | "\t" | " "|"\n"|"\f">
-|"\ufeff"
+"\ufeff"
+|"\r"
+|"\n"
+|"\u00a0"
 }
 TOKEN :{
-    <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
+ <ESPACIO: ( "\t" |" "|"\f")+>
+|    <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
 |   <#LETTER: (["a"-"z","A"-"Z"])>
 |   <INTEGER: (<DIGIT>)+>
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
 |   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
-|   <T_Texto:(~["~","$","#","[","@"," ","]",".","\f","\n","\r"])+>
+|   <T_Texto:(~["~","$","#","[","@"," ","]",".","\f","\n","\r","\ufeff"])+>
 }
 
 

@@ -1,6 +1,8 @@
 ﻿~$tipo~$Iniciar Agrupacion$/~$
 ~$idpregunta~$info1$/~$
-~$etiqueta~$Agrupación1$/~$ ~$parametro~$$/~$
+~$etiqueta~$Inci$/~$
+~$etiqueta~$Iniciar Agrupacion$/~$
+~$parametro~$$/~$
 ~$calculo~$$/~$
 ~$aplicable~$$/~$
 ~$sugerir~$$/~$
