@@ -384,7 +384,7 @@ void Cuerpo_aparien(Nodo_Arbol actual):
 {Token t;}
 {
 t=<T_ID><R_fin> {actual.set_apariencia(t.image);}
-<R_fin>         {}
+|<R_fin>         {}
 }
 /*------------------------OPERACION lectura-----------------------------------*/
 void Est_Lectura(Nodo_Arbol actual):
@@ -565,7 +565,7 @@ String T() :
 {
 {System.out.println("entro3");}
 t = <T_Texto>{return t.image + " ";}
-|<NCO><CORI> t=<T_ID> <COR> {return t.image + " ";}
+|<NCO>{System.out.println("reconocio #");}<CORI> t=<T_ID> <COR> {return t.image + " ";}
 | <PUN> {return "yo ";}
 | <DPUN> {return "padre";}
 |t=<INTEGER>{return t.image;}
