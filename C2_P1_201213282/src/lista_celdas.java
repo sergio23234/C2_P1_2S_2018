@@ -50,9 +50,9 @@ public class lista_celdas {
         lista.add(new Nodo_celda("aplicable"));
         lista.add(new Nodo_celda("sugerir"));
         lista.add(new Nodo_celda("restringir"));
+        lista.add(new Nodo_celda("requerido"));
         lista.add(new Nodo_celda("restringirmsn"));
         lista.add(new Nodo_celda("requeridomsn"));
-        lista.add(new Nodo_celda("requerido"));
         lista.add(new Nodo_celda("predeterminado"));
         lista.add(new Nodo_celda("repeticion"));
         lista.add(new Nodo_celda("apariencia"));
@@ -68,9 +68,9 @@ public class lista_celdas {
         matriz[5]="@[aplicable]@";
         matriz[6]="@[sugerir]@";
         matriz[7]="@[restringir]@";
-        matriz[8]="@[restringirmsn]@";
-        matriz[9]="@[requeridomsn]@";
-        matriz[10]="@[requerido]@";
+        matriz[8]="@[requerido]@";
+        matriz[9]="@[restringirmsn]@";
+        matriz[10]="@[requeridomsn]@";
         matriz[11]="@[predeterminado]@";
         matriz[12]="@[repeticion]@";
         matriz[13]="@[apariencia]@";

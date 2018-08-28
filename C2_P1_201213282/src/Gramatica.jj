@@ -138,10 +138,13 @@ SKIP:{
 |"\r"
 |"\n"
 |"\u00a0"
+|" "
+|"\f"
+|"\t"
 }
 TOKEN :{
- <ESPACIO: ( "\t" |" "|"\f")+>
-|    <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
+ //<ESPACIO: ( "\t" |" "|"\f")+>
+    <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
 |   <#LETTER: (["a"-"z","A"-"Z"])>
 |   <INTEGER: (<DIGIT>)+>
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
@@ -217,7 +220,7 @@ void Cuerpo_ID(Nodo_Arbol actual):
 void Est_eti(Nodo_Arbol actual):
 {String etiqueta="";}
 {
-  <R_eti> {System.out.println("entro2");}etiqueta=Etiqueta_ET() {actual.Set_etiqueta(etiqueta);} Est_param(actual)
+  <R_eti> {System.out.println("entro2");}etiqueta=Etiqueta_ET()<R_fin> {actual.Set_etiqueta(etiqueta);} Est_param(actual)
 }
 
 /*--------------- Estructura PARAMETRO---------------- */
@@ -532,19 +535,20 @@ String EXP_COMP3(): //NOT
 String Etiqueta_ET() :
 {String Cad;String total="";}
 {
-  total = ETIQ() {System.out.println("Si redujo etiqueta");} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;}
+  total = T() {System.out.println("Si redujo etiqueta");} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;}
 }
 String Etiqueta_ET1() :
 {String Cad;String total="";}
 {
-  //Cad = ETIQ(){total=total+Cad;} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;} 
-<R_fin>{return "";}
+ Cad = T(){total=total+Cad;} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;} 
+|<EOF>{return "";}
 }
 String ETIQ() :
 {String Cad;
 String aux;}
 {
-Cad = T() {System.out.println("redujo"+Cad);} aux = ETIQ2() { System.out.println("1");Cad = Cad + aux;  return Cad;}
+//<ESPACIO>{return " ";}
+Cad=T(){return Cad;}
 }
 
 String ETIQ2() :
@@ -552,8 +556,8 @@ String ETIQ2() :
 String aux="";}
 {
 //Cad = T() <EOF>{Cad = Cad + aux;  return Cad;}
-<ESPACIO>{return " ";}
-|<EOF> {return aux;}
+//<ESPACIO>{return " ";}
+<EOF> {return aux;}
 }
 
 String T() :
@@ -564,6 +568,7 @@ t = <T_Texto>{return t.image + " ";}
 |<NCO><CORI> t=<T_ID> <COR> {return t.image + " ";}
 | <PUN> {return "yo ";}
 | <DPUN> {return "padre";}
+|t=<INTEGER>{return t.image;}
 }
 /*------------------------VAR ID---------------------------------*/
 String Var_ID():{

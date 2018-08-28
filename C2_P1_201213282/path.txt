@@ -1,6 +1,6 @@
 ﻿@[tipo]@Iniciar Agrupacion@[/]@
 @[idpregunta]@info1@[/]@
-@[etiqueta]@Agrupación @[/]@
+@[etiqueta]@Agrupación 1 254@[/]@
 @[parametro]@@[/]@
 @[calculo]@@[/]@
 @[aplicable]@@[/]@
