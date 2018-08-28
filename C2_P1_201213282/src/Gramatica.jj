@@ -143,8 +143,8 @@ SKIP:{
 |"\t"
 }
 TOKEN :{
- //<ESPACIO: ( "\t" |" "|"\f")+>
-    <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
+<ESPACIO: ( "\t" |" "|"\f")+>
+|   <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
 |   <#LETTER: (["a"-"z","A"-"Z"])>
 |   <INTEGER: (<DIGIT>)+>
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
@@ -535,13 +535,13 @@ String EXP_COMP3(): //NOT
 String Etiqueta_ET() :
 {String Cad;String total="";}
 {
-  total = T() {System.out.println("Si redujo etiqueta");} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;}
+  (total = T() {System.out.println("Si redujo etiqueta");} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;}) 
 }
 String Etiqueta_ET1() :
 {String Cad;String total="";}
 {
- Cad = T(){total=total+Cad;} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;} 
-|<EOF>{return "";}
+ Cad = T()(total=Etiqueta_ET1(){total=Cad+total; return total;})* {return Cad;} 
+|<ESPACIO>(total=Etiqueta_ET1(){return " "+total;})* {return " ";}
 }
 String ETIQ() :
 {String Cad;

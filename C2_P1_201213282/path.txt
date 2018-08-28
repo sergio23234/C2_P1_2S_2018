@@ -1,16 +1,16 @@
 ﻿@[tipo]@Iniciar Agrupacion@[/]@
 @[idpregunta]@info1@[/]@
-@[etiqueta]@Agrupación 1 254@[/]@
+@[etiqueta]@Agrupación 1@[/]@
 @[parametro]@@[/]@
 @[calculo]@@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
-@[repeticion]@@[/]@
+@[repeticion]@ @[/]@
 @[apariencia]@@[/]@
 @[lectura]@@[/]@
 @[multimedia]@@[/]@
@@ -24,9 +24,9 @@
 @[aplicable]@@[/]@
 @[sugerir]@Esta pregunta no se puede omitir@[/]@
 @[restringir]@@[/]@
+@[requerido]@verdadero@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@Ingrese un nombre@[/]@
-@[requerido]@verdadero@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -42,9 +42,9 @@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@hoy()@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -60,9 +60,9 @@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -78,9 +78,9 @@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -96,9 +96,9 @@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -114,9 +114,9 @@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -132,9 +132,9 @@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -151,9 +151,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@. >= 1 && . <= 20@[/]@
+@[requerido]@verdadero@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@verdadero@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -169,9 +169,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -187,9 +187,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -205,9 +205,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -223,9 +223,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -241,9 +241,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -260,9 +260,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@verdadero@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@verdadero@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -278,9 +278,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -296,9 +296,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -314,9 +314,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -332,9 +332,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -352,9 +352,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -370,9 +370,9 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@[/]@
 @[aplicable]@#[impre_1] = "a1"@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -389,9 +389,9 @@ abo1.imprimirPre ();@[/]@
 @[aplicable]@#[impre_1] = "a2"@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -408,9 +408,9 @@ abo2.imprimirPre ();@[/]@
 @[aplicable]@#[impre_1] >= "a1" && #[impre_1] <= "a2"@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -426,9 +426,9 @@ abo2.imprimirPre ();@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@
@@ -444,9 +444,9 @@ abo2.imprimirPre ();@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@[/]@
 @[restringir]@@[/]@
+@[requerido]@@[/]@
 @[restringirmsn]@@[/]@
 @[requeridomsn]@@[/]@
-@[requerido]@@[/]@
 @[predeterminado]@@[/]@
 @[repeticion]@@[/]@
 @[apariencia]@@[/]@

@@ -149,19 +149,21 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int R_pos = 70;
   /** RegularExpression Id. */
-  int T_ID = 78;
+  int ESPACIO = 78;
   /** RegularExpression Id. */
-  int LETTER = 79;
+  int T_ID = 79;
   /** RegularExpression Id. */
-  int INTEGER = 80;
+  int LETTER = 80;
   /** RegularExpression Id. */
-  int DOUBLE = 81;
+  int INTEGER = 81;
   /** RegularExpression Id. */
-  int DIGIT = 82;
+  int DOUBLE = 82;
   /** RegularExpression Id. */
-  int T_MUL = 83;
+  int DIGIT = 83;
   /** RegularExpression Id. */
-  int T_Texto = 84;
+  int T_MUL = 84;
+  /** RegularExpression Id. */
+  int T_Texto = 85;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -246,6 +248,7 @@ public interface GramaticaConstants {
     "\" \"",
     "\"\\f\"",
     "\"\\t\"",
+    "<ESPACIO>",
     "<T_ID>",
     "<LETTER>",
     "<INTEGER>",
