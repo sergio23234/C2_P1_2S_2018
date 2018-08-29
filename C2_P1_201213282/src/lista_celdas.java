@@ -152,7 +152,15 @@ public class lista_celdas {
                 linea ="";
                 for(int j=0;j<lista.size();j++){
                     Nodo_celda nodo=lista.get(j);
-                  String es_nodo = matriz[j]+nodo.celdas.get(i)+"@[/]@\r\n";
+                    String es_nodo;
+                    if(j==2)
+                    {
+                        es_nodo = matriz[j]+"@\"@"+nodo.celdas.get(i)+"@\"@ @[/]@\r\n";
+                    }
+                    else{
+                        es_nodo = matriz[j]+nodo.celdas.get(i)+"@[/]@\r\n";
+                  
+                    }
                   linea = linea +es_nodo;
                 }
                 BR.write(linea);

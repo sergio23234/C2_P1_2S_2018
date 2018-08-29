@@ -77,7 +77,8 @@ TOKEN:
  |	<NCO:"#">
  |      <CORI:"[">
  |      <COR:"]">
- |  <R_fin:"@[/]@">
+ |      <R_fin:"@[/]@">
+ |      <R_TEX:"@\"@">
 }
 SKIP:{
 "\ufeff"
@@ -143,7 +144,7 @@ TOKEN :{
 |   <INTEGER: (<DIGIT>)+>
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
-|   <T_Texto:(~["#","[","@"," ","]",".","\t"," ","\f","\r","\n","\ufeff"]|<T_ID>)+>
+|   <T_Texto:(<R_TEX>(~["#","[","@"," ","]",".","\ufeff"])+<R_TEX>)>
 |   <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
 |   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
 }
@@ -214,7 +215,7 @@ void Estruct_ID(Nodo_Arbol actual):
 void Cuerpo_ID(Nodo_Arbol actual):
 {Token ID;}
 {
-    ID=<T_Texto><R_fin>{actual.set_ID(token.image);}
+    ID=<T_ID><R_fin>{actual.set_ID(token.image);}
 }
 /*--------------- Estructura etiqueta---------------- */
 void Est_eti(Nodo_Arbol actual):
@@ -388,7 +389,7 @@ void Est_apariencia(Nodo_Arbol actual): //apariencia
 void Cuerpo_aparien(Nodo_Arbol actual):
 {Token t;}
 {
-t=<T_Texto><R_fin> {actual.set_apariencia(t.image);}
+t=<T_ID><R_fin> {actual.set_apariencia(t.image);}
 |<R_fin>         {}
 }
 /*------------------------OPERACION lectura-----------------------------------*/

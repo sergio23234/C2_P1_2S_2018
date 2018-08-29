@@ -155,7 +155,7 @@ System.out.println("vacio");
   }
 
   final public void Cuerpo_ID(Nodo_Arbol actual) throws ParseException {Token ID;
-    ID = jj_consume_token(T_Texto);
+    ID = jj_consume_token(T_ID);
     jj_consume_token(R_fin);
 actual.set_ID(token.image);
   }
@@ -496,7 +496,7 @@ actual.add_repetir(resultado);
 
   final public void Cuerpo_aparien(Nodo_Arbol actual) throws ParseException {Token t;
     if (jj_2_57(10)) {
-      t = jj_consume_token(T_Texto);
+      t = jj_consume_token(T_ID);
       jj_consume_token(R_fin);
 actual.set_apariencia(t.image);
     } else if (jj_2_58(10)) {
@@ -1780,13 +1780,6 @@ String var;
     finally { jj_save(105, xla); }
   }
 
-  private boolean jj_3_7()
- {
-    if (jj_scan_token(R_Fech)) return true;
-    if (jj_scan_token(R_fin)) return true;
-    return false;
-  }
-
   private boolean jj_3_6()
  {
     if (jj_scan_token(R_Cond)) return true;
@@ -2641,7 +2634,7 @@ String var;
 
   private boolean jj_3R_32()
  {
-    if (jj_scan_token(T_Texto)) return true;
+    if (jj_scan_token(T_ID)) return true;
     if (jj_scan_token(R_fin)) return true;
     return false;
   }
@@ -2757,7 +2750,7 @@ String var;
 
   private boolean jj_3_57()
  {
-    if (jj_scan_token(T_Texto)) return true;
+    if (jj_scan_token(T_ID)) return true;
     if (jj_scan_token(R_fin)) return true;
     return false;
   }
@@ -2895,6 +2888,13 @@ String var;
   private boolean jj_3_55()
  {
     if (jj_3R_8()) return true;
+    return false;
+  }
+
+  private boolean jj_3_7()
+ {
+    if (jj_scan_token(R_Fech)) return true;
+    if (jj_scan_token(R_fin)) return true;
     return false;
   }
 
@@ -3107,7 +3107,7 @@ String var;
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[86];
+    boolean[] la1tokens = new boolean[87];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -3127,7 +3127,7 @@ String var;
         }
       }
     }
-    for (int i = 0; i < 86; i++) {
+    for (int i = 0; i < 87; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
