@@ -153,10 +153,18 @@ public class lista_celdas {
                 for(int j=0;j<lista.size();j++){
                     Nodo_celda nodo=lista.get(j);
                     String es_nodo;
-                    if(j==2)
+                    if(j==0)
                     {
-                        es_nodo = matriz[j]+"@\"@"+nodo.celdas.get(i)+"@\"@ @[/]@\r\n";
+                        es_nodo = matriz[j]+nodo.celdas.get(i).trim() +"@[/]@\r\n";
                     }
+                    else if(j==1)
+                    {
+                        es_nodo = matriz[j]+"@\"@"+nodo.celdas.get(i).trim()+"@\"@@[/]@\r\n";
+                    }
+                    else if(j!=2&&j!=6&&j!=9&&j!=10&&j!=16&&j!=17)
+                    {
+                        es_nodo = matriz[j]+nodo.celdas.get(i).replace(" ","") +"@[/]@\r\n";
+                    } 
                     else{
                         es_nodo = matriz[j]+nodo.celdas.get(i)+"@[/]@\r\n";
                   

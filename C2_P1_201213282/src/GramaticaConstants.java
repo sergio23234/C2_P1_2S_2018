@@ -161,11 +161,11 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int DIGIT = 83;
   /** RegularExpression Id. */
-  int T_Texto = 84;
+  int T_ID = 84;
   /** RegularExpression Id. */
-  int T_ID = 85;
+  int T_MUL = 85;
   /** RegularExpression Id. */
-  int T_MUL = 86;
+  int T_Texto = 86;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -256,9 +256,9 @@ public interface GramaticaConstants {
     "<INTEGER>",
     "<DOUBLE>",
     "<DIGIT>",
-    "<T_Texto>",
     "<T_ID>",
     "<T_MUL>",
+    "<T_Texto>",
   };
 
 }
