@@ -54,6 +54,7 @@ public class Gramatica {
   }
 
 PARSER_END(Gramatica)
+
 TOKEN:
 {
   	<MAS:"+">
@@ -78,6 +79,15 @@ TOKEN:
  |      <COR:"]">
  |  <R_fin:"@[/]@">
 }
+SKIP:{
+"\ufeff"
+|"\r"
+|"\n"
+|"\u00a0"
+|" "
+|"\f"
+|"\t"
+}
 TOKEN :{
 <R_MIMG:"Media_imagen">
 |<R_MVID:"Media_video">
@@ -90,9 +100,9 @@ TOKEN :{
 |<FALSE:"falso">
 |<R_OF:"Finalizar">
 |<R_OI:"Iniciar">
-|<R_CMIN:"Cad_min">
-|<R_CMAX:"Cad_max">
-|<R_CFIL:"Cad_fil">
+|<R_CMIN:"cad_min">
+|<R_CMAX:"cad_max">
+|<R_CFIL:"cad_fila">
 |<R_Text:"Texto">
 |<R_Ente:"Entero">
 |<R_Deci:"Decimal">
@@ -110,11 +120,7 @@ TOKEN :{
 |<R_AgrF:"Finalizar agrupacion">
 |<R_Cici:"Iniciar Ciclo">
 |<R_Cicf:"Finalizar Ciclo">
-}
-
-TOKEN:
-{
-<R_tip:"@[tipo]@">
+|<R_tip:"@[tipo]@">
 |<R_idp:"@[idpregunta]@">
 |<R_eti:"@[etiqueta]@">
 |<R_par:"@[parametro]@">
@@ -132,26 +138,17 @@ TOKEN:
 |<R_apa:"@[apariencia]@">
 |<R_pre:"@[codigo_pre]@">
 |<R_pos:"@[codigo_post]@">
-}
-SKIP:{
-"\ufeff"
-|"\r"
-|"\n"
-|"\u00a0"
-|" "
-|"\f"
-|"\t"
-}
-TOKEN :{
-<ESPACIO: ( "\t" |" "|"\f")+>
-|   <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
+|    <ESPACIO: ( "\t" |" "|"\f")+>
 |   <#LETTER: (["a"-"z","A"-"Z"])>
 |   <INTEGER: (<DIGIT>)+>
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
+|   <T_Texto:(~["#","[","@"," ","]",".","\t"," ","\f","\r","\n","\ufeff"]|<T_ID>)+>
+|   <T_ID:<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*>
 |   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
-|   <T_Texto:(~["#","[","@"," ","]",".","\t"," ","\f","\r","\n","\ufeff"])+>
 }
+
+
 
 
 Nodo_Arbol Inicio(Nodo_Arbol arbol): 
@@ -162,13 +159,16 @@ Nodo_Arbol Inicio(Nodo_Arbol arbol):
 void Contenido(Nodo_Arbol arbol) ://Inicio del Cuerpo Tipo
 {   Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
-<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
+ContenidoP(arbol){System.out.println("llego al arbol");} (ContenidoP(arbol))*{}
+//<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
 }
+
 void ContenidoP(Nodo_Arbol arbol):
 {Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
-<R_tip>Inicial_Cont(arbol_1){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} 
-|<EOF>{}
+//<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
+<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
+
 }
 void Inicial_Cont(Nodo_Arbol arbol):
 {}
@@ -208,13 +208,13 @@ t=<T_MUL>   {actual.Set_fichero(t.image);}
 void Estruct_ID(Nodo_Arbol actual):
 {}
 {
-  <R_idp> Cuerpo_ID(actual) {System.out.println("entro1");}Est_eti(actual)
+  <R_idp> Cuerpo_ID(actual) Est_eti(actual)
 }
 
 void Cuerpo_ID(Nodo_Arbol actual):
 {Token ID;}
 {
-    ID=<T_ID><R_fin>{actual.set_ID(token.image);}
+    ID=<T_Texto><R_fin>{actual.set_ID(token.image);}
 }
 /*--------------- Estructura etiqueta---------------- */
 void Est_eti(Nodo_Arbol actual):
@@ -227,14 +227,14 @@ void Est_eti(Nodo_Arbol actual):
 void Est_param(Nodo_Arbol actual): //
 {}
 {
-<R_par> Cuerpo_param(actual) Est_calcular(actual)
+<R_par> {System.out.println("entro aqui parama");} Cuerpo_param(actual) Est_calcular(actual)
 }
 void Cuerpo_param(Nodo_Arbol actual):
 {String Respuesta="";}
 {
  <R_OP>     <IGU>   PARAM1(actual)                                   // Opcion  = Param1(){}
-|<R_OI>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_min(Respuesta);}    PARAM2(actual)// Iniciar = EXP
-|<R_OF>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_max(Respuesta);}    PARAM2(actual)// Finalizar = EXP
+|<R_OI>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_min(Respuesta);}    PARAM21(actual)// Iniciar = EXP
+|<R_OF>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_max(Respuesta);}    PARAM21(actual)// Finalizar = EXP
 |<R_CMIN>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_min(Respuesta);}      PARAM3(actual)// C_min = num 
 |<R_CMAX>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_max(Respuesta);}      PARAM3(actual)// C_max = num
 |<R_CFIL>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_fil(Respuesta);}      PARAM3(actual)// C_FIl = num
@@ -248,6 +248,11 @@ void PARAM1(Nodo_Arbol actual):
 |   <C_VF>{actual.add_opc(0);}
 }
 //parametro de rango
+void PARAM21(Nodo_Arbol actual):
+{}
+{
+ (<ESPACIO>)* PARAM2(actual)
+}
 void PARAM2(Nodo_Arbol actual):
 {String resultado="";}
 {
@@ -383,7 +388,7 @@ void Est_apariencia(Nodo_Arbol actual): //apariencia
 void Cuerpo_aparien(Nodo_Arbol actual):
 {Token t;}
 {
-t=<T_ID><R_fin> {actual.set_apariencia(t.image);}
+t=<T_Texto><R_fin> {actual.set_apariencia(t.image);}
 |<R_fin>         {}
 }
 /*------------------------OPERACION lectura-----------------------------------*/
@@ -535,14 +540,15 @@ String EXP_COMP3(): //NOT
 String Etiqueta_ET() :
 {String Cad;String total="";}
 {
-  (total = T() {System.out.println("Si redujo etiqueta");} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;}) 
+  total = T() {System.out.println("Si redujo etiqueta");} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;} 
 }
 String Etiqueta_ET1() :
 {String Cad;String total="";}
 {
- Cad = T()(total=Etiqueta_ET1(){total=Cad+total; return total;})* {return Cad;} 
-|<ESPACIO>(total=Etiqueta_ET1(){return " "+total;})* {return " ";}
+ Cad = T()(LOOKAHEAD(200) total=Etiqueta_ET1(){total=Cad+total; return total;})* {return Cad;} 
+|<ESPACIO>(LOOKAHEAD(200) total=Etiqueta_ET1(){return " "+total;})* {return " ";}
 }
+/*
 String ETIQ() :
 {String Cad;
 String aux;}
@@ -559,7 +565,7 @@ String aux="";}
 //<ESPACIO>{return " ";}
 <EOF> {return aux;}
 }
-
+*/
 String T() :
 {Token t;}
 {
@@ -576,7 +582,7 @@ Token t;
 String var;
 }
 {
-    t=<INTEGER> {return t.image;}
+    LOOKAHEAD(200) t=<INTEGER> {return t.image;}
 |   t=<DOUBLE>  {return t.image;}
 |   var=T()     {return var;}  
 }

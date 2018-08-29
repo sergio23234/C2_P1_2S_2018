@@ -1,6 +1,6 @@
 ﻿@[tipo]@Iniciar Agrupacion@[/]@
 @[idpregunta]@info1@[/]@
-@[etiqueta]@Agrupación 1@[/]@
+@[etiqueta]@Agrupación 1 cual es @[/]@
 @[parametro]@@[/]@
 @[calculo]@@[/]@
 @[aplicable]@@[/]@
@@ -19,7 +19,7 @@
 @[tipo]@texto@[/]@
 @[idpregunta]@nombre@[/]@
 @[etiqueta]@Cual es tu nombre?@[/]@
-@[parametro]@cad_min=5 cad_fila= 1@[/]@
+@[parametro]@cad_min =5 cad_fila = 1@[/]@
 @[calculo]@@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@Esta pregunta no se puede omitir@[/]@
