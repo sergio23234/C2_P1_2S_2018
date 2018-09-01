@@ -78,7 +78,6 @@ TOKEN:
  |      <CORI:"[">
  |      <COR:"]">
  |      <R_fin:"@[/]@">
- |      <R_TEX:"@\"@">
 }
 SKIP:{
 "\ufeff"
@@ -144,11 +143,27 @@ TOKEN :{
 |   <INTEGER: (<DIGIT>)+>
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
 |   <#DIGIT: ["0"-"9"]>
-|   <T_ID:(<R_TEX>(<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*)<R_TEX>)>
+|   <T_ID:(<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*)>
 |   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
-|   <T_Texto:((~["#","[","@"," ","]","\n"," ","\r",".","\ufeff"])+)>
-}
 
+}
+<T_Texto1> SKIP:
+{
+"\r"
+|"\n"
+|"\t"
+|"\f"
+|"\u00a0"
+|"\ufeff"
+}
+<T_Texto1> TOKEN:
+{
+<T_Texto:"@\"@" {System.out.println("redujo1");}>:DEFAULT
+}
+<T_Texto1> MORE:
+{
+<~["@",".","#","[","]"," "]>{System.out.println("redujo");}
+}
 
 
 
@@ -215,7 +230,7 @@ void Estruct_ID(Nodo_Arbol actual):
 void Cuerpo_ID(Nodo_Arbol actual):
 {Token ID;}
 {
-    ID=<T_ID><R_fin>{String imagen = token.image; actual.set_ID(imagen.replace("@\"@",""));}
+    ID=<T_ID><R_fin>{String imagen = token.image; actual.set_ID(imagen);}
 }
 /*--------------- Estructura etiqueta---------------- */
 void Est_eti(Nodo_Arbol actual):
@@ -536,7 +551,7 @@ String EXP_COMP3(): //NOT
 String Etiqueta_ET() :
 {String Cad;String total="";}
 {
-  total = T() {System.out.println("Si redujo etiqueta");} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;} 
+  {System.out.println("llego");}total = T() {System.out.println("Si redujo etiqueta");} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;} 
 }
 String Etiqueta_ET1() :
 {String Cad;String total="";}
@@ -548,8 +563,7 @@ String Etiqueta_ET1() :
 String T() :
 {Token t;}
 {
-{System.out.println("entro3");}
-t = <T_Texto>{return t.image + " ";}
+    t = <T_Texto>{System.out.println("redujo"); return t.image + " ";}
 |<NCO>{System.out.println("reconocio #");}<CORI> t=<T_ID> <COR> {return t.image + " ";}
 | <PUN> {return "yo ";}
 | <DPUN> {return "padre";}
