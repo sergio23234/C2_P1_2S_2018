@@ -53,31 +53,31 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int R_MIMG = 29;
   /** RegularExpression Id. */
-  int R_MVID = 30;
+  int R_CMIN = 30;
   /** RegularExpression Id. */
-  int R_MAUD = 31;
+  int R_CMAX = 31;
   /** RegularExpression Id. */
-  int R_repro = 32;
+  int R_CFIL = 32;
   /** RegularExpression Id. */
-  int R_OP = 33;
+  int R_MVID = 33;
   /** RegularExpression Id. */
-  int C_VF = 34;
+  int R_MAUD = 34;
   /** RegularExpression Id. */
-  int C_SN = 35;
+  int R_repro = 35;
   /** RegularExpression Id. */
-  int TRUE = 36;
+  int R_OP = 36;
   /** RegularExpression Id. */
-  int FALSE = 37;
+  int C_VF = 37;
   /** RegularExpression Id. */
-  int R_OF = 38;
+  int C_SN = 38;
   /** RegularExpression Id. */
-  int R_OI = 39;
+  int TRUE = 39;
   /** RegularExpression Id. */
-  int R_CMIN = 40;
+  int FALSE = 40;
   /** RegularExpression Id. */
-  int R_CMAX = 41;
+  int R_OF = 41;
   /** RegularExpression Id. */
-  int R_CFIL = 42;
+  int R_OI = 42;
   /** RegularExpression Id. */
   int R_Text = 43;
   /** RegularExpression Id. */
@@ -208,6 +208,9 @@ public interface GramaticaConstants {
     "\"\\f\"",
     "\"\\t\"",
     "\"Media_imagen\"",
+    "\"cad_min\"",
+    "\"cad_max\"",
+    "\"cad_fila\"",
     "\"Media_video\"",
     "\"Media_audio\"",
     "\"reproduccion\"",
@@ -218,9 +221,6 @@ public interface GramaticaConstants {
     "\"falso\"",
     "\"Finalizar\"",
     "\"Iniciar\"",
-    "\"cad_min\"",
-    "\"cad_max\"",
-    "\"cad_fila\"",
     "\"Texto\"",
     "\"Entero\"",
     "\"Decimal\"",

@@ -23,7 +23,7 @@
 
 
 options {
-  LOOKAHEAD = 10;
+  LOOKAHEAD = 100;
   STATIC = false;
   IGNORE_CASE =true;
   FORCE_LA_CHECK = true;
@@ -96,6 +96,9 @@ SKIP:{
 }
 TOKEN :{
 <R_MIMG:"Media_imagen">
+|<R_CMIN:"cad_min">
+|<R_CMAX:"cad_max">
+|<R_CFIL:"cad_fila">
 |<R_MVID:"Media_video">
 |<R_MAUD:"Media_audio">
 |<R_repro:"reproduccion">
@@ -106,9 +109,6 @@ TOKEN :{
 |<FALSE:"falso">
 |<R_OF:"Finalizar">
 |<R_OI:"Iniciar">
-|<R_CMIN:"cad_min">
-|<R_CMAX:"cad_max">
-|<R_CFIL:"cad_fila">
 |<R_Text:"Texto">
 |<R_Ente:"Entero">
 |<R_Deci:"Decimal">
@@ -249,29 +249,35 @@ void Est_eti(Nodo_Arbol actual):
 
 /*--------------- Estructura PARAMETRO---------------- */
 void Est_param(Nodo_Arbol actual): //
-{}
+{Token t;}
 {
-<R_par> Cuerpo_param(actual) Est_calcular(actual)
+t=<R_par>{System.out.println("saco parametro"+t.image);} Cuerpo_param(actual) Est_calcular(actual)
 }
 void Cuerpo_param(Nodo_Arbol actual):
 {String Respuesta="";
-System.out.println("llego");}
+    Token t;}
 {
- <R_OP>     <IGU>   PARAM1(actual)                                   // Opcion  = Param1(){}
-|<R_OI>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_min(Respuesta); System.out.println("entro aqui parama1");}    PARAM2(actual)// Iniciar = EXP
-|<R_OF>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_max(Respuesta); System.out.println("entro aqui parama2");}    PARAM2(actual)// Finalizar = EXP
-|<R_CMIN>   <IGU>   {System.out.println("entro aqui parama3");}Respuesta=EXP_AR(){actual.add_cad_min(Respuesta);   System.out.println("entro aqui parama3");}      PARAM3(actual)// C_min = num 
-|<R_CMAX>   <IGU>   {System.out.println("entro aqui parama4");}Respuesta=EXP_AR(){actual.add_cad_max(Respuesta);   System.out.println("entro aqui parama4");}      PARAM3(actual)// C_max = num
-|<R_CFIL>   <IGU>   {System.out.println("entro aqui parama5");}Respuesta=EXP_AR(){actual.add_cad_fil(Respuesta);   System.out.println("entro aqui parama5");}      PARAM3(actual)// C_FIl = num
-|<T_Texto> {System.out.println("entro aqui parama6");}
-|<R_fin>    {}
+<R_fin>    {}
+|t=<R_OP>     <IGU>   PARAM1(actual)                                   // Opcion  = Param1(){}
+|t=<R_OI>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_min(Respuesta); System.out.println("entro aqui parama1");}     (PARAM2(actual))+// Iniciar = EXP
+|t=<R_OF>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_max(Respuesta); System.out.println("entro aqui parama2");}     (PARAM2(actual))+// Finalizar = EXP
+|t=<R_CMIN>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_min(Respuesta);   System.out.println("entro aqui parama3");}     (PARAM3(actual))+// C_min = num 
+|t=<R_CMAX>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_max(Respuesta);   System.out.println("entro aqui parama4");}     (PARAM3(actual))+// C_max = num
+|t=<R_CFIL>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_fil(Respuesta);   System.out.println("entro aqui parama5");}     (PARAM3(actual))+// C_FIl = num
+}
+String respuesta_param():
+{String respuesta;
+System.out.println("entro");}
+{
+
+<IGU> respuesta=EXP_AR(){return "";}
 }
 //parametro1 V_F o S_N
 void PARAM1(Nodo_Arbol actual):
 {}
 {
-    <C_SN>{actual.add_opc(1);}
-|   <C_VF>{actual.add_opc(0);}
+    <C_SN><R_fin>{actual.add_opc(1);}
+|   <C_VF><R_fin>{actual.add_opc(0);}
 }
 
 void PARAM2(Nodo_Arbol actual):
@@ -279,16 +285,16 @@ void PARAM2(Nodo_Arbol actual):
 {
  <R_OF> <IGU> resultado=EXP_AR(){actual.add_rango_max(resultado);} PARAM2(actual)
 |<R_OI> <IGU> resultado=EXP_AR(){actual.add_rango_min(resultado);} PARAM2(actual)
-|<EOF>  
+|<R_fin>  
 }
 //parametro de texto
 void PARAM3(Nodo_Arbol actual):
 {String resultado ="";}
 {
-<R_CMIN><IGU> resultado=EXP_AR(){actual.add_cad_min(resultado);} PARAM3(actual)
-|<R_CMAX><IGU> resultado=EXP_AR(){actual.add_cad_max(resultado);} PARAM3(actual)
-|<R_CFIL><IGU> resultado=EXP_AR(){actual.add_cad_fil(resultado);} PARAM3(actual)
-|<EOF>{}
+ <R_CMIN><IGU> resultado=EXP_AR(){actual.add_cad_min(resultado);} 
+|<R_CMAX><IGU> resultado=EXP_AR(){actual.add_cad_max(resultado);} 
+|<R_CFIL><IGU> resultado=EXP_AR(){actual.add_cad_fil(resultado);} 
+|<R_fin>{}
 }
 
 /*------------------------OPERACION CALCULAR-----------------------------------*/
@@ -477,30 +483,28 @@ String EXP_AR(): //SUMA Y RESTA
 {String resultado="";
  String var1="";}
 {
-  var1=Est_MD() resultado=EXP_ARP()    {return var1+resultado;}
+  var1=Est_MD() (resultado=EXP_ARP(){var1=var1+resultado;})*    {return var1;}
 }
 String EXP_ARP():
 {String resultado="";
  String var1="";}
 {
-  <MAS> var1=Est_MD() resultado=EXP_ARP()   {var1="+"+var1; return var1+resultado;}
-| <MEN> var1=Est_MD() resultado=EXP_ARP()   {var1="-"+var1; return var1+resultado;}
-| <EOF>                                     {return "";}
+  <MAS> var1=Est_MD() {var1="+"+var1; return var1;}
+| <MEN> var1=Est_MD() {var1="-"+var1; return var1;}
 }
 String Est_MD(): //MULTIPLICACION Y DIVISION
 {   String resultado="";
     String var1="";}
 {
-  var1=Est_ID() resultado=Est_MDP(){return var1+resultado;}
+  var1=Est_ID() (resultado=Est_MDP(){var1= var1+resultado;})* {return var1;}
 }
 String Est_MDP():
 {String resultado="";
  String var1="";}
 {
-  <POR> var1=Est_ID() resultado=EXP_ARP()   {var1="*"+var1; return var1+resultado;}
-| <DIV> var1=Est_ID() resultado=EXP_ARP()   {var1="/"+var1; return var1+resultado;}
-| <MOD> var1=Est_ID() resultado=EXP_ARP()   {var1="%"+var1; return var1+resultado;}
-| <EOF>                                     {return "";}
+  <POR> var1=Est_ID()   {var1="*"+var1; return var1;}
+| <DIV> var1=Est_ID()   {var1="/"+var1; return var1;}
+| <MOD> var1=Est_ID()   {var1="%"+var1; return var1;}
 }
 String Est_ID():
 {String resultado="";}
@@ -512,15 +516,14 @@ String Est_ID():
 String EXP_LOG(): //AND y OR
 {   String resultado="";
     String var1="";}{
-  var1=Est_NOT() resultado=EXP_LOGP()     {return var1+resultado;}
+  var1=Est_NOT() (resultado=EXP_LOGP() {var1=var1+resultado;})* {return var1;}
 }
 String EXP_LOGP():
 {   String resultado="";
     String var1="";}
 {
-  <AND> var1=Est_NOT() resultado=EXP_LOGP()   {resultado="&&"+var1+resultado; return resultado;}
-| <OR>  var1=Est_NOT() resultado=EXP_LOGP()   {resultado="||"+var1+resultado; return resultado;}
-| <EOF>                                         {return "";}
+  <AND> var1=Est_NOT()      {resultado="&&"+var1; return resultado;}
+| <OR>  var1=Est_NOT()      {resultado="||"+var1; return resultado;}
 }
 String Est_NOT(): //NOT
 {String resultado="";}
@@ -573,10 +576,10 @@ String Etiqueta_ET1() :
 String T() :
 {Token t;}
 {
-   <T_Texto2> t = <T_Texto>{System.out.println(t.image+"redujo esto"); return t.image + " ";}
+ <T_Texto2> t = <T_Texto>{System.out.println(t.image+"redujo esto"); return t.image + " ";}
 |t=<T_var> {return t.image + " ";}
-| <PUN> {return "yo ";}
-| <DPUN> {return "padre";}
+|<PUN> {return "yo ";}
+|<DPUN> {return "padre";}
 |t=<INTEGER>{return t.image;}
 |t=<DOUBLE>  {return t.image;}
 |<ESPACIO>{return " ";}

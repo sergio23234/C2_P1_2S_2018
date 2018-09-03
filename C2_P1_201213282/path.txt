@@ -1,4 +1,4 @@
-@[tipo]@Iniciar Agrupacion@[/]@
+﻿@[tipo]@Iniciar Agrupacion@[/]@
 @[idpregunta]@info1@[/]@
 @[etiqueta]@@"@Agrupación 1@"@@[/]@
 @[parametro]@@[/]@
@@ -19,7 +19,7 @@
 @[tipo]@texto@[/]@
 @[idpregunta]@nombre@[/]@
 @[etiqueta]@@"@Cual es tu nombre?@"@@[/]@
-@[parametro]@ cad_min =5 cad_fila= 1@[/]@
+@[parametro]@ Cad_min = 5+4*3 cad_fila=12@[/]@
 @[calculo]@@[/]@
 @[aplicable]@@[/]@
 @[sugerir]@@"@Esta pregunta no se puede omitir@"@@[/]@
