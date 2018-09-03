@@ -170,7 +170,7 @@ TOKEN :{
 }
 <T_Texto1> MORE:
 {
-<~["@",".","#","[","]"," "]>{System.out.println("redujo");}
+<~["@",".","#","[","]"," "]>
 }
 
 
@@ -183,7 +183,7 @@ Nodo_Arbol Inicio(Nodo_Arbol arbol):
 void Contenido(Nodo_Arbol arbol) ://Inicio del Cuerpo Tipo
 {   Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
-ContenidoP(arbol){System.out.println("llego al arbol");} (ContenidoP(arbol))*{}
+{Pila.push(arbol);} ContenidoP(arbol) (ContenidoP(arbol))*{}
 //<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
 }
 
@@ -191,8 +191,16 @@ void ContenidoP(Nodo_Arbol arbol):
 {Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
 //<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
-<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
-
+<R_tip>Inicial_Cont(arbol_1){Pila.peek().Add_Nodo_Arbol(arbol_1);
+if(arbol_1.get_anidado()!=0){     
+    if(arbol_1.get_anidado()==1){
+        Pila.push(arbol_1); 
+        ContenidoP(Pila.peek());
+    }
+    else if(arbol_1.get_anidado()<0){
+        System.out.println("salida");
+        ContenidoP(Pila.pop());} }
+} 
 }
 void Inicial_Cont(Nodo_Arbol arbol):
 {}
@@ -226,7 +234,7 @@ void Cuerpo_mul(Nodo_Arbol actual):
 {Token t;}
 {
 t=<T_MUL>   {actual.Set_fichero(t.image);}
-|<EOF>      {System.out.println("vacio");}
+|<EOF>      {}
 }
 /*--------------- Estructura ID---------------- */
 void Estruct_ID(Nodo_Arbol actual):
@@ -238,20 +246,20 @@ void Estruct_ID(Nodo_Arbol actual):
 void Cuerpo_ID(Nodo_Arbol actual):
 {Token ID;}
 {
-    ID=<T_ID><R_fin>{String imagen = token.image; actual.set_ID(imagen);}
+    ID=<T_ID> <R_fin>{String imagen = ID.image; actual.set_ID(imagen);}
 }
 /*--------------- Estructura etiqueta---------------- */
 void Est_eti(Nodo_Arbol actual):
 {String etiqueta="";}
 {
-  <R_eti> {System.out.println("entro2");}etiqueta=Etiqueta_ET()<R_fin> {actual.Set_etiqueta(etiqueta);} Est_param(actual)
+  <R_eti> etiqueta=Etiqueta_ET()<R_fin> {actual.Set_etiqueta(etiqueta);} Est_param(actual)
 }
 
 /*--------------- Estructura PARAMETRO---------------- */
 void Est_param(Nodo_Arbol actual): //
 {Token t;}
 {
-t=<R_par>{System.out.println("saco parametro"+t.image);} Cuerpo_param(actual) Est_calcular(actual)
+t=<R_par> Cuerpo_param(actual) Est_calcular(actual)
 }
 void Cuerpo_param(Nodo_Arbol actual):
 {String Respuesta="";
@@ -259,19 +267,13 @@ void Cuerpo_param(Nodo_Arbol actual):
 {
 <R_fin>    {}
 |t=<R_OP>     <IGU>   PARAM1(actual)                                   // Opcion  = Param1(){}
-|t=<R_OI>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_min(Respuesta); System.out.println("entro aqui parama1");}     (PARAM2(actual))+// Iniciar = EXP
-|t=<R_OF>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_max(Respuesta); System.out.println("entro aqui parama2");}     (PARAM2(actual))+// Finalizar = EXP
-|t=<R_CMIN>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_min(Respuesta);   System.out.println("entro aqui parama3");}     (PARAM3(actual))+// C_min = num 
-|t=<R_CMAX>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_max(Respuesta);   System.out.println("entro aqui parama4");}     (PARAM3(actual))+// C_max = num
-|t=<R_CFIL>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_fil(Respuesta);   System.out.println("entro aqui parama5");}     (PARAM3(actual))+// C_FIl = num
+|t=<R_OI>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_min(Respuesta); }     (PARAM2(actual))+// Iniciar = EXP
+|t=<R_OF>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_max(Respuesta); }     (PARAM2(actual))+// Finalizar = EXP
+|t=<R_CMIN>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_min(Respuesta);   }     (PARAM3(actual))+// C_min = num 
+|t=<R_CMAX>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_max(Respuesta);   }     (PARAM3(actual))+// C_max = num
+|t=<R_CFIL>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_fil(Respuesta);   }     (PARAM3(actual))+// C_FIl = num
 }
-String respuesta_param():
-{String respuesta;
-System.out.println("entro");}
-{
 
-<IGU> respuesta=EXP_AR(){return "";}
-}
 //parametro1 V_F o S_N
 void PARAM1(Nodo_Arbol actual):
 {}
@@ -354,8 +356,8 @@ void Est_requerido(Nodo_Arbol actual): //requerido
 void Cuerpo_requerido(Nodo_Arbol actual):
 {}
 {
- <TRUE>     {actual.set_requerido();}
-|<FALSE>    {}
+ <TRUE><R_fin>      {actual.set_requerido();}
+|<FALSE><R_fin>     {}
 |<R_fin>    {}
 }
 /*------------------------OPERACION Restringir mensaje-----------------------------------*/
@@ -376,11 +378,11 @@ void Est_resquemen(Nodo_Arbol actual): //requerido mensaje
 {
     <R_rqm>cuerpo_requemen(actual) Est_predeter(actual)
 }
-String cuerpo_requemen(Nodo_Arbol actual):
+void cuerpo_requemen(Nodo_Arbol actual):
 {String mensaje="";}
 {
 mensaje=Etiqueta_ET()  <R_fin>  {actual.set_men_reque(mensaje);}
-|<R_fin>{return "";}
+|<R_fin>{}
 }
 /*------------------------OPERACION Predeterminado-----------------------------------*/
 void Est_predeter(Nodo_Arbol actual): //predeterminado 
@@ -389,10 +391,11 @@ void Est_predeter(Nodo_Arbol actual): //predeterminado
 <R_prd> Cuerpo_prede(actual) Est_repetir(actual)
 }
 void Cuerpo_prede(Nodo_Arbol actual):
-{String resultado="";}
+{String resultado=""; Token t;}
 {
-resultado=EXP_LOG()    {actual.set_predeterminado(resultado);}
-|<R_fin>                {}
+resultado=EXP_LOG() <R_fin>   {actual.set_predeterminado(resultado);}
+|t=<T_ID><PAI><PAF> <R_fin>  {actual.set_predeterminado(t.image+"()");}
+|<R_fin>                        {}
 }
 /*------------------------OPERACION repetir-----------------------------------*/
 void Est_repetir(Nodo_Arbol actual): //repeticion 
@@ -564,7 +567,7 @@ String EXP_COMP3(): //NOT
 String Etiqueta_ET() :
 {String Cad;String total="";}
 {
-  {System.out.println("llego");}total = T() {System.out.println("Si redujo etiqueta");} Cad=Etiqueta_ET1(){System.out.println(Cad); total = total+Cad; return total;} 
+  total = T() Cad=Etiqueta_ET1(){ total = total+Cad; return total;} 
 }
 String Etiqueta_ET1() :
 {String Cad;String total="";}
@@ -574,9 +577,10 @@ String Etiqueta_ET1() :
 }
 //total=Etiqueta_ET1()
 String T() :
-{Token t;}
+{Token t;
+}
 {
- <T_Texto2> t = <T_Texto>{System.out.println(t.image+"redujo esto"); return t.image + " ";}
+ <T_Texto2> t = <T_Texto>{return t.image + " ";}
 |t=<T_var> {return t.image + " ";}
 |<PUN> {return "yo ";}
 |<DPUN> {return "padre";}

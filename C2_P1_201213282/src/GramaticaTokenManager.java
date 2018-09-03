@@ -1740,9 +1740,6 @@ public Token getNextToken()
       matchedToken = jjFillToken();
       return matchedToken;
    }
-   image = jjimage;
-   image.setLength(0);
-   jjimageLen = 0;
 
    for (;;)
    {
@@ -1781,7 +1778,6 @@ public Token getNextToken()
            curLexState = jjnewLexState[jjmatchedKind];
            continue EOFLoop;
         }
-        MoreLexicalActions();
       if (jjnewLexState[jjmatchedKind] != -1)
         curLexState = jjnewLexState[jjmatchedKind];
         curPos = 0;
@@ -1816,20 +1812,6 @@ public Token getNextToken()
   }
 }
 
-void MoreLexicalActions()
-{
-   jjimageLen += (lengthOfMatch = jjmatchedPos + 1);
-   switch(jjmatchedKind)
-   {
-      case 95 :
-         image.append(input_stream.GetSuffix(jjimageLen));
-         jjimageLen = 0;
-                             System.out.println("redujo");
-         break;
-      default :
-         break;
-   }
-}
 private void jjCheckNAdd(int state)
 {
    if (jjrounds[state] != jjround)
@@ -1932,10 +1914,6 @@ static final long[] jjtoMore = {
     private final int[] jjrounds = new int[15];
     private final int[] jjstateSet = new int[2 * 15];
 
-    private final StringBuilder jjimage = new StringBuilder();
-    private StringBuilder image = jjimage;
-    private int jjimageLen;
-    private int lengthOfMatch;
     
     protected char curChar;
 }
