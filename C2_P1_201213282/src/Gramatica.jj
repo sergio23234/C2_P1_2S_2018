@@ -75,7 +75,6 @@ TOKEN:
  |      <NOT:"!">
  |	<NOR:"<"> 
  |	<MAY:">">
- |      <DPUN:"..">
  |      <PUN:".">
  |	<MOD:"mod">
  |	<DIV:"div">
@@ -144,7 +143,6 @@ TOKEN :{
 |<R_apa:"#[apariencia]#">
 |<R_pre:"#[codigo_pre]#">
 |<R_pos:"#[codigo_post]#">
-|    <ESPACIO: ( "\t" |" "|"\f")+>
 |   <#LETTER: (["a"-"z","A"-"Z"])>
 |   <INTEGER: (<DIGIT>)+>
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
@@ -347,12 +345,12 @@ void Cuerpo_suger(Nodo_Arbol actual):
 void Est_restrin(Nodo_Arbol actual): //restringir
 {}
 {
-<R_res>Cuerpo_restringir(actual) Est_requerido(actual)
+<R_res> {System.out.println("encontro primero");}Cuerpo_restringir(actual) Est_requerido(actual)
 }
 void Cuerpo_restringir(Nodo_Arbol actual):
 {String resultado="";}
 {
- resultado=EXP_COMP()   {actual.set_restringir(resultado);}
+  resultado=EXP_COMP()  <R_fin> {actual.set_restringir(resultado);}
 |<R_fin>                {}
 }
 /*------------------------OPERACION Requerido-----------------------------------*/
@@ -527,7 +525,7 @@ String Est_ID():
 String EXP_LOG(): //AND y OR
 {   String resultado="";
     String var1="";}{
-  var1=Est_NOT() (resultado=EXP_LOGP() {var1=var1+resultado;})* {return var1;}
+  {System.out.println("encontro esto1");}var1=Est_NOT() (resultado=EXP_LOGP() {var1=var1+resultado;})* {return var1;}
 }
 String EXP_LOGP():
 {   String resultado="";
@@ -540,14 +538,14 @@ String Est_NOT(): //NOT
 {String resultado="";}
 {
     <NOT> resultado=EXP_LOG() {return "!"+resultado;}
-|   resultado=EXP_COMP()        {return resultado;}
+|   {System.out.println("encontro esto2");}resultado=EXP_COMP()        {return resultado;}
 }
 /*---------------------Operaciones de Comparadores---------------------- */
-String EXP_COMP(): //AND y OR
+String EXP_COMP(): //COMPARADORES
 {String resultado="";
     String var1="";}
 {
-  resultado=EXP_COMP3() var1=EXP_COMPP()    {return resultado+var1;}
+  resultado=EXP_COMP3() (var1=EXP_COMPP(){resultado=resultado+var1;})*    {return resultado;}
 }
 String EXP_COMPP():
 {   String resultado="";
@@ -555,16 +553,14 @@ String EXP_COMPP():
     String var2="";
     String var3=""; }
 {
-  <IGU> EXP_COMP3() EXP_COMPP()                         {resultado = "=="+var2+var3; return resultado;}
-| <NOT><IGU> var2=EXP_COMP3() var3=EXP_COMPP()          {resultado = "!="+var2+var3; return resultado;}
-| <NOR>var1=COMP2() var2=EXP_COMP3() var3=EXP_COMPP()   {String pre_res ="<"+var1; resultado = pre_res+var2+var3; return resultado;}
-| <MAY>var1=COMP2() var2=EXP_COMP3() var3=EXP_COMPP()   {String pre_res =">"+var1; resultado = pre_res+var2+var3; return resultado;}
-| <EOF>                                                 {return "";}
+  <IGU> EXP_COMP3()                     {resultado = "=="+var2; return resultado;}
+| <NOT><IGU> var2=EXP_COMP3()           {resultado = "!="+var2; return resultado;}
+| <NOR>(var1=COMP2(){var3="=";})? var2=EXP_COMP3()    {String pre_res ="<"+var3; resultado = pre_res+var2; return resultado;}
+| <MAY>(var1=COMP2(){var3="=";})? var2=EXP_COMP3()    {String pre_res =">"+var3; resultado = pre_res+var2; return resultado;}
 }
 String COMP2():{}
 {   
     <IGU>   {return "=";}
-|   <EOF>   {return "";}
 }
 String EXP_COMP3(): //NOT
 {String resultado="";}
@@ -586,22 +582,24 @@ String Etiqueta_ET1() :
 //total=Etiqueta_ET1()
 String T() :
 {Token t;
+System.out.println("entro al ciclo T");
 }
 {
- t=<T_Texto>{System.out.println("llego a texto"); return t.image + " ";}
-|t=<T_var> {return t.image + " ";}
-|<PUNTO> {return "yo ";}
-|<DPUN> {return "padre";}
-|t=<INTEGER>{return t.image;}
-|t=<DOUBLE>  {return t.image;}
-|<ESPACIO>{return " ";}
-|t=<T_Estilo>{ System.out.println("llego a estilo");return t.image;}
+  
+    t=<T_var> {return t.image;}
+|   t=<T_Texto>{return t.image;}
+|   t=<INTEGER>{return t.image;}
+|   t=<PUNTO>(<PUNTO>)? {return "yo ";}
+|   t=<DOUBLE>  {return t.image;}
+|   t=<T_Estilo>{ System.out.println("llego a estilo");return t.image;}
 }
 /*------------------------VAR ID---------------------------------*/
 String Var_ID():{
 Token t;
 String var;
+System.out.println("llego aqui");
 }
 {
-   var=T()     {return var;}  
+
+ var=T()     {return var;}  
 }

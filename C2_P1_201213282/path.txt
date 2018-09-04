@@ -1,3 +1,22 @@
+#[tipo]#entero#[/]#
+#[idpregunta]#insertar1#[/]#
+#[etiqueta]#@"@Dame un numero @{color: #FFFF00, tam:15, negrilla }: { Mayor }@ a 1 
+y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
+#[parametro]##[/]#
+#[calculo]##[/]#
+#[aplicable]##[/]#
+#[sugerir]##[/]#
+#[restringir]# ..<= 20#[/]#
+#[requerido]#verdadero#[/]#
+#[restringirmsn]##[/]#
+#[requeridomsn]##[/]#
+#[predeterminado]##[/]#
+#[repeticion]##[/]#
+#[apariencia]##[/]#
+#[lectura]##[/]#
+#[multimedia]##[/]#
+#[codigo_pre]##[/]#
+#[codigo_post]#@"@abo1.insertar();@"@#[/]#
 #[tipo]#Iniciar Agrupacion#[/]#
 #[idpregunta]#info1#[/]#
 #[etiqueta]#@"@Agrupación 1@"@#[/]#
@@ -142,25 +161,6 @@
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
-#[tipo]#entero#[/]#
-#[idpregunta]#insertar1#[/]#
-#[etiqueta]#@"@Dame un numero @{color: #FFFF00, tam:15, negrilla }: { Mayor }@ a 1 
-y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
-#[parametro]##[/]#
-#[calculo]##[/]#
-#[aplicable]##[/]#
-#[sugerir]##[/]#
-#[restringir]#. >= 1 && . <= 20#[/]#
-#[requerido]#verdadero#[/]#
-#[restringirmsn]##[/]#
-#[requeridomsn]##[/]#
-#[predeterminado]##[/]#
-#[repeticion]##[/]#
-#[apariencia]##[/]#
-#[lectura]##[/]#
-#[multimedia]##[/]#
-#[codigo_pre]##[/]#
-#[codigo_post]#@"@abo1.insertar();@"@#[/]#
 #[tipo]#finalizar ciclo#[/]#
 #[idpregunta]#llenar1#[/]#
 #[etiqueta]##[/]#
