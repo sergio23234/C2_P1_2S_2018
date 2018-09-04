@@ -169,7 +169,11 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int T_var = 93;
   /** RegularExpression Id. */
-  int T_Coma = 94;
+  int T_Estilo = 94;
+  /** RegularExpression Id. */
+  int PUNTO = 95;
+  /** RegularExpression Id. */
+  int T_Coma = 96;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -199,7 +203,7 @@ public interface GramaticaConstants {
     "\"#\"",
     "\"[\"",
     "\"]\"",
-    "\"@[/]@\"",
+    "\"#[/]#\"",
     "\"\\ufeff\"",
     "\"\\r\"",
     "\"\\n\"",
@@ -238,24 +242,24 @@ public interface GramaticaConstants {
     "\"Finalizar agrupacion\"",
     "\"Iniciar Ciclo\"",
     "\"Finalizar Ciclo\"",
-    "\"@[tipo]@\"",
-    "\"@[idpregunta]@\"",
-    "\"@[etiqueta]@\"",
-    "\"@[parametro]@\"",
-    "\"@[calculo]@\"",
-    "\"@[aplicable]@\"",
-    "\"@[sugerir]@\"",
-    "\"@[restringir]@\"",
-    "\"@[requerido]@\"",
-    "\"@[restringirmsn]@\"",
-    "\"@[requeridomsn]@\"",
-    "\"@[predeterminado]@\"",
-    "\"@[repeticion]@\"",
-    "\"@[multimedia]@\"",
-    "\"@[lectura]@\"",
-    "\"@[apariencia]@\"",
-    "\"@[codigo_pre]@\"",
-    "\"@[codigo_post]@\"",
+    "\"#[tipo]#\"",
+    "\"#[idpregunta]#\"",
+    "\"#[etiqueta]#\"",
+    "\"#[parametro]#\"",
+    "\"#[calculo]#\"",
+    "\"#[aplicable]#\"",
+    "\"#[sugerir]#\"",
+    "\"#[restringir]#\"",
+    "\"#[requerido]#\"",
+    "\"#[restringirmsn]#\"",
+    "\"#[requeridomsn]#\"",
+    "\"#[predeterminado]#\"",
+    "\"#[repeticion]#\"",
+    "\"#[multimedia]#\"",
+    "\"#[lectura]#\"",
+    "\"#[apariencia]#\"",
+    "\"#[codigo_pre]#\"",
+    "\"#[codigo_post]#\"",
     "<ESPACIO>",
     "<LETTER>",
     "<INTEGER>",
@@ -272,8 +276,10 @@ public interface GramaticaConstants {
     "\"\\ufeff\"",
     "<T_Texto>",
     "<T_var>",
+    "<T_Estilo>",
+    "\".\"",
     "\"@\\\"@\"",
-    "<token of kind 95>",
+    "<token of kind 97>",
   };
 
 }

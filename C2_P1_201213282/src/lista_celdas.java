@@ -60,24 +60,24 @@ public class lista_celdas {
         lista.add(new Nodo_celda("multimedia"));
         lista.add(new Nodo_celda("codigo_pre"));
         lista.add(new Nodo_celda("codigo_post"));
-        matriz[0]="@[tipo]@";
-        matriz[1]="@[idpregunta]@";
-        matriz[2]="@[etiqueta]@";
-        matriz[3]="@[parametro]@";
-        matriz[4]="@[calculo]@";
-        matriz[5]="@[aplicable]@";
-        matriz[6]="@[sugerir]@";
-        matriz[7]="@[restringir]@";
-        matriz[8]="@[requerido]@";
-        matriz[9]="@[restringirmsn]@";
-        matriz[10]="@[requeridomsn]@";
-        matriz[11]="@[predeterminado]@";
-        matriz[12]="@[repeticion]@";
-        matriz[13]="@[apariencia]@";
-        matriz[14]="@[lectura]@";
-        matriz[15]="@[multimedia]@";
-        matriz[16]="@[codigo_pre]@";
-        matriz[17]="@[codigo_post]@";
+        matriz[0]="#[tipo]#";
+        matriz[1]="#[idpregunta]#";
+        matriz[2]="#[etiqueta]#";
+        matriz[3]="#[parametro]#";
+        matriz[4]="#[calculo]#";
+        matriz[5]="#[aplicable]#";
+        matriz[6]="#[sugerir]#";
+        matriz[7]="#[restringir]#";
+        matriz[8]="#[requerido]#";
+        matriz[9]="#[restringirmsn]#";
+        matriz[10]="#[requeridomsn]#";
+        matriz[11]="#[predeterminado]#";
+        matriz[12]="#[repeticion]#";
+        matriz[13]="#[apariencia]#";
+        matriz[14]="#[lectura]#";
+        matriz[15]="#[multimedia]#";
+        matriz[16]="#[codigo_pre]#";
+        matriz[17]="#[codigo_post]#";
     }
 
     public void llenar_Vacias() {
@@ -155,14 +155,14 @@ public class lista_celdas {
                     String es_nodo;
                     if(j==0)
                     {
-                        es_nodo = matriz[j]+nodo.celdas.get(i).trim() +"@[/]@\r\n";
+                        es_nodo = matriz[j]+nodo.celdas.get(i).trim() +"#[/]#\r\n";
                     }
                     else if((j==2||j==6||j==9||j==10||j==16||j==17)&&(!nodo.celdas.get(i).trim().equalsIgnoreCase("")))
                     {
-                        es_nodo = matriz[j]+"@\"@"+nodo.celdas.get(i).trim()+"@\"@@[/]@\r\n";
+                        es_nodo = matriz[j]+"@\"@"+nodo.celdas.get(i).trim()+"@\"@#[/]#\r\n";
                     } 
                     else{
-                        es_nodo = matriz[j]+nodo.celdas.get(i)+"@[/]@\r\n";
+                        es_nodo = matriz[j]+nodo.celdas.get(i)+"#[/]#\r\n";
                   
                     }
                   linea = linea +es_nodo;

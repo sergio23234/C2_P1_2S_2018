@@ -36,7 +36,7 @@ public class Gramatica implements GramaticaConstants {
 
   final public void Contenido(Nodo_Arbol arbol) throws ParseException {Nodo_Arbol arbol_1 = new Nodo_Arbol();
 Pila.push(arbol);
-    ContenidoP(arbol);
+    ContenidoP();
     label_1:
     while (true) {
       if (jj_2_1(100)) {
@@ -44,23 +44,29 @@ Pila.push(arbol);
       } else {
         break label_1;
       }
-      ContenidoP(arbol);
+      ContenidoP();
+System.out.println("trololo");
     }
 
   }
 
-  final public void ContenidoP(Nodo_Arbol arbol) throws ParseException {Nodo_Arbol arbol_1 = new Nodo_Arbol();
+  final public void ContenidoP() throws ParseException {Nodo_Arbol arbol_1 = new Nodo_Arbol();
     jj_consume_token(R_tip);
     Inicial_Cont(arbol_1);
 Pila.peek().Add_Nodo_Arbol(arbol_1);
 if(arbol_1.get_anidado()!=0){
     if(arbol_1.get_anidado()==1){
         Pila.push(arbol_1);
-        ContenidoP(Pila.peek());
+
     }
     else if(arbol_1.get_anidado()<0){
         System.out.println("salida");
-        ContenidoP(Pila.pop());} }
+        Pila.pop();
+
+        }
+    }
+   // ContenidoP();
+
   }
 
   final public void Inicial_Cont(Nodo_Arbol arbol) throws ParseException {
@@ -883,6 +889,7 @@ String pre_res =">"+var1; resultado = pre_res+var2+var3; {if ("" != null) return
 
 /*---------------------Propuesta de ID---------------------- */
   final public String Etiqueta_ET() throws ParseException {String Cad;String total="";
+    jj_consume_token(T_Texto2);
     total = T();
     Cad = Etiqueta_ET1();
 total = total+Cad; {if ("" != null) return total;}
@@ -916,14 +923,13 @@ total=Cad+total;
 //total=Etiqueta_ET1()
   final public String T() throws ParseException {Token t;
     if (jj_2_103(100)) {
-      jj_consume_token(T_Texto2);
       t = jj_consume_token(T_Texto);
-{if ("" != null) return t.image + " ";}
+System.out.println("llego a texto"); {if ("" != null) return t.image + " ";}
     } else if (jj_2_104(100)) {
       t = jj_consume_token(T_var);
 {if ("" != null) return t.image + " ";}
     } else if (jj_2_105(100)) {
-      jj_consume_token(PUN);
+      jj_consume_token(PUNTO);
 {if ("" != null) return "yo ";}
     } else if (jj_2_106(100)) {
       jj_consume_token(DPUN);
@@ -937,6 +943,9 @@ total=Cad+total;
     } else if (jj_2_109(100)) {
       jj_consume_token(ESPACIO);
 {if ("" != null) return " ";}
+    } else if (jj_2_110(100)) {
+      t = jj_consume_token(T_Estilo);
+System.out.println("llego a estilo");{if ("" != null) return t.image;}
     } else {
       jj_consume_token(-1);
       throw new ParseException();
@@ -1824,10 +1833,12 @@ String var;
     finally { jj_save(108, xla); }
   }
 
-  private boolean jj_3_54()
+  private boolean jj_2_110(int xla)
  {
-    if (jj_scan_token(R_fin)) return true;
-    return false;
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_110(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(109, xla); }
   }
 
   private boolean jj_3R_52()
@@ -1997,13 +2008,6 @@ String var;
     return false;
   }
 
-  private boolean jj_3_44()
- {
-    if (jj_3R_18()) return true;
-    if (jj_scan_token(R_fin)) return true;
-    return false;
-  }
-
   private boolean jj_3R_44()
  {
     Token xsp;
@@ -2012,6 +2016,13 @@ String var;
     jj_scanpos = xsp;
     if (jj_3_45()) return true;
     }
+    return false;
+  }
+
+  private boolean jj_3_44()
+ {
+    if (jj_3R_18()) return true;
+    if (jj_scan_token(R_fin)) return true;
     return false;
   }
 
@@ -2386,12 +2397,6 @@ String var;
     return false;
   }
 
-  private boolean jj_3_1()
- {
-    if (jj_3R_11()) return true;
-    return false;
-  }
-
   private boolean jj_3_10()
  {
     if (jj_scan_token(R_Selu)) return true;
@@ -2441,16 +2446,16 @@ String var;
     return false;
   }
 
+  private boolean jj_3R_26()
+ {
+    if (jj_3R_33()) return true;
+    return false;
+  }
+
   private boolean jj_3_3()
  {
     if (jj_scan_token(R_Ente)) return true;
     if (jj_scan_token(R_fin)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_26()
- {
-    if (jj_3R_33()) return true;
     return false;
   }
 
@@ -2517,10 +2522,22 @@ String var;
     return false;
   }
 
+  private boolean jj_3_1()
+ {
+    if (jj_3R_11()) return true;
+    return false;
+  }
+
   private boolean jj_3R_34()
  {
     if (jj_3R_35()) return true;
     if (jj_3R_36()) return true;
+    return false;
+  }
+
+  private boolean jj_3_110()
+ {
+    if (jj_scan_token(T_Estilo)) return true;
     return false;
   }
 
@@ -2556,7 +2573,7 @@ String var;
 
   private boolean jj_3_105()
  {
-    if (jj_scan_token(PUN)) return true;
+    if (jj_scan_token(PUNTO)) return true;
     return false;
   }
 
@@ -2568,7 +2585,6 @@ String var;
 
   private boolean jj_3_103()
  {
-    if (jj_scan_token(T_Texto2)) return true;
     if (jj_scan_token(T_Texto)) return true;
     return false;
   }
@@ -2589,20 +2605,16 @@ String var;
     jj_scanpos = xsp;
     if (jj_3_108()) {
     jj_scanpos = xsp;
-    if (jj_3_109()) return true;
+    if (jj_3_109()) {
+    jj_scanpos = xsp;
+    if (jj_3_110()) return true;
     }
     }
     }
     }
     }
     }
-    return false;
-  }
-
-  private boolean jj_3R_11()
- {
-    if (jj_scan_token(R_tip)) return true;
-    if (jj_3R_34()) return true;
+    }
     return false;
   }
 
@@ -2636,8 +2648,16 @@ String var;
 
   private boolean jj_3R_19()
  {
+    if (jj_scan_token(T_Texto2)) return true;
     if (jj_3R_33()) return true;
     if (jj_3R_32()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_11()
+ {
+    if (jj_scan_token(R_tip)) return true;
+    if (jj_3R_34()) return true;
     return false;
   }
 
@@ -3267,6 +3287,12 @@ String var;
     return false;
   }
 
+  private boolean jj_3_54()
+ {
+    if (jj_scan_token(R_fin)) return true;
+    return false;
+  }
+
   /** Generated Token Manager. */
   public GramaticaTokenManager token_source;
   SimpleCharStream jj_input_stream;
@@ -3282,10 +3308,12 @@ String var;
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
+  static private int[] jj_la1_3;
   static {
       jj_la1_init_0();
       jj_la1_init_1();
       jj_la1_init_2();
+      jj_la1_init_3();
    }
    private static void jj_la1_init_0() {
       jj_la1_0 = new int[] {};
@@ -3296,7 +3324,10 @@ String var;
    private static void jj_la1_init_2() {
       jj_la1_2 = new int[] {};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[109];
+   private static void jj_la1_init_3() {
+      jj_la1_3 = new int[] {};
+   }
+  final private JJCalls[] jj_2_rtns = new JJCalls[110];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -3476,7 +3507,7 @@ String var;
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[96];
+    boolean[] la1tokens = new boolean[98];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -3493,10 +3524,13 @@ String var;
           if ((jj_la1_2[i] & (1<<j)) != 0) {
             la1tokens[64+j] = true;
           }
+          if ((jj_la1_3[i] & (1<<j)) != 0) {
+            la1tokens[96+j] = true;
+          }
         }
       }
     }
-    for (int i = 0; i < 96; i++) {
+    for (int i = 0; i < 98; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -3523,7 +3557,7 @@ String var;
 
   private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 109; i++) {
+    for (int i = 0; i < 110; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -3639,6 +3673,7 @@ String var;
             case 106: jj_3_107(); break;
             case 107: jj_3_108(); break;
             case 108: jj_3_109(); break;
+            case 109: jj_3_110(); break;
           }
         }
         p = p.next;

@@ -83,7 +83,7 @@ TOKEN:
  |	<NCO:"#">
  |      <CORI:"[">
  |      <COR:"]">
- |      <R_fin:"@[/]@">
+ |      <R_fin:"#[/]#">
 }
 SKIP:{
 "\ufeff"
@@ -126,24 +126,24 @@ TOKEN :{
 |<R_AgrF:"Finalizar agrupacion">
 |<R_Cici:"Iniciar Ciclo">
 |<R_Cicf:"Finalizar Ciclo">
-|<R_tip:"@[tipo]@">
-|<R_idp:"@[idpregunta]@">
-|<R_eti:"@[etiqueta]@">
-|<R_par:"@[parametro]@">
-|<R_cal:"@[calculo]@">
-|<R_apl:"@[aplicable]@">
-|<R_sug:"@[sugerir]@">
-|<R_res:"@[restringir]@">
-|<R_req:"@[requerido]@">
-|<R_rsm:"@[restringirmsn]@">
-|<R_rqm:"@[requeridomsn]@">
-|<R_prd:"@[predeterminado]@">
-|<R_rep:"@[repeticion]@">
-|<R_mul:"@[multimedia]@">
-|<R_lec:"@[lectura]@">
-|<R_apa:"@[apariencia]@">
-|<R_pre:"@[codigo_pre]@">
-|<R_pos:"@[codigo_post]@">
+|<R_tip:"#[tipo]#">
+|<R_idp:"#[idpregunta]#">
+|<R_eti:"#[etiqueta]#">
+|<R_par:"#[parametro]#">
+|<R_cal:"#[calculo]#">
+|<R_apl:"#[aplicable]#">
+|<R_sug:"#[sugerir]#">
+|<R_res:"#[restringir]#">
+|<R_req:"#[requerido]#">
+|<R_rsm:"#[restringirmsn]#">
+|<R_rqm:"#[requeridomsn]#">
+|<R_prd:"#[predeterminado]#">
+|<R_rep:"#[repeticion]#">
+|<R_mul:"#[multimedia]#">
+|<R_lec:"#[lectura]#">
+|<R_apa:"#[apariencia]#">
+|<R_pre:"#[codigo_pre]#">
+|<R_pos:"#[codigo_post]#">
 |    <ESPACIO: ( "\t" |" "|"\f")+>
 |   <#LETTER: (["a"-"z","A"-"Z"])>
 |   <INTEGER: (<DIGIT>)+>
@@ -166,6 +166,8 @@ TOKEN :{
 {
 <T_Texto:(~["@",".","#","[","]","\n","\t"])+>
 |<T_var:"#["(<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*)"]">
+|<T_Estilo:"@{"(~["@"])+"}@">
+|<PUNTO:".">
 |<T_Coma:"@\"@">:DEFAULT
 }
 <T_Texto1> MORE:
@@ -183,25 +185,31 @@ Nodo_Arbol Inicio(Nodo_Arbol arbol):
 void Contenido(Nodo_Arbol arbol) ://Inicio del Cuerpo Tipo
 {   Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
-{Pila.push(arbol);} ContenidoP(arbol) (ContenidoP(arbol))*{}
+{Pila.push(arbol);} ContenidoP() (ContenidoP(){System.out.println("trololo");})*{}
 //<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
 }
 
-void ContenidoP(Nodo_Arbol arbol):
+void ContenidoP():
 {Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
 //<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
-<R_tip>Inicial_Cont(arbol_1){Pila.peek().Add_Nodo_Arbol(arbol_1);
+<R_tip>Inicial_Cont(arbol_1){
+Pila.peek().Add_Nodo_Arbol(arbol_1);
 if(arbol_1.get_anidado()!=0){     
     if(arbol_1.get_anidado()==1){
         Pila.push(arbol_1); 
-        ContenidoP(Pila.peek());
+       
     }
     else if(arbol_1.get_anidado()<0){
         System.out.println("salida");
-        ContenidoP(Pila.pop());} }
-} 
+        Pila.pop();
+                
+        } 
+    }
+   // ContenidoP();
 }
+}
+
 void Inicial_Cont(Nodo_Arbol arbol):
 {}
 {
@@ -567,7 +575,7 @@ String EXP_COMP3(): //NOT
 String Etiqueta_ET() :
 {String Cad;String total="";}
 {
-  total = T() Cad=Etiqueta_ET1(){ total = total+Cad; return total;} 
+  <T_Texto2> total = T() Cad=Etiqueta_ET1(){ total = total+Cad; return total;} 
 }
 String Etiqueta_ET1() :
 {String Cad;String total="";}
@@ -580,13 +588,14 @@ String T() :
 {Token t;
 }
 {
- <T_Texto2> t = <T_Texto>{return t.image + " ";}
+ t=<T_Texto>{System.out.println("llego a texto"); return t.image + " ";}
 |t=<T_var> {return t.image + " ";}
-|<PUN> {return "yo ";}
+|<PUNTO> {return "yo ";}
 |<DPUN> {return "padre";}
 |t=<INTEGER>{return t.image;}
 |t=<DOUBLE>  {return t.image;}
 |<ESPACIO>{return " ";}
+|t=<T_Estilo>{ System.out.println("llego a estilo");return t.image;}
 }
 /*------------------------VAR ID---------------------------------*/
 String Var_ID():{
