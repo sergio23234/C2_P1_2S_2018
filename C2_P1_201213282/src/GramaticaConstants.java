@@ -153,23 +153,27 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int DOUBLE = 79;
   /** RegularExpression Id. */
-  int DIGIT = 80;
+  int STRING = 80;
   /** RegularExpression Id. */
-  int T_ID = 81;
+  int DIGIT = 81;
   /** RegularExpression Id. */
-  int T_MUL = 82;
+  int T_ID = 82;
   /** RegularExpression Id. */
-  int T_Texto2 = 83;
+  int T_MUL = 83;
   /** RegularExpression Id. */
-  int T_Texto = 90;
+  int T_Texto2 = 84;
   /** RegularExpression Id. */
-  int T_var = 91;
+  int T_Texto = 91;
   /** RegularExpression Id. */
-  int T_Estilo = 92;
+  int T_var = 92;
   /** RegularExpression Id. */
-  int PUNTO = 93;
+  int T_varID = 93;
   /** RegularExpression Id. */
-  int T_Coma = 94;
+  int T_Estilo = 94;
+  /** RegularExpression Id. */
+  int PUNTO = 95;
+  /** RegularExpression Id. */
+  int T_Coma = 96;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -258,6 +262,7 @@ public interface GramaticaConstants {
     "<LETTER>",
     "<INTEGER>",
     "<DOUBLE>",
+    "<STRING>",
     "<DIGIT>",
     "<T_ID>",
     "<T_MUL>",
@@ -270,10 +275,11 @@ public interface GramaticaConstants {
     "\"\\ufeff\"",
     "<T_Texto>",
     "<T_var>",
+    "<T_varID>",
     "<T_Estilo>",
     "\".\"",
     "\"@\\\"@\"",
-    "<token of kind 95>",
+    "<token of kind 97>",
   };
 
 }

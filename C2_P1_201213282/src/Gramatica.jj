@@ -146,6 +146,7 @@ TOKEN :{
 |   <#LETTER: (["a"-"z","A"-"Z"])>
 |   <INTEGER: (<DIGIT>)+>
 |   <DOUBLE: (<DIGIT>)+<PUN>(<DIGIT>)+>
+|   <STRING:"\""(~["\""])*"\"">
 |   <#DIGIT: ["0"-"9"]>
 |   <T_ID:(<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*)>
 |   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
@@ -163,7 +164,8 @@ TOKEN :{
 <T_Texto1> TOKEN:
 {
 <T_Texto:(~["@",".","#","[","]","\n","\t"])+>
-|<T_var:"#["(<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*)"]">
+|<T_var:"#["(<LETTER>(<LETTER>|<DIGIT>|"_"|"-")*)"]">
+|<T_varID:((<LETTER>(<LETTER>|<DIGIT>|"_"|"-")*<PUNTO>(<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|"("|")"|"@"|".")*)))>
 |<T_Estilo:"@{"(~["@"])+"}@">
 |<PUNTO:".">
 |<T_Coma:"@\"@">:DEFAULT
@@ -183,7 +185,7 @@ Nodo_Arbol Inicio(Nodo_Arbol arbol):
 void Contenido(Nodo_Arbol arbol) ://Inicio del Cuerpo Tipo
 {   Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
-{Pila.push(arbol);} ContenidoP() (ContenidoP(){System.out.println("trololo");})*{}
+{Pila.push(arbol);} ContenidoP() (ContenidoP(){System.out.print("");})*{}
 //<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
 }
 
@@ -312,7 +314,7 @@ void Est_calcular(Nodo_Arbol actual): //calcular
 <R_cal>Cuerpo_calcular(actual) Est_aplicable(actual)
 }
 void Cuerpo_calcular(Nodo_Arbol actual):
-{String resultado="";}
+{String resultado=""; }
 {
  resultado=EXP_LOG(){actual.Set_calcular(resultado);}
 | <R_fin>           {}
@@ -326,7 +328,7 @@ void Est_aplicable(Nodo_Arbol actual): //aplicable
 void Cuerpo_apli(Nodo_Arbol actual):
 {String resultado="";}
 {
-resultado=EXP_COMP()<R_fin>{actual.set_aplicable(resultado);}
+resultado=EXP_LOG()<R_fin>{actual.set_aplicable(resultado);}
 |<R_fin>
 }
 /*------------------------OPERACION Sugerir-----------------------------------*/
@@ -345,7 +347,7 @@ void Cuerpo_suger(Nodo_Arbol actual):
 void Est_restrin(Nodo_Arbol actual): //restringir
 {}
 {
-<R_res> {System.out.println("encontro primero");}Cuerpo_restringir(actual) Est_requerido(actual)
+<R_res> Cuerpo_restringir(actual) Est_requerido(actual)
 }
 void Cuerpo_restringir(Nodo_Arbol actual):
 {String resultado="";}
@@ -524,8 +526,9 @@ String Est_ID():
 /*---------------------Operaciones de Logias---------------------- */
 String EXP_LOG(): //AND y OR
 {   String resultado="";
-    String var1="";}{
-  {System.out.println("encontro esto1");}var1=Est_NOT() (resultado=EXP_LOGP() {var1=var1+resultado;})* {return var1;}
+    String var1="";
+ }{
+ var1=Est_NOT() (resultado=EXP_LOGP() {var1=var1+resultado;})* {return var1;}
 }
 String EXP_LOGP():
 {   String resultado="";
@@ -551,7 +554,8 @@ String EXP_COMPP():
 {   String resultado="";
     String var1="";
     String var2="";
-    String var3=""; }
+    String var3=""; 
+}
 {
   <IGU> EXP_COMP3()                     {resultado = "=="+var2; return resultado;}
 | <NOT><IGU> var2=EXP_COMP3()           {resultado = "!="+var2; return resultado;}
@@ -582,24 +586,24 @@ String Etiqueta_ET1() :
 //total=Etiqueta_ET1()
 String T() :
 {Token t;
-System.out.println("entro al ciclo T");
 }
 {
   
-    t=<T_var> {return t.image;}
+    t=<T_var> {System.out.println(t.image.replace("#[","").replace("]","")+"<---"); return t.image;}
 |   t=<T_Texto>{return t.image;}
 |   t=<INTEGER>{return t.image;}
-|   t=<PUNTO>(<PUNTO>)? {return "yo ";}
+|   t=<PUN>(<PUN>)? {return "yo ";}
 |   t=<DOUBLE>  {return t.image;}
-|   t=<T_Estilo>{ System.out.println("llego a estilo");return t.image;}
+|   t=<T_varID> {return "yolo";}
+|   t=<T_Estilo>{return t.image;}
+|   t=<STRING>{return t.image;}
 }
 /*------------------------VAR ID---------------------------------*/
 String Var_ID():{
 Token t;
 String var;
-System.out.println("llego aqui");
 }
 {
-
- var=T()     {return var;}  
+ var=T()     {return var;}
+|<NCO><CORI>t=<T_ID><COR>{System.out.println("--->"+t.image);return t.image;}  
 }

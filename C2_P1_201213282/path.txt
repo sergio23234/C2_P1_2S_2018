@@ -1,22 +1,3 @@
-#[tipo]#entero#[/]#
-#[idpregunta]#insertar1#[/]#
-#[etiqueta]#@"@Dame un numero @{color: #FFFF00, tam:15, negrilla }: { Mayor }@ a 1 
-y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
-#[parametro]##[/]#
-#[calculo]##[/]#
-#[aplicable]##[/]#
-#[sugerir]##[/]#
-#[restringir]# ..<= 20#[/]#
-#[requerido]#verdadero#[/]#
-#[restringirmsn]##[/]#
-#[requeridomsn]##[/]#
-#[predeterminado]##[/]#
-#[repeticion]##[/]#
-#[apariencia]##[/]#
-#[lectura]##[/]#
-#[multimedia]##[/]#
-#[codigo_pre]##[/]#
-#[codigo_post]#@"@abo1.insertar();@"@#[/]#
 #[tipo]#Iniciar Agrupacion#[/]#
 #[idpregunta]#info1#[/]#
 #[etiqueta]#@"@Agrupación 1@"@#[/]#
@@ -161,9 +142,28 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+#[tipo]#entero#[/]#
+#[idpregunta]#insertar1#[/]#
+#[etiqueta]#@"@Dame un numero @{color: #FFFF00, tam:15, negrilla }: { Mayor }@ a 1 
+y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
+#[parametro]##[/]#
+#[calculo]##[/]#
+#[aplicable]##[/]#
+#[sugerir]##[/]#
+#[restringir]# ..<= 20#[/]#
+#[requerido]#verdadero#[/]#
+#[restringirmsn]##[/]#
+#[requeridomsn]##[/]#
+#[predeterminado]##[/]#
+#[repeticion]##[/]#
+#[apariencia]##[/]#
+#[lectura]##[/]#
+#[multimedia]##[/]#
+#[codigo_pre]##[/]#
+#[codigo_post]#@"@abo1.insertar(@);@"@#[/]#
 #[tipo]#finalizar ciclo#[/]#
 #[idpregunta]#llenar1#[/]#
-#[etiqueta]##[/]#
+#[etiqueta]#@"@lleno@"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -181,7 +181,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
 #[codigo_post]##[/]#
 #[tipo]#finalizar Agrupacion#[/]#
 #[idpregunta]#info2#[/]#
-#[etiqueta]##[/]#
+#[etiqueta]#@"@lleno@"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -235,7 +235,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
 #[codigo_post]#@"@abo2 = nuevo ArbolBinario();@"@#[/]#
 #[tipo]#Iniciar Ciclo#[/]#
 #[idpregunta]#llenar2#[/]#
-#[etiqueta]##[/]#
+#[etiqueta]#@"@lleno@"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -269,10 +269,10 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[lectura]##[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
-#[codigo_post]#@"@abo2.insertar (@);@"@#[/]#
+#[codigo_post]#@"@abo2.insertar(@);@"@#[/]#
 #[tipo]#finalizar ciclo#[/]#
 #[idpregunta]#llenar2#[/]#
-#[etiqueta]##[/]#
+#[etiqueta]#@"@lleno@"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -290,7 +290,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[codigo_post]##[/]#
 #[tipo]#finalizar Agrupacion#[/]#
 #[idpregunta]#info3#[/]#
-#[etiqueta]##[/]#
+#[etiqueta]#@"@lleno@"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -326,7 +326,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[codigo_post]##[/]#
 #[tipo]#Iniciar Ciclo#[/]#
 #[idpregunta]#llenar3#[/]#
-#[etiqueta]##[/]#
+#[etiqueta]#@"@lleno@"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -342,7 +342,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
-#[tipo]#selecciona_uno elegir#[/]#
+#[tipo]#seleccion_uno#[/]#
 #[idpregunta]#impre_1#[/]#
 #[etiqueta]#@"@Que Arbol desea imprimir: 
 1 - Imprimir el Arbol 1
@@ -367,7 +367,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[etiqueta]#@"@Se imprimira el Arbol #[impre_1]@"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
-#[aplicable]##[impre_1] = "a1"#[/]#
+#[aplicable]# #[impre_1] = "a1"#[/]#
 #[sugerir]##[/]#
 #[restringir]##[/]#
 #[requerido]##[/]#
@@ -420,7 +420,7 @@ abo2.imprimirPre ();@"@#[/]#
 #[codigo_post]##[/]#
 #[tipo]#finalizar ciclo#[/]#
 #[idpregunta]#llenar3#[/]#
-#[etiqueta]##[/]#
+#[etiqueta]#@"@Se imprimira el Arbol #[impre_1]@"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -438,7 +438,7 @@ abo2.imprimirPre ();@"@#[/]#
 #[codigo_post]##[/]#
 #[tipo]#finalizar Agrupacion#[/]#
 #[idpregunta]#impresion#[/]#
-#[etiqueta]##[/]#
+#[etiqueta]#@"@Se imprimira el Arbol #[impre_1]@"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
