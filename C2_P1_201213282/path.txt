@@ -1,4 +1,4 @@
-#[tipo]#Iniciar Agrupacion#[/]#
+#[tipo]#Iniciar#[/]#
 #[idpregunta]#info1#[/]#
 #[etiqueta]#@"@Agrupación 1@"@#[/]#
 #[parametro]##[/]#

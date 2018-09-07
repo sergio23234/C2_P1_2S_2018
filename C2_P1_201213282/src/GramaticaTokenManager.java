@@ -4,6 +4,7 @@ import java.util.Stack;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /** Token Manager. */
 @SuppressWarnings("unused")public class GramaticaTokenManager implements GramaticaConstants {

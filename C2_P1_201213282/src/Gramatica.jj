@@ -34,9 +34,11 @@ import java.util.Stack;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class Gramatica {
     Stack<Nodo_Arbol> Pila = new Stack();
+    ArrayList<Errores> LErrores = new ArrayList();
     Nodo_Arbol primero = new Nodo_Arbol();
     public void Gramatica(String arg){ 
     try{
@@ -55,6 +57,9 @@ public class Gramatica {
     catch(ParseException e){
       System.out.println("Analizador: Se han encontrado errores en el analisis.");
         System.out.println(e.getMessage()+"1\n"+e.currentToken+"2\n"+e.eol+"3\n");
+    }
+    catch(TokenMgrError e){
+        System.out.println(e.getMessage());
     }
   }
   }
@@ -192,17 +197,20 @@ void Contenido(Nodo_Arbol arbol) ://Inicio del Cuerpo Tipo
 void ContenidoP():
 {Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
-//<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
 <R_tip>Inicial_Cont(arbol_1){
-Pila.peek().Add_Nodo_Arbol(arbol_1);
+ if(!Pila.isEmpty()){
+     Pila.peek().Add_Nodo_Arbol(arbol_1);
+ }
 if(arbol_1.get_anidado()!=0){     
     if(arbol_1.get_anidado()==1){
         Pila.push(arbol_1); 
        
     }
     else if(arbol_1.get_anidado()<0){
-        System.out.println("salida");
-        Pila.pop();
+       
+        if(!Pila.isEmpty()){
+            Pila.pop();
+        }
                 
         } 
     }
@@ -218,8 +226,10 @@ Cuerpo_Tipo(arbol) Estruct_ID(arbol){}
 /*--------------- Cuerpo Tipo---------------- */
 void Cuerpo_Tipo(Nodo_Arbol actual):
 {String valor ="";
- Token val;}
+ Token val;
+      Token t;}
 {
+try{
  val=<R_Text><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_Ente><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_Deci><R_fin>                                                        {actual.set_tipo(val.image); }
@@ -237,12 +247,33 @@ void Cuerpo_Tipo(Nodo_Arbol actual):
 |val=<R_AgrF><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(-1);}
 |val=<R_Cici><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(1);}
 |val=<R_Cicf><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(-1);}
+}catch (ParseException e) {
+    boolean entro = true;
+do{
+       t = getNextToken();
+       if(entro){
+        entro = false;
+        Errores er = new Errores(t.beginLine,t.beginColumn,"tipo de agrupación",t.image);
+        LErrores.add(er);}
+      }while(t.kind !=R_fin);
+}
 }
 void Cuerpo_mul(Nodo_Arbol actual):
 {Token t;}
 {
+try{
 t=<T_MUL>   {actual.Set_fichero(t.image);}
 |<EOF>      {}
+}catch (ParseException e) {
+    boolean entro = true;
+do{
+       t = getNextToken();
+       if(entro){
+        entro = false;
+        Errores er = new Errores(t.beginLine,t.beginColumn,"tipo de fichero",t.image);
+        LErrores.add(er);}
+      }while(t.kind !=R_fin);
+}
 }
 /*--------------- Estructura ID---------------- */
 void Estruct_ID(Nodo_Arbol actual):
@@ -252,9 +283,20 @@ void Estruct_ID(Nodo_Arbol actual):
 }
 
 void Cuerpo_ID(Nodo_Arbol actual):
-{Token ID;}
+{Token ID,t;}
 {
+try{
     ID=<T_ID> <R_fin>{String imagen = ID.image; actual.set_ID(imagen);}
+}catch (ParseException e) {
+    boolean entro = true;
+do{
+       t = getNextToken();
+       if(entro){
+        entro = false;
+        Errores er = new Errores(t.beginLine,t.beginColumn,"ID",t.image);
+        LErrores.add(er);}
+      }while(t.kind !=R_fin);
+}
 }
 /*--------------- Estructura etiqueta---------------- */
 void Est_eti(Nodo_Arbol actual):
@@ -273,6 +315,7 @@ void Cuerpo_param(Nodo_Arbol actual):
 {String Respuesta="";
     Token t;}
 {
+try{
 <R_fin>    {}
 |t=<R_OP>     <IGU>   PARAM1(actual)                                   // Opcion  = Param1(){}
 |t=<R_OI>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_min(Respuesta); }     (PARAM2(actual))+// Iniciar = EXP
@@ -280,6 +323,16 @@ void Cuerpo_param(Nodo_Arbol actual):
 |t=<R_CMIN>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_min(Respuesta);   }     (PARAM3(actual))+// C_min = num 
 |t=<R_CMAX>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_max(Respuesta);   }     (PARAM3(actual))+// C_max = num
 |t=<R_CFIL>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_fil(Respuesta);   }     (PARAM3(actual))+// C_FIl = num
+}catch (ParseException e) {
+    boolean entro = true;
+do{
+       t = getNextToken();
+       if(entro){
+        entro = false;
+        Errores er = new Errores(t.beginLine,t.beginColumn,"tipo de agrupación",t.image);
+        LErrores.add(er);}
+      }while(t.kind !=R_fin);
+}
 }
 
 //parametro1 V_F o S_N
@@ -541,7 +594,7 @@ String Est_NOT(): //NOT
 {String resultado="";}
 {
     <NOT> resultado=EXP_LOG() {return "!"+resultado;}
-|   {System.out.println("encontro esto2");}resultado=EXP_COMP()        {return resultado;}
+|   resultado=EXP_COMP()        {return resultado;}
 }
 /*---------------------Operaciones de Comparadores---------------------- */
 String EXP_COMP(): //COMPARADORES
