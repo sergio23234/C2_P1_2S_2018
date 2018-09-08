@@ -49,131 +49,135 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int R_fin = 20;
   /** RegularExpression Id. */
-  int R_MIMG = 28;
+  int Fin = 21;
   /** RegularExpression Id. */
-  int R_CMIN = 29;
+  int R_MIMG = 29;
   /** RegularExpression Id. */
-  int R_CMAX = 30;
+  int R_CMIN = 30;
   /** RegularExpression Id. */
-  int R_CFIL = 31;
+  int R_CMAX = 31;
   /** RegularExpression Id. */
-  int R_MVID = 32;
+  int R_CFIL = 32;
   /** RegularExpression Id. */
-  int R_MAUD = 33;
+  int R_MVID = 33;
   /** RegularExpression Id. */
-  int R_repro = 34;
+  int R_MAUD = 34;
   /** RegularExpression Id. */
-  int R_OP = 35;
+  int R_repro = 35;
   /** RegularExpression Id. */
-  int C_VF = 36;
+  int R_OP = 36;
   /** RegularExpression Id. */
-  int C_SN = 37;
+  int C_VF = 37;
   /** RegularExpression Id. */
-  int TRUE = 38;
+  int C_SN = 38;
   /** RegularExpression Id. */
-  int FALSE = 39;
+  int TRUE = 39;
   /** RegularExpression Id. */
-  int R_OF = 40;
+  int FALSE = 40;
   /** RegularExpression Id. */
-  int R_OI = 41;
+  int R_OF = 41;
   /** RegularExpression Id. */
-  int R_Text = 42;
+  int R_OI = 42;
   /** RegularExpression Id. */
-  int R_Ente = 43;
+  int R_Text = 43;
   /** RegularExpression Id. */
-  int R_Deci = 44;
+  int R_Ente = 44;
   /** RegularExpression Id. */
-  int R_Rang = 45;
+  int R_Deci = 45;
   /** RegularExpression Id. */
-  int R_Cond = 46;
+  int R_Rang = 46;
   /** RegularExpression Id. */
-  int R_Fech = 47;
+  int R_Cond = 47;
   /** RegularExpression Id. */
-  int R_Hora = 48;
+  int R_Fech = 48;
   /** RegularExpression Id. */
-  int R_FeHo = 49;
+  int R_Hora = 49;
   /** RegularExpression Id. */
-  int R_Selu = 50;
+  int R_FeHo = 50;
   /** RegularExpression Id. */
-  int R_Selm = 51;
+  int R_Selu = 51;
   /** RegularExpression Id. */
-  int R_Nota = 52;
+  int R_Selm = 52;
   /** RegularExpression Id. */
-  int R_Mult = 53;
+  int R_Nota = 53;
   /** RegularExpression Id. */
-  int R_Calc = 54;
+  int R_Mult = 54;
   /** RegularExpression Id. */
-  int R_AgrI = 55;
+  int R_Calc = 55;
   /** RegularExpression Id. */
-  int R_AgrF = 56;
+  int R_AgrI = 56;
   /** RegularExpression Id. */
-  int R_Cici = 57;
+  int R_AgrF = 57;
   /** RegularExpression Id. */
-  int R_Cicf = 58;
+  int R_Cici = 58;
   /** RegularExpression Id. */
-  int R_tip = 59;
+  int R_Cicf = 59;
   /** RegularExpression Id. */
-  int R_idp = 60;
+  int R_tip = 60;
   /** RegularExpression Id. */
-  int R_eti = 61;
+  int R_idp = 61;
   /** RegularExpression Id. */
-  int R_par = 62;
+  int R_eti = 62;
   /** RegularExpression Id. */
-  int R_cal = 63;
+  int R_par = 63;
   /** RegularExpression Id. */
-  int R_apl = 64;
+  int R_cal = 64;
   /** RegularExpression Id. */
-  int R_sug = 65;
+  int R_apl = 65;
   /** RegularExpression Id. */
-  int R_res = 66;
+  int R_sug = 66;
   /** RegularExpression Id. */
-  int R_req = 67;
+  int R_res = 67;
   /** RegularExpression Id. */
-  int R_rsm = 68;
+  int R_req = 68;
   /** RegularExpression Id. */
-  int R_rqm = 69;
+  int R_rsm = 69;
   /** RegularExpression Id. */
-  int R_prd = 70;
+  int R_rqm = 70;
   /** RegularExpression Id. */
-  int R_rep = 71;
+  int R_prd = 71;
   /** RegularExpression Id. */
-  int R_mul = 72;
+  int R_rep = 72;
   /** RegularExpression Id. */
-  int R_lec = 73;
+  int R_mul = 73;
   /** RegularExpression Id. */
-  int R_apa = 74;
+  int R_lec = 74;
   /** RegularExpression Id. */
-  int R_pre = 75;
+  int R_apa = 75;
   /** RegularExpression Id. */
-  int R_pos = 76;
+  int R_pre = 76;
   /** RegularExpression Id. */
-  int LETTER = 77;
+  int R_pos = 77;
   /** RegularExpression Id. */
-  int INTEGER = 78;
+  int LETTER = 78;
   /** RegularExpression Id. */
-  int DOUBLE = 79;
+  int INTEGER = 79;
   /** RegularExpression Id. */
-  int STRING = 80;
+  int DOUBLE = 80;
   /** RegularExpression Id. */
-  int DIGIT = 81;
+  int STRING = 81;
   /** RegularExpression Id. */
-  int T_ID = 82;
+  int DIGIT = 82;
   /** RegularExpression Id. */
-  int T_MUL = 83;
+  int T_ID = 83;
   /** RegularExpression Id. */
-  int T_Texto2 = 84;
+  int T_MUL = 84;
   /** RegularExpression Id. */
-  int T_Texto = 91;
+  int T_Texto2 = 85;
   /** RegularExpression Id. */
-  int T_var = 92;
+  int T_Texto = 92;
   /** RegularExpression Id. */
-  int T_varID = 93;
+  int T_var = 93;
   /** RegularExpression Id. */
-  int T_Estilo = 94;
+  int T_varID = 94;
   /** RegularExpression Id. */
-  int PUNTO = 95;
+  int T_Estilo = 95;
   /** RegularExpression Id. */
-  int T_Coma = 96;
+  int PUNTO = 96;
+  /** RegularExpression Id. */
+  int T_Espacio = 97;
+  /** RegularExpression Id. */
+  int T_Coma = 98;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -203,6 +207,7 @@ public interface GramaticaConstants {
     "\"[\"",
     "\"]\"",
     "\"#[/]#\"",
+    "\"@[/]@\"",
     "\"\\ufeff\"",
     "\"\\r\"",
     "\"\\n\"",
@@ -278,8 +283,9 @@ public interface GramaticaConstants {
     "<T_varID>",
     "<T_Estilo>",
     "\".\"",
+    "\" \"",
     "\"@\\\"@\"",
-    "<token of kind 97>",
+    "<token of kind 99>",
   };
 
 }

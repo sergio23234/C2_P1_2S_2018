@@ -13,11 +13,13 @@ public class Errores {
  int columna;
  String token_es;
  String token_en;
- public Errores(int linea,int columna,String encontrado,String esperado){
+ int Tipo;
+ public Errores(int linea,int columna,String encontrado,String esperado,int tipo){
      this.linea = linea;
      this.columna = columna;
      this.token_en = encontrado;
      this.token_es = esperado;
+     this.Tipo = tipo;
  }
  public String dev_error(){
      String retorno = "Error en Linea: "+linea+" Columna: "+columna+" Se esperaba: "+token_es+" pero se encontro: "+token_en;

@@ -23,7 +23,7 @@
 
 
 options {
-  LOOKAHEAD = 100;
+  LOOKAHEAD = 20;
   STATIC = false;
   IGNORE_CASE =true;
   FORCE_LA_CHECK = true;
@@ -38,7 +38,7 @@ import java.util.ArrayList;
 
 public class Gramatica {
     Stack<Nodo_Arbol> Pila = new Stack();
-    ArrayList<Errores> LErrores = new ArrayList();
+    static ArrayList<Errores> LErrores = new ArrayList();
     Nodo_Arbol primero = new Nodo_Arbol();
     public void Gramatica(String arg){ 
     try{
@@ -46,6 +46,7 @@ public class Gramatica {
      primero.set_ID("~$RAIZ~$");
      Gramatica parser = new Gramatica(new BufferedReader(new FileReader("path.txt")));
      parser.Inicio(primero);
+     System.out.println(LErrores.size());
     }
     catch(FileNotFoundException e)
     {
@@ -88,7 +89,7 @@ TOKEN:
  |      <CORI:"[">
  |      <COR:"]">
  |      <R_fin:"#[/]#">
-}
+ |      <Fin:"@[/]@">}
 SKIP:{
 "\ufeff"
 |"\r"
@@ -168,19 +169,40 @@ TOKEN :{
 }
 <T_Texto1> TOKEN:
 {
-<T_Texto:(~["@",".","#","[","]","\n","\t"])+>
+<T_Texto:(~["@",".","#","[","]","\n","\t"," "])+>
 |<T_var:"#["(<LETTER>(<LETTER>|<DIGIT>|"_"|"-")*)"]">
 |<T_varID:((<LETTER>(<LETTER>|<DIGIT>|"_"|"-")*<PUNTO>(<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|"("|")"|"@"|".")*)))>
 |<T_Estilo:"@{"(~["@"])+"}@">
 |<PUNTO:".">
+|<T_Espacio:" ">
 |<T_Coma:"@\"@">:DEFAULT
 }
 <T_Texto1> MORE:
 {
 <~["@",".","#","[","]"," "]>
 }
-
-
+/*--------------EN CASO DE QUE OCURRAN ERROES--------------------*/
+JAVACODE
+void error_skipto(int kind) {
+  ParseException e = generateParseException();  // generate the exception object.
+    boolean entro = true;
+  Token t;
+    int contador=0;
+  do {
+    t = getNextToken();    
+    if(entro){
+        entro =false;
+        Errores er= new Errores(t.beginLine,t.beginColumn,"","Etiqueta valida",1);
+        LErrores.add(er);
+    }
+    contador++;
+  } while (t.kind != kind);
+    // The above loop consumes tokens all the way up to a token of
+    // "kind".  We use a do-while loop rather than a while because the
+    // current token is the one immediately before the erroneous token
+    // (in our case the token immediately before what should have been
+    // "if"/"while".
+}
 
 Nodo_Arbol Inicio(Nodo_Arbol arbol): 
 {}
@@ -190,11 +212,18 @@ Nodo_Arbol Inicio(Nodo_Arbol arbol):
 void Contenido(Nodo_Arbol arbol) ://Inicio del Cuerpo Tipo
 {   Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
-{Pila.push(arbol);} ContenidoP() (ContenidoP(){System.out.print("");})*{}
+{Pila.push(arbol);} ContenidoP(){}
 //<R_tip>Inicial_Cont(arbol_1){if(arbol_1.get_anidado()!=0){arbol.Add_Nodo_Arbol(arbol_1); if(arbol_1.get_anidado()==1){Pila.push(arbol); ContenidoP(arbol_1);}else{ContenidoP(Pila.pop());}} } 
 }
 
 void ContenidoP():
+{Nodo_Arbol arbol_1 = new Nodo_Arbol();}
+{
+ContenidoP1() <Fin>ContenidoP() 
+|<EOF>
+//|error_skipto(Fin) ContenidoP()
+}
+void ContenidoP1():
 {Nodo_Arbol arbol_1 = new Nodo_Arbol();}
 {
 <R_tip>Inicial_Cont(arbol_1){
@@ -217,7 +246,6 @@ if(arbol_1.get_anidado()!=0){
    // ContenidoP();
 }
 }
-
 void Inicial_Cont(Nodo_Arbol arbol):
 {}
 {
@@ -229,7 +257,6 @@ void Cuerpo_Tipo(Nodo_Arbol actual):
  Token val;
       Token t;}
 {
-try{
  val=<R_Text><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_Ente><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_Deci><R_fin>                                                        {actual.set_tipo(val.image); }
@@ -247,33 +274,13 @@ try{
 |val=<R_AgrF><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(-1);}
 |val=<R_Cici><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(1);}
 |val=<R_Cicf><R_fin>                                                        {actual.set_tipo(val.image); actual.set_ciclo(-1);}
-}catch (ParseException e) {
-    boolean entro = true;
-do{
-       t = getNextToken();
-       if(entro){
-        entro = false;
-        Errores er = new Errores(t.beginLine,t.beginColumn,"tipo de agrupación",t.image);
-        LErrores.add(er);}
-      }while(t.kind !=R_fin);
-}
+|error_skipto(R_fin)
 }
 void Cuerpo_mul(Nodo_Arbol actual):
 {Token t;}
 {
-try{
 t=<T_MUL>   {actual.Set_fichero(t.image);}
 |<EOF>      {}
-}catch (ParseException e) {
-    boolean entro = true;
-do{
-       t = getNextToken();
-       if(entro){
-        entro = false;
-        Errores er = new Errores(t.beginLine,t.beginColumn,"tipo de fichero",t.image);
-        LErrores.add(er);}
-      }while(t.kind !=R_fin);
-}
 }
 /*--------------- Estructura ID---------------- */
 void Estruct_ID(Nodo_Arbol actual):
@@ -285,37 +292,38 @@ void Estruct_ID(Nodo_Arbol actual):
 void Cuerpo_ID(Nodo_Arbol actual):
 {Token ID,t;}
 {
-try{
     ID=<T_ID> <R_fin>{String imagen = ID.image; actual.set_ID(imagen);}
-}catch (ParseException e) {
-    boolean entro = true;
-do{
-       t = getNextToken();
-       if(entro){
-        entro = false;
-        Errores er = new Errores(t.beginLine,t.beginColumn,"ID",t.image);
-        LErrores.add(er);}
-      }while(t.kind !=R_fin);
-}
+|error_skipto(R_fin)
 }
 /*--------------- Estructura etiqueta---------------- */
 void Est_eti(Nodo_Arbol actual):
 {String etiqueta="";}
 {
-  <R_eti> etiqueta=Etiqueta_ET()<R_fin> {actual.Set_etiqueta(etiqueta);} Est_param(actual)
+  <R_eti> Cuerpo_etiqueta(actual)Est_param(actual)
+}
+void Cuerpo_etiqueta(Nodo_Arbol actual):
+{String etiqueta="";Token t;}
+{
+   etiqueta=Etiqueta_ET(){actual.Set_etiqueta(etiqueta);}<R_fin>
+ |t=<R_fin>{
+    if(actual.get_anidado()==0){
+        Errores er= new Errores(t.beginLine,t.beginColumn,"Fin","Etiqueta valida",2);
+        LErrores.add(er);
+        }
+    }
 }
 
 /*--------------- Estructura PARAMETRO---------------- */
 void Est_param(Nodo_Arbol actual): //
 {Token t;}
 {
-t=<R_par> Cuerpo_param(actual) Est_calcular(actual)
+        t=<R_par> Cuerpo_param(actual) Est_calcular(actual)
+
 }
 void Cuerpo_param(Nodo_Arbol actual):
 {String Respuesta="";
     Token t;}
 {
-try{
 <R_fin>    {}
 |t=<R_OP>     <IGU>   PARAM1(actual)                                   // Opcion  = Param1(){}
 |t=<R_OI>     <IGU>   Respuesta=EXP_AR(){actual.add_rango_min(Respuesta); }     (PARAM2(actual))+// Iniciar = EXP
@@ -323,54 +331,51 @@ try{
 |t=<R_CMIN>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_min(Respuesta);   }     (PARAM3(actual))+// C_min = num 
 |t=<R_CMAX>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_max(Respuesta);   }     (PARAM3(actual))+// C_max = num
 |t=<R_CFIL>   <IGU>   Respuesta=EXP_AR(){actual.add_cad_fil(Respuesta);   }     (PARAM3(actual))+// C_FIl = num
-}catch (ParseException e) {
-    boolean entro = true;
-do{
-       t = getNextToken();
-       if(entro){
-        entro = false;
-        Errores er = new Errores(t.beginLine,t.beginColumn,"tipo de agrupación",t.image);
-        LErrores.add(er);}
-      }while(t.kind !=R_fin);
-}
+|error_skipto(R_fin)
 }
 
 //parametro1 V_F o S_N
 void PARAM1(Nodo_Arbol actual):
-{}
+{Token t;}
 {
-    <C_SN><R_fin>{actual.add_opc(1);}
-|   <C_VF><R_fin>{actual.add_opc(0);}
+        <C_SN><R_fin>{actual.add_opc(1);}
+    |   <C_VF><R_fin>{actual.add_opc(0);}
+
 }
 
 void PARAM2(Nodo_Arbol actual):
-{String resultado="";}
+{String resultado="";Token t;}
 {
- <R_OF> <IGU> resultado=EXP_AR(){actual.add_rango_max(resultado);} PARAM2(actual)
-|<R_OI> <IGU> resultado=EXP_AR(){actual.add_rango_min(resultado);} PARAM2(actual)
-|<R_fin>  
+     <R_OF> <IGU> resultado=EXP_AR(){actual.add_rango_max(resultado);} PARAM2(actual)
+    |<R_OI> <IGU> resultado=EXP_AR(){actual.add_rango_min(resultado);} PARAM2(actual)
+    |<R_fin>
+
 }
 //parametro de texto
 void PARAM3(Nodo_Arbol actual):
-{String resultado ="";}
+{String resultado ="";
+Token t;}
 {
  <R_CMIN><IGU> resultado=EXP_AR(){actual.add_cad_min(resultado);} 
 |<R_CMAX><IGU> resultado=EXP_AR(){actual.add_cad_max(resultado);} 
 |<R_CFIL><IGU> resultado=EXP_AR(){actual.add_cad_fil(resultado);} 
 |<R_fin>{}
+
 }
 
 /*------------------------OPERACION CALCULAR-----------------------------------*/
 void Est_calcular(Nodo_Arbol actual): //calcular
-{}
+{Token t;}
 {
-<R_cal>Cuerpo_calcular(actual) Est_aplicable(actual)
+    <R_cal>Cuerpo_calcular(actual) Est_aplicable(actual)
+
 }
 void Cuerpo_calcular(Nodo_Arbol actual):
-{String resultado=""; }
+{String resultado=""; Token t;}
 {
  resultado=EXP_LOG(){actual.Set_calcular(resultado);}
 | <R_fin>           {}
+|error_skipto(R_fin)
 }
 /*------------------------OPERACION Aplicable-----------------------------------*/
 void Est_aplicable(Nodo_Arbol actual): //aplicable
@@ -379,10 +384,11 @@ void Est_aplicable(Nodo_Arbol actual): //aplicable
 <R_apl>Cuerpo_apli(actual) Est_sugerir(actual)
 }
 void Cuerpo_apli(Nodo_Arbol actual):
-{String resultado="";}
+{String resultado="";Token t;}
 {
 resultado=EXP_LOG()<R_fin>{actual.set_aplicable(resultado);}
 |<R_fin>
+|error_skipto(R_fin)
 }
 /*------------------------OPERACION Sugerir-----------------------------------*/
 void Est_sugerir(Nodo_Arbol actual): //sugerir
@@ -395,6 +401,7 @@ void Cuerpo_suger(Nodo_Arbol actual):
 {
  mensaje=Etiqueta_ET()  <R_fin>  {actual.set_sugerir(mensaje);}
 |<R_fin>                         {}
+|error_skipto(R_fin)
 }
 /*------------------------OPERACION Restringir-----------------------------------*/
 void Est_restrin(Nodo_Arbol actual): //restringir
@@ -403,10 +410,11 @@ void Est_restrin(Nodo_Arbol actual): //restringir
 <R_res> Cuerpo_restringir(actual) Est_requerido(actual)
 }
 void Cuerpo_restringir(Nodo_Arbol actual):
-{String resultado="";}
+{String resultado="";Token t;}
 {
   resultado=EXP_COMP()  <R_fin> {actual.set_restringir(resultado);}
 |<R_fin>                {}
+|error_skipto(R_fin)
 }
 /*------------------------OPERACION Requerido-----------------------------------*/
 void Est_requerido(Nodo_Arbol actual): //requerido
@@ -420,6 +428,7 @@ void Cuerpo_requerido(Nodo_Arbol actual):
  <TRUE><R_fin>      {actual.set_requerido();}
 |<FALSE><R_fin>     {}
 |<R_fin>    {}
+|error_skipto(R_fin)
 }
 /*------------------------OPERACION Restringir mensaje-----------------------------------*/
 void Est_restrimen(Nodo_Arbol actual): //restringir mensaje 
@@ -432,6 +441,7 @@ void Cuerpo_resmensaje(Nodo_Arbol actual):
 {
 mensaje=Etiqueta_ET()  <R_fin>  {actual.set_men_rest(mensaje);}
 |<R_fin>                        {}
+|error_skipto(R_fin)
 }
 /*------------------------OPERACION Requerido mensaje-----------------------------------*/
 void Est_resquemen(Nodo_Arbol actual): //requerido mensaje 
@@ -444,6 +454,7 @@ void cuerpo_requemen(Nodo_Arbol actual):
 {
 mensaje=Etiqueta_ET()  <R_fin>  {actual.set_men_reque(mensaje);}
 |<R_fin>{}
+|error_skipto(R_fin)
 }
 /*------------------------OPERACION Predeterminado-----------------------------------*/
 void Est_predeter(Nodo_Arbol actual): //predeterminado 
@@ -457,6 +468,7 @@ void Cuerpo_prede(Nodo_Arbol actual):
 resultado=EXP_LOG() <R_fin>   {actual.set_predeterminado(resultado);}
 |t=<T_ID><PAI><PAF> <R_fin>  {actual.set_predeterminado(t.image+"()");}
 |<R_fin>                        {}
+|error_skipto(R_fin)
 }
 /*------------------------OPERACION repetir-----------------------------------*/
 void Est_repetir(Nodo_Arbol actual): //repeticion 
@@ -469,6 +481,7 @@ String resultado="";}
 {
   resultado = EXP_AR()  {actual.add_repetir(resultado);}
 | <R_fin>               {}
+|error_skipto(R_fin)
 }
 /*------------------------OPERACION apariencia-----------------------------------*/
 void Est_apariencia(Nodo_Arbol actual): //apariencia 
@@ -481,6 +494,7 @@ void Cuerpo_aparien(Nodo_Arbol actual):
 {
 t=<T_ID><R_fin> {actual.set_apariencia(t.image);}
 |<R_fin>         {}
+|error_skipto(R_fin)
 }
 /*------------------------OPERACION lectura-----------------------------------*/
 void Est_Lectura(Nodo_Arbol actual):
@@ -496,6 +510,7 @@ String resultado="";
 | <FALSE>               <R_fin> {actual.Set_lectura("falso");}
 | resultado=EXP_AR()    <R_fin> {actual.Set_lectura(resultado);}
 | <R_fin>                       {}
+|error_skipto(R_fin)
 }
 /*------------------------OPERACION multimedia-----------------------------------*/
 void Est_multimed(Nodo_Arbol actual):{
@@ -512,6 +527,7 @@ void Cuerpo_multimed(Nodo_Arbol actual):
 |<R_MVID>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                         Cuerpo_multimed(actual)
 |<R_repro><IGU> resultado=Cuerpo_RE(actual){actual.Set_automul(resultado);}   Cuerpo_multimed(actual)       
 |<R_fin>             {}
+|error_skipto(R_fin)
 }
 String Cuerpo_RE(Nodo_Arbol actual):
 {}
@@ -530,6 +546,7 @@ void Cuerpo_pre(Nodo_Arbol actual):
 {
 mensaje=Etiqueta_ET()  <R_fin>  {actual.set_codigoPRE(mensaje);}
 |<R_fin>                        {}
+|error_skipto(R_fin)
 }
 void Est_codigoPOST(Nodo_Arbol actual): //codigo post
 {}
@@ -541,6 +558,7 @@ void Cuerpo_post(Nodo_Arbol actual):
 {
 mensaje=Etiqueta_ET()  <R_fin>  {actual.set_codigoPOS(mensaje);}
 |<R_fin>                        {}
+|error_skipto(R_fin)
 }
 /*---------------------Operaciones Aritmeticas---------------------- */
 String EXP_AR(): //SUMA Y RESTA
@@ -635,6 +653,7 @@ String Etiqueta_ET1() :
 {
  Cad = T() (total= Etiqueta_ET1(){total=Cad+total;})*{return total;}
 |<T_Coma>{return "";}
+
 }
 //total=Etiqueta_ET1()
 String T() :
@@ -649,6 +668,7 @@ String T() :
 |   t=<DOUBLE>  {return t.image;}
 |   t=<T_varID> {return "yolo";}
 |   t=<T_Estilo>{return t.image;}
+|   <T_Espacio>{return " ";}
 |   t=<STRING>{return t.image;}
 }
 /*------------------------VAR ID---------------------------------*/

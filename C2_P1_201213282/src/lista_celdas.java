@@ -168,6 +168,7 @@ public class lista_celdas {
                   linea = linea +es_nodo;
                 }
                 BR.write(linea);
+                BR.write("@[/]@\r\n");
             }
             BR.close();
         } catch (IOException e) {

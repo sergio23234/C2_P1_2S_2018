@@ -1,4 +1,4 @@
-#[tipo]#Iniciar#[/]#
+#[tipo]#Iniciar Agrupacion#[/]#
 #[idpregunta]#info1#[/]#
 #[etiqueta]#@"@Agrupación 1@"@#[/]#
 #[parametro]##[/]#
@@ -16,6 +16,7 @@
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#texto#[/]#
 #[idpregunta]#nombre#[/]#
 #[etiqueta]#@"@Cual es tu nombre?@"@#[/]#
@@ -34,6 +35,7 @@
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#fecha#[/]#
 #[idpregunta]#hoyes#[/]#
 #[etiqueta]#@"@Que fecha es hoy?@"@#[/]#
@@ -52,6 +54,7 @@
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#Nota#[/]#
 #[idpregunta]#nota_dato#[/]#
 #[etiqueta]#@"@Se llenara dos arboles Binarios@"@#[/]#
@@ -70,9 +73,10 @@
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#finalizar Agrupacion#[/]#
 #[idpregunta]#info1#[/]#
-#[etiqueta]#@"@fin@"@#[/]#
+#[etiqueta]##[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -88,6 +92,7 @@
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#Iniciar Agrupacion#[/]#
 #[idpregunta]#info2#[/]#
 #[etiqueta]#@"@Agrupación 2@"@#[/]#
@@ -106,6 +111,7 @@
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#Nota#[/]#
 #[idpregunta]#arbol1#[/]#
 #[etiqueta]#@"@Se incio la instancia del primer Arbol?@"@#[/]#
@@ -124,6 +130,7 @@
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]#@"@abo1 = nuevo ArbolBinario();@"@#[/]#
+@[/]@
 #[tipo]#Iniciar Ciclo#[/]#
 #[idpregunta]#llenar1#[/]#
 #[etiqueta]#@"@Ciclo Arbol 1@"@#[/]#
@@ -142,6 +149,7 @@
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#entero#[/]#
 #[idpregunta]#insertar1#[/]#
 #[etiqueta]#@"@Dame un numero @{color: #FFFF00, tam:15, negrilla }: { Mayor }@ a 1 
@@ -161,9 +169,10 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]#@"@abo1.insertar(@);@"@#[/]#
+@[/]@
 #[tipo]#finalizar ciclo#[/]#
 #[idpregunta]#llenar1#[/]#
-#[etiqueta]#@"@lleno@"@#[/]#
+#[etiqueta]##[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -179,9 +188,10 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#finalizar Agrupacion#[/]#
 #[idpregunta]#info2#[/]#
-#[etiqueta]#@"@lleno@"@#[/]#
+#[etiqueta]##[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -197,6 +207,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#iniciar agrupacion#[/]#
 #[idpregunta]#info3#[/]#
 #[etiqueta]#@"@Agrupación 3@"@#[/]#
@@ -215,6 +226,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#Nota#[/]#
 #[idpregunta]#arbol2#[/]#
 #[etiqueta]#@"@Se incio la instancia del segundo arbol@"@#[/]#
@@ -233,6 +245,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]#@"@abo2 = nuevo ArbolBinario();@"@#[/]#
+@[/]@
 #[tipo]#Iniciar Ciclo#[/]#
 #[idpregunta]#llenar2#[/]#
 #[etiqueta]#@"@lleno@"@#[/]#
@@ -251,6 +264,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#rango#[/]#
 #[idpregunta]#insertar2#[/]#
 #[etiqueta]#@"@Dame un numero @{color: #FFFF00, tam:15, negrilla }: { Mayor }@ a 20
@@ -270,9 +284,10 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]#@"@abo2.insertar(@);@"@#[/]#
+@[/]@
 #[tipo]#finalizar ciclo#[/]#
 #[idpregunta]#llenar2#[/]#
-#[etiqueta]#@"@lleno@"@#[/]#
+#[etiqueta]##[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -288,9 +303,10 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#finalizar Agrupacion#[/]#
 #[idpregunta]#info3#[/]#
-#[etiqueta]#@"@lleno@"@#[/]#
+#[etiqueta]##[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -306,6 +322,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#Iniciar Agrupacion#[/]#
 #[idpregunta]#impresion#[/]#
 #[etiqueta]#@"@Salida De Resultados@"@#[/]#
@@ -324,9 +341,10 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#Iniciar Ciclo#[/]#
 #[idpregunta]#llenar3#[/]#
-#[etiqueta]#@"@lleno@"@#[/]#
+#[etiqueta]##[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -342,6 +360,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#seleccion_uno#[/]#
 #[idpregunta]#impre_1#[/]#
 #[etiqueta]#@"@Que Arbol desea imprimir: 
@@ -362,6 +381,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#Nota#[/]#
 #[idpregunta]#impreA#[/]#
 #[etiqueta]#@"@Se imprimira el Arbol #[impre_1]@"@#[/]#
@@ -381,12 +401,13 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]#@"@imprimir (Preorden: Arbol " + #[impre_1]);
 abo1.imprimirPre();@"@#[/]#
+@[/]@
 #[tipo]#Nota#[/]#
 #[idpregunta]#impreB#[/]#
 #[etiqueta]#@"@Se imprimira el Arbol #[impre_1]@"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
-#[aplicable]##[impre_1] = "a2"#[/]#
+#[aplicable]# #[impre_1] = "a2" #[/]#
 #[sugerir]##[/]#
 #[restringir]##[/]#
 #[requerido]##[/]#
@@ -398,8 +419,9 @@ abo1.imprimirPre();@"@#[/]#
 #[lectura]##[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
-#[codigo_post]#@"@imprimir (Preorden: Arbol " + #[impre_1]);
-abo2.imprimirPre ();@"@#[/]#
+#[codigo_post]#@"@imprimir ("Preorden: Arbol " + #[impre_1]);
+abo2.imprimirPre();@"@#[/]#
+@[/]@
 #[tipo]#Nota#[/]#
 #[idpregunta]#error#[/]#
 #[etiqueta]#@"@NO existe la Opcion #[impre_1]@"@#[/]#
@@ -418,9 +440,10 @@ abo2.imprimirPre ();@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#finalizar ciclo#[/]#
 #[idpregunta]#llenar3#[/]#
-#[etiqueta]#@"@Se imprimira el Arbol #[impre_1]@"@#[/]#
+#[etiqueta]##[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -436,9 +459,10 @@ abo2.imprimirPre ();@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
 #[tipo]#finalizar Agrupacion#[/]#
 #[idpregunta]#impresion#[/]#
-#[etiqueta]#@"@Se imprimira el Arbol #[impre_1]@"@#[/]#
+#[etiqueta]##[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -446,7 +470,7 @@ abo2.imprimirPre ();@"@#[/]#
 #[restringir]##[/]#
 #[requerido]##[/]#
 #[restringirmsn]##[/]#
-#[requeridomsn]##[/]#
+#[requeridomsn]#aa#[/]#
 #[predeterminado]##[/]#
 #[repeticion]##[/]#
 #[apariencia]##[/]#
@@ -454,3 +478,4 @@ abo2.imprimirPre ();@"@#[/]#
 #[multimedia]##[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
+@[/]@
