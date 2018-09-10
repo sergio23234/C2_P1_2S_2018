@@ -19,6 +19,9 @@ public class Nodo_Arbol {
     Arbol_Grupo Nodo_Gr;
     ArrayList<Nodo_Arbol> lista_arbol;
     int agrupacion, ciclo;
+    ArrayList<String> Parametros_et;
+    ArrayList<String> Parametros_cal;
+    ArrayList<String> Parametros_resp;
 
     public Nodo_Arbol() {
         this.lista_arbol = new ArrayList();
@@ -257,4 +260,7 @@ public class Nodo_Arbol {
         return "";
     }
 
+    private String get_(){
+        return "";
+    }
 }

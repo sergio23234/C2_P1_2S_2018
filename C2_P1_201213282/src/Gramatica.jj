@@ -168,8 +168,9 @@ TOKEN :{
 }
 <T_Texto1> TOKEN:
 {
-<T_Texto:(~["@",".","#","[","]","\n","\t"," "])+>
-|<T_var:"#["(<LETTER>(<LETTER>|<DIGIT>|"_"|"-")*)"]">
+<F_COR:"]">
+|<T_Texto:(~["@",".","#","[","]","\n","\t"," "])+>
+|<T_var:"#["(((<T_Espacio>)*(<LETTER>)(<LETTER>|<DIGIT>|"_"|"-")*)(<T_Espacio>)*"]")*>
 |<T_varID:((<LETTER>(<LETTER>|<DIGIT>|"_"|"-")*<PUNTO>(<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|"("|")"|"@"|".")*)))>
 |<T_Estilo:"@{"(~["@"])+"}@">
 |<PUNTO:".">
@@ -264,8 +265,8 @@ void Cuerpo_Tipo(Nodo_Arbol actual):
 |val=<R_Fech><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_Hora><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_FeHo><R_fin>                                                        {actual.set_tipo(val.image); }
-|val=<R_Selu><R_fin>                                                        {actual.set_tipo(val.image); }
-|val=<R_Selm><R_fin>                                                        {actual.set_tipo(val.image); }
+|val=<R_Selu> <T_ID><R_fin>                                                 {actual.set_tipo(val.image); }
+|val=<R_Selm> <T_ID><R_fin>                                                 {actual.set_tipo(val.image); }
 |val=<R_Nota><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_Mult> {actual.set_tipo(val.image);} Cuerpo_mul(actual)       { }
 |val=<R_Calc><R_fin>                                                        {actual.set_tipo(val.image); }
@@ -372,7 +373,7 @@ void Est_calcular(Nodo_Arbol actual): //calcular
 void Cuerpo_calcular(Nodo_Arbol actual):
 {String resultado=""; Token t;}
 {
- resultado=EXP_LOG(){actual.Set_calcular(resultado);}
+ resultado=EXP_LOG()<R_fin>{actual.Set_calcular(resultado);}
 | <R_fin>           {}
 |error_skipto(R_fin)
 }
@@ -661,7 +662,8 @@ String T() :
 }
 {
   
-    t=<T_var> {System.out.println(t.image.replace("#[","").replace("]","")+"<---"); return t.image;}
+    t=<T_var> {if(!t.image.replace(" ","").equals("#[")){System.out.println(t.image.replace("#[","").replace(" ","").replace("]","")+"<---"); return t.image.replace("#[","").replace(" ","").replace("]","");}else{System.out.println(t.image+"---"); return t.image;}}
+|   t=<F_COR> {System.out.println(t.image+"--"); return "]";}
 |   t=<T_Texto>{return t.image;}
 |   t=<INTEGER>{return t.image;}
 |   t=<PUN>(<PUN>)? {return "yo ";}

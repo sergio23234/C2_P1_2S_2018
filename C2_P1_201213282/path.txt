@@ -1,6 +1,6 @@
 #[tipo]#Iniciar Agrupacion#[/]#
 #[idpregunta]#info1#[/]#
-#[etiqueta]#@"@Agrupación 1@"@#[/]#
+#[etiqueta]#@"@Agrupación 1 @"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
@@ -361,7 +361,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
 @[/]@
-#[tipo]#seleccion_uno#[/]#
+#[tipo]#seleccion_uno lista#[/]#
 #[idpregunta]#impre_1#[/]#
 #[etiqueta]#@"@Que Arbol desea imprimir: 
 1 - Imprimir el Arbol 1
@@ -384,7 +384,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 30@"@#[/]#
 @[/]@
 #[tipo]#Nota#[/]#
 #[idpregunta]#impreA#[/]#
-#[etiqueta]#@"@Se imprimira el Arbol #[impre_1]@"@#[/]#
+#[etiqueta]#@"@Se imprimira el Arbol #[impre_1] #[] @"@#[/]#
 #[parametro]##[/]#
 #[calculo]##[/]#
 #[aplicable]# #[impre_1] = "a1"#[/]#
