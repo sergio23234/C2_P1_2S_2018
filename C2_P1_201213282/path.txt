@@ -150,7 +150,7 @@
 #[codigo_pre]##[/]#
 #[codigo_post]##[/]#
 @[/]@
-#[tipo]#entero#[/]#
+#[tipo]#Fichero ".mp3" #[/]#
 #[idpregunta]#insertar1#[/]#
 #[etiqueta]#@"@Dame un numero @{color: #FFFF00, tam:15, negrilla }: { Mayor }@ a 1 
 y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
@@ -158,7 +158,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
 #[calculo]##[/]#
 #[aplicable]##[/]#
 #[sugerir]##[/]#
-#[restringir]# ..<= 20#[/]#
+#[restringir]#.>=1 && .<= 20#[/]#
 #[requerido]#verdadero#[/]#
 #[restringirmsn]##[/]#
 #[requeridomsn]##[/]#
@@ -166,7 +166,7 @@ y @{color: #FFFF00, tam:15, negrilla }: { Menor }@ a 20@"@#[/]#
 #[repeticion]##[/]#
 #[apariencia]##[/]#
 #[lectura]##[/]#
-#[multimedia]##[/]#
+#[multimedia]# #[/]#
 #[codigo_pre]##[/]#
 #[codigo_post]#@"@abo1.insertar(@);@"@#[/]#
 @[/]@
@@ -470,7 +470,7 @@ abo2.imprimirPre();@"@#[/]#
 #[restringir]##[/]#
 #[requerido]##[/]#
 #[restringirmsn]##[/]#
-#[requeridomsn]#aa#[/]#
+#[requeridomsn]##[/]#
 #[predeterminado]##[/]#
 #[repeticion]##[/]#
 #[apariencia]##[/]#

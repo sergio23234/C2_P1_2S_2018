@@ -15,6 +15,7 @@ public class prueba {
         gr.Gramatica("");
         prueba p = new prueba();
         p.recorrer_raiz("Sin padre",gr.primero);
+        p.dev_error();
     }
 
     public void recorrer_raiz(String padre,Nodo_Arbol primero) {
@@ -23,6 +24,14 @@ public class prueba {
             for (int i = 0; i < primero.lista_arbol.size(); i++) {
                 recorrer_raiz(primero.ID,primero.lista_arbol.get(i));
             }
+        }
+
+    }
+    public void dev_error(){
+                if(Gramatica.LErrores.size()>0){
+            for(int i=0;i<Gramatica.LErrores.size();i++){
+            System.out.println(Gramatica.LErrores.get(i).dev_error());
+        }
         }
     }
 }

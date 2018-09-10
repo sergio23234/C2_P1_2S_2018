@@ -155,7 +155,6 @@ TOKEN :{
 |   <STRING:"\""(~["\""])*"\"">
 |   <#DIGIT: ["0"-"9"]>
 |   <T_ID:(<LETTER>(<LETTER>|<DIGIT>|"_"|"-"|<PUN>)*)>
-|   <T_MUL:"\""(<PUN>(<LETTER>)+)(","<PUN>(<LETTER>)+)*"\"">
 |   <T_Texto2:"@\"@">:T_Texto1
 }
 <T_Texto1> SKIP:
@@ -268,7 +267,7 @@ void Cuerpo_Tipo(Nodo_Arbol actual):
 |val=<R_Selu><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_Selm><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_Nota><R_fin>                                                        {actual.set_tipo(val.image); }
-|val=<R_Mult> {actual.set_tipo(val.image);} Cuerpo_mul(actual)<R_fin>       { }
+|val=<R_Mult> {actual.set_tipo(val.image);} Cuerpo_mul(actual)       { }
 |val=<R_Calc><R_fin>                                                        {actual.set_tipo(val.image); }
 |val=<R_AgrI><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(1);}
 |val=<R_AgrF><R_fin>                                                        {actual.set_tipo(val.image); actual.set_agrupacion(-1);}
@@ -279,8 +278,8 @@ void Cuerpo_Tipo(Nodo_Arbol actual):
 void Cuerpo_mul(Nodo_Arbol actual):
 {Token t;}
 {
-t=<T_MUL>   {actual.Set_fichero(t.image);}
-|<EOF>      {}
+t=<STRING>   {actual.Set_fichero(t.image);} Cuerpo_mul(actual)
+|<R_fin>      {}
 }
 /*--------------- Estructura ID---------------- */
 void Estruct_ID(Nodo_Arbol actual):
@@ -412,7 +411,7 @@ void Est_restrin(Nodo_Arbol actual): //restringir
 void Cuerpo_restringir(Nodo_Arbol actual):
 {String resultado="";Token t;}
 {
-  resultado=EXP_COMP()  <R_fin> {actual.set_restringir(resultado);}
+ resultado=EXP_LOG()  <R_fin> {actual.set_restringir(resultado);}
 |<R_fin>                {}
 |error_skipto(R_fin)
 }
@@ -522,11 +521,12 @@ void Cuerpo_multimed(Nodo_Arbol actual):
 {String resultado="";
  Token t;}
 {
- <R_MIMG>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                         Cuerpo_multimed(actual)
-|<R_MAUD>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                         Cuerpo_multimed(actual)
-|<R_MVID>t=<T_MUL>{actual.Set_multimedia(t.image,0);}                         Cuerpo_multimed(actual)
-|<R_repro><IGU> resultado=Cuerpo_RE(actual){actual.Set_automul(resultado);}   Cuerpo_multimed(actual)       
-|<R_fin>             {}
+ <R_MIMG>                                       {actual.Set_tipomultimedia(0);}                         Cuerpo_multimed(actual)
+|<R_MAUD>                                       {actual.Set_tipomultimedia(1);}                         Cuerpo_multimed(actual)
+|<R_MVID>                                       {actual.Set_tipomultimedia(2);}                         Cuerpo_multimed(actual)
+|t=<STRING>                                     {actual.Set_multimedia(t.image);}                       Cuerpo_multimed(actual)
+|<R_repro><IGU> resultado=Cuerpo_RE(actual)     {actual.Set_automul(resultado);}                        Cuerpo_multimed(actual)       
+|<R_fin>                                                                        {}
 |error_skipto(R_fin)
 }
 String Cuerpo_RE(Nodo_Arbol actual):

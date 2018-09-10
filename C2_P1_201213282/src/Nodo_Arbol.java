@@ -122,8 +122,11 @@ public class Nodo_Arbol {
         Nodo_NG.Set_lectura(lectura);
     }
 
-    public void Set_multimedia(String multi, int tipo) {
-        Nodo_NG.Set_multimedia(multi, tipo);
+    public void Set_multimedia(String multi) {
+        Nodo_NG.Set_multimedia(multi);
+    }
+    public void Set_tipomultimedia(int multi) {
+        Nodo_NG.Set_tipo(multi);
     }
 
     public void Set_automul(String multi) {
@@ -132,11 +135,11 @@ public class Nodo_Arbol {
 
 //*----------------------------Acciones Arbol Grupo---------------------------------------*/
     public void set_codigoPRE(String codigo) {
-        Nodo_Gr.set_codigoPRE(codigo);
+        Nodo_Gr.SetcodigoPRE(codigo);
     }
 
     public void set_codigoPOS(String codigo) {
-        Nodo_Gr.set_codigoPOS(codigo);
+        Nodo_Gr.SetcodigoPOS(codigo);
     }
 
     public void set_aplicable(String apli) {
@@ -199,6 +202,59 @@ public class Nodo_Arbol {
 
     public void set_apariencia(String apar) {
 
+    }
+
+//*----------------------------Acciones de Armar Arbol---------------------------------------*/
+    private String getEtiqueta() {
+        if (!Nodo_NG.getEtiqueta().equals("")) {
+            String respuesta = "cadena etiqueta = \"" + Nodo_NG.getEtiqueta() + "\";";
+            return respuesta;
+        }
+        return "";
+    }
+
+    private String getrequerido() {
+        if (!Nodo_NG.getRequerido().equals("falso")) {
+            String respuesta = "booleano requerido = " + Nodo_NG.getRequerido() + ";";
+        }
+        return "";
+    }
+
+    private String getsugerencia() {
+        if (!Nodo_NG.getSugerir().equals("")) {
+            String respuesta = "cadena sugerencia = \"" + Nodo_NG.getSugerir() + "\";";
+        }
+        return "";
+    }
+
+    private String getrequeridomsn() {
+        if (!Nodo_NG.getMensaje_reque().equals("")) {
+            String respuesta = "cadena requeridomsn = \"" + Nodo_NG.getMensaje_reque() + "\";";
+        }
+        return "";
+    }
+
+    private String getrestrinmsn() {
+        if (!Nodo_NG.getMensaje_restrin().equals("")) {
+            String respuesta = "mensaje(\"" + Nodo_NG.getMensaje_reque() + "\");";
+        }
+        return "";
+    }
+
+    private String getrestringir() {
+        if (!Nodo_NG.getRestringir().equals("")) {
+            String respuesta = "si(" + Nodo_NG.getRestringir() + "){\r\n respuesta = param_1;\r\n }\r\n";
+            return respuesta;
+        }
+        return "";
+    }
+
+    private String getrutamedia() {
+        if (!Nodo_NG.getRuta().equals("")) {
+            String respuesta = "cadena ruta =\"" + Nodo_NG.getRuta() + "\";";
+            return respuesta;
+        }
+        return "";
     }
 
 }

@@ -10,19 +10,19 @@
  */
 public class Arbol_Nogrupo {
 
-    String etiqueta;
-    String requerido;
-    String mensaje_reque;
-    String restringir;
-    String predeterminado;
-    String mensaje_restrin;
-    String Calcular;
-    String Ruta;
-    String sugerir;
-    String lectura;
-    String auto_mult;
-    String multimedia;
-    String tipo_mul;
+    private String etiqueta;
+    private String requerido;
+    private String mensaje_reque;
+    private String restringir;
+    private String predeterminado;
+    private String mensaje_restrin;
+    private String Calcular;
+    private String Ruta;
+    private String sugerir;
+    private String lectura;
+    private String auto_mult;
+    private String multimedia;
+    private String tipo_mul;
 
     public Arbol_Nogrupo() {
         etiqueta = "";
@@ -37,6 +37,7 @@ public class Arbol_Nogrupo {
         lectura = "";
         auto_mult = "";
         multimedia = "";
+        tipo_mul="";
     }
 
     public void set_requerido() {
@@ -90,10 +91,9 @@ public class Arbol_Nogrupo {
         this.lectura = rut;
     }
 
-    public String Set_multimedia(String multi, int tipo) {
+    public String Set_multimedia(String multi) {
         if (multimedia.equals("")) {
             this.multimedia = multi;
-            Set_tipo(tipo);
             return "true";
         } else {
             return "YA EXISTE UN ARCHIVO MULTIMEDIA";
@@ -109,16 +109,74 @@ public class Arbol_Nogrupo {
         }
     }
 
-    private void Set_tipo(int tipo) {
-        switch (tipo) {
-            case 0:
-                this.tipo_mul = "Imagen";
-                break;
-            case 1:
-                this.tipo_mul = "Audio";
-                break;
-            default:
-                this.tipo_mul = "Video";
+    public String Set_tipo(int tipo) {
+        if (!tipo_mul.equalsIgnoreCase("")) {
+            switch (tipo) {
+                case 0:
+                    this.tipo_mul = "Imagen";
+                    break;
+                case 1:
+                    this.tipo_mul = "Audio";
+                    break;
+                default:
+                    this.tipo_mul = "Video";
+            }
+        } else {
+            return "YA EXISTE UN TIPO MULTIMEDIA";
         }
+        return "true";
     }
+
+    public String getEtiqueta() {
+        return etiqueta;
+    }
+
+    public String getRequerido() {
+        return requerido;
+    }
+
+    public String getMensaje_reque() {
+        return mensaje_reque;
+    }
+
+    public String getRestringir() {
+        return restringir;
+    }
+
+    public String getPredeterminado() {
+        return predeterminado;
+    }
+
+    public String getMensaje_restrin() {
+        return mensaje_restrin;
+    }
+
+    public String getCalcular() {
+        return Calcular;
+    }
+
+    public String getRuta() {
+        return Ruta;
+    }
+
+    public String getSugerir() {
+        return sugerir;
+    }
+
+    public String getLectura() {
+        return lectura;
+    }
+
+    public String getAuto_mult() {
+        return auto_mult;
+    }
+
+    public String getMultimedia() {
+        return multimedia;
+    }
+
+    public String getTipo_mul() {
+        return tipo_mul;
+    }
+
 }

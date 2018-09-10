@@ -10,12 +10,12 @@
  */
 public class Arbol_Grupo {
 
-    String codigo_pre;
-    String codigo_post;
-    String aplicable;
-    Clase_parametro parametro;
-    String tipo_fichero;
-    String repetir;
+    private String codigo_pre;
+    private String codigo_post;
+    private String aplicable;
+    private Clase_parametro parametro;
+    private String tipo_fichero;
+    private String repetir;
 
     public Arbol_Grupo() {
         codigo_pre = "";
@@ -26,11 +26,11 @@ public class Arbol_Grupo {
         parametro = new Clase_parametro();
     }
 
-    public void set_codigoPRE(String codigo) {
+    public void SetcodigoPRE(String codigo) {
         this.codigo_pre = codigo;
     }
 
-    public void set_codigoPOS(String codigo) {
+    public void SetcodigoPOS(String codigo) {
         this.codigo_post = codigo;
     }
 
@@ -44,6 +44,34 @@ public class Arbol_Grupo {
 
     public void Set_fichero(String fichero) {
         this.tipo_fichero = fichero;
+    }
+
+    public String get_codigoPRE() {
+        return codigo_pre;
+    }
+
+    public String get_codigoPOS() {
+        return codigo_post;
+    }
+
+    public String get_aplicable() {
+        return aplicable;
+    }
+
+    public String get_tipo() {
+        return tipo_fichero;
+    }
+
+    public String get_fichero() {
+        return tipo_fichero;
+    }
+
+    public String get_repetir() {
+        return repetir;
+    }
+
+    public Clase_parametro get_parametro() {
+        return this.parametro;
     }
 
     public String add_cad_min(String cad) {
